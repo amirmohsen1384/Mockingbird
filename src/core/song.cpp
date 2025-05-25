@@ -48,6 +48,10 @@ bool Song::operator==(const Song &other) const
     {
         return false;
     }
+    else if(this->cover != other.artist)
+    {
+        return false;
+    }
     else
     {
         return true;
