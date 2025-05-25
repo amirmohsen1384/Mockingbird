@@ -17,6 +17,11 @@ namespace MainFolder
 
 using IDContainer = qint64;
 
+namespace ID
+{
+    bool isValid(const IDContainer &value);
+}
+
 constexpr int _min_year = 1900;
 
 #endif // GENERAL_H
