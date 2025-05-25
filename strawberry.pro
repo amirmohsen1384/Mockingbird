@@ -9,9 +9,13 @@ CONFIG += c++17
 
 SOURCES += \
     main.cpp \
+    src/core/general.cpp \
+    src/core/song.cpp \
     src/pages/welcomepage.cpp
 
 HEADERS += \
+    include/core/general.h \
+    include/core/song.h \
     include/pages/welcomepage.h
 
 FORMS += \
