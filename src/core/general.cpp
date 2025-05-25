@@ -54,3 +54,8 @@ QDir MainFolder::getArtists()
     return result;
 }
 
+
+bool ID::isValid(const IDContainer &value)
+{
+    return value > 0;
+}
