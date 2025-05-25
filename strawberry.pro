@@ -13,6 +13,7 @@ SOURCES += \
     src/core/general.cpp \
     src/core/playlist.cpp \
     src/core/song.cpp \
+    src/dialogs/songedit.cpp \
     src/pages/welcomepage.cpp
 
 HEADERS += \
@@ -20,12 +21,17 @@ HEADERS += \
     include/core/general.h \
     include/core/playlist.h \
     include/core/song.h \
+    include/dialogs/songedit.h \
     include/pages/welcomepage.h
 
 FORMS += \
-    ui/pages/welcomepage.ui
+    ui/pages/welcomepage.ui \
+    ui/dialogs/songedit.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    resources.qrc
