@@ -7,7 +7,7 @@ QString Playlist::getName() const
 
 bool Playlist::operator==(const Playlist &another)
 {
-    return this->name = another.name;
+    return this->name == another.name;
 }
 
 bool Playlist::operator!=(const Playlist &another)
@@ -26,7 +26,7 @@ QDataStream& operator<<(QDataStream &stream, const Playlist &data)
     return stream;
 }
 
-QDataStream& operator>>(QDataStream &stream, const Playlist &data)
+QDataStream& operator>>(QDataStream &stream, Playlist &data)
 {
     stream >> data.name;
     return stream;
