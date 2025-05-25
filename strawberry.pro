@@ -9,12 +9,14 @@ CONFIG += c++17
 
 SOURCES += \
     main.cpp \
+    src/core/artist.cpp \
     src/core/general.cpp \
     src/core/playlist.cpp \
     src/core/song.cpp \
     src/pages/welcomepage.cpp
 
 HEADERS += \
+    include/core/artist.h \
     include/core/general.h \
     include/core/playlist.h \
     include/core/song.h \
