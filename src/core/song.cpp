@@ -63,7 +63,7 @@ bool Song::operator!=(const Song &other) const
     return !(*this == other);
 }
 
-void Song::saveToRecord(const IDContainer &value)
+void Song::saveToRecord(const IDContainer &value) const
 {
     QFile file(absoluteRecord(value));
     if(!file.open(QFile::WriteOnly))
@@ -73,6 +73,23 @@ void Song::saveToRecord(const IDContainer &value)
     QDataStream stream(&file);
     stream << *this;
     return;
+}
+
+IDContainer Song::generateKey()
+{
+    IDs keys;
+    IDContainer result = 0;
+    QFileInfoList entries = MainFolder::getSongs().entryInfoList({"*.sof"}, QDir::AllEntries | QDir::NoDotAndDotDot);
+    for(QFileInfo entry : entries)
+    {
+        keys.append(entry.baseName().toLongLong());
+    }
+    do
+    {
+        result = QRandomGenerator::global()->generate();
+    }
+    while(keys.contains(result));
+    return result;
 }
 
 Song Song::loadFromRecord(const IDContainer &value)

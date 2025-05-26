@@ -37,8 +37,9 @@ public:
     friend QDataStream& operator<<(QDataStream &stream, const Song &another);
     friend QDataStream& operator>>(QDataStream &stream, Song &another);
 
-    void saveToRecord(const IDContainer &value);
+    void saveToRecord(const IDContainer &value) const;
 
+    static IDContainer generateKey();
     static Song loadFromRecord(const IDContainer &value);
     static QString absoluteRecord(const IDContainer &value);
 
@@ -57,6 +58,7 @@ private:
     QString artist;
     int publicationYear;
     Genre genre = Genre::Classic;
+    friend class SongEdit;
 };
 
 QDataStream& operator<<(QDataStream &stream, const Song &another);
