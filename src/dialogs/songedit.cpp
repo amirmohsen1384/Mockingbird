@@ -119,10 +119,7 @@ void SongEdit::updateMetaData()
             name = data.value(QMediaMetaData::Description);
         }
     }
-    if(predefined.name.isEmpty())
-    {
-        setName(name.toString());
-    }
+    setName(name.toString());
 
     // Initializes the image cover
     QVariant cover = data.value(QMediaMetaData::ThumbnailImage);
@@ -130,10 +127,7 @@ void SongEdit::updateMetaData()
     {
         cover = data.value(QMediaMetaData::CoverArtImage);
     }
-    if(predefined.cover.isNull())
-    {
-        setCover(qvariant_cast<QImage>(cover));
-    }
+    setCover(qvariant_cast<QImage>(cover));
 
     // Initializes the artist
     QVariant artist = data.value(QMediaMetaData::AlbumArtist);
@@ -145,10 +139,7 @@ void SongEdit::updateMetaData()
             artist = data.value(QMediaMetaData::ContributingArtist);
         }
     }
-    if(predefined.artist.isEmpty())
-    {
-        setArtist(artist.toString());
-    }
+    setArtist(artist.toString());
 }
 
 void SongEdit::controlPlayback()
