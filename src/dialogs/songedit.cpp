@@ -21,13 +21,12 @@ SongEdit::SongEdit(QWidget *parent) : QDialog{parent}
 
     ui->genreEdit->setModel(&model);
     ui->playbackButton->setVisible(false);
+    ui->initializeButton->setVisible(false);
     ui->releaseYearEdit->setValue(QDate::currentDate().year());
 
     connect(this, &SongEdit::locationChanged, player, &QMediaPlayer::setSource);
     connect(player, &QMediaPlayer::sourceChanged, this, &SongEdit::updateSource);
-    connect(player, &QMediaPlayer::metaDataChanged, this, &SongEdit::updateMetaData);
     connect(player, &QMediaPlayer::playingChanged, this, &SongEdit::updatePlaybackControl);
-
     connect(ui->nameEdit, &QLineEdit::textChanged, this, &SongEdit::nameChanged);
     connect(ui->artistEdit, &QLineEdit::textChanged, this, &SongEdit::artistChanged);
     connect(ui->fileNameEdit, &QLineEdit::textChanged, this, [&](const QString &text)
@@ -43,6 +42,14 @@ SongEdit::SongEdit(QWidget *parent) : QDialog{parent}
     connect(ui->coverView, &ImageView::imageChanged, this, [&](const QImage &image)
     {
         emit SongEdit::coverChanged(QPixmap::fromImage(image));
+    }
+    );
+    connect(player, &QMediaPlayer::metaDataChanged, this, [&]()
+    {
+        if(player->mediaStatus() != QMediaPlayer::InvalidMedia)
+        {
+            ui->initializeButton->setVisible(true);
+        }
     }
     );
     connect(ui->releaseYearEdit, &QSpinBox::valueChanged, this, &SongEdit::releasedYearChanged);
@@ -68,6 +75,7 @@ QFileDialog *SongEdit::browseFile()
 void SongEdit::updateSource()
 {
     player->stop();
+    ui->initializeButton->setVisible(false);
     ui->playbackButton->setVisible(player->mediaStatus() != QMediaPlayer::InvalidMedia);
 }
 
@@ -103,9 +111,6 @@ void SongEdit::updateMetaData()
 {
     // Fetches the meta data from the media player
     QMediaMetaData data = player->metaData();
-
-    // Fetches the default song
-    Song predefined = Song::loadFromRecord(id);
 
     // Initializes the name
     QVariant name = data.value(QMediaMetaData::Title);
