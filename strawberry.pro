@@ -9,6 +9,7 @@ CONFIG += c++17
 
 SOURCES += \
     main.cpp \
+    src/components/imageview.cpp \
     src/core/artist.cpp \
     src/core/general.cpp \
     src/core/playlist.cpp \
@@ -18,6 +19,7 @@ SOURCES += \
     src/pages/welcomepage.cpp
 
 HEADERS += \
+    include/components/imageview.h \
     include/core/artist.h \
     include/core/general.h \
     include/core/playlist.h \
