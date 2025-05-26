@@ -13,20 +13,20 @@ SongEdit::SongEdit(QWidget *parent) : QDialog{parent}
     ui = std::make_unique<Ui::SongEdit>();
     ui->setupUi(this);
 
-    output = std::make_unique<QAudioOutput>();
+    output = new QAudioOutput(this);
     output->setDevice(QMediaDevices::defaultAudioOutput());
 
-    player = std::make_unique<QMediaPlayer>();
-    player->setAudioOutput(output.get());
+    player = new QMediaPlayer(this);
+    player->setAudioOutput(output);
 
     ui->genreEdit->setModel(&model);
     ui->playbackButton->setVisible(false);
     ui->releaseYearEdit->setValue(QDate::currentDate().year());
 
-    connect(this, &SongEdit::locationChanged, player.get(), &QMediaPlayer::setSource);
-    connect(player.get(), &QMediaPlayer::sourceChanged, this, &SongEdit::updateSource);
-    connect(player.get(), &QMediaPlayer::metaDataChanged, this, &SongEdit::updateMetaData);
-    connect(player.get(), &QMediaPlayer::playingChanged, this, &SongEdit::updatePlaybackControl);
+    connect(this, &SongEdit::locationChanged, player, &QMediaPlayer::setSource);
+    connect(player, &QMediaPlayer::sourceChanged, this, &SongEdit::updateSource);
+    connect(player, &QMediaPlayer::metaDataChanged, this, &SongEdit::updateMetaData);
+    connect(player, &QMediaPlayer::playingChanged, this, &SongEdit::updatePlaybackControl);
 
     connect(ui->nameEdit, &QLineEdit::textChanged, this, &SongEdit::nameChanged);
     connect(ui->artistEdit, &QLineEdit::textChanged, this, &SongEdit::artistChanged);
@@ -49,9 +49,11 @@ SongEdit::SongEdit(QWidget *parent) : QDialog{parent}
     ui->releaseYearEdit->setMinimum(_min_year);
 }
 
-SongEdit::SongEdit(const Song &value, QWidget *parent) : SongEdit(parent)
+SongEdit::SongEdit(const IDContainer &value, QWidget *parent) : SongEdit(parent)
 {
-    setValue(value);
+    const Song &song = Song::loadFromRecord(value);
+    setValue(song);
+    id = value;
 }
 
 QFileDialog *SongEdit::browseFile()
@@ -94,7 +96,7 @@ void SongEdit::openImageFile()
     if(dialog->exec() == QDialog::Accepted)
     {
         const QString fileName = dialog->selectedFiles().constFirst();
-        setCover(QPixmap(fileName));
+        setCover(QImage(fileName));
         history.append(fileName);
     }
 }
@@ -103,6 +105,9 @@ void SongEdit::updateMetaData()
 {
     // Fetches the meta data from the media player
     QMediaMetaData data = player->metaData();
+
+    // Fetches the default song
+    Song predefined = Song::loadFromRecord(id);
 
     // Initializes the name
     QVariant name = data.value(QMediaMetaData::Title);
@@ -114,7 +119,7 @@ void SongEdit::updateMetaData()
             name = data.value(QMediaMetaData::Description);
         }
     }
-    if(getName().isEmpty())
+    if(predefined.name.isEmpty())
     {
         setName(name.toString());
     }
@@ -125,9 +130,9 @@ void SongEdit::updateMetaData()
     {
         cover = data.value(QMediaMetaData::CoverArtImage);
     }
-    if(getCover().isNull())
+    if(predefined.cover.isNull())
     {
-        setCover(qvariant_cast<QPixmap>(cover));
+        setCover(qvariant_cast<QImage>(cover));
     }
 
     // Initializes the artist
@@ -140,7 +145,7 @@ void SongEdit::updateMetaData()
             artist = data.value(QMediaMetaData::ContributingArtist);
         }
     }
-    if(getArtist().isEmpty())
+    if(predefined.artist.isEmpty())
     {
         setArtist(artist.toString());
     }
@@ -186,9 +191,9 @@ QUrl SongEdit::getLocation() const
     return QUrl::fromLocalFile(ui->fileNameEdit->text());
 }
 
-QPixmap SongEdit::getCover() const
+QImage SongEdit::getCover() const
 {
-    return QPixmap::fromImage(ui->coverView->getImage());
+    return ui->coverView->getImage();
 }
 
 QString SongEdit::getName() const
@@ -213,6 +218,13 @@ void SongEdit::setReleasedYear(int value)
     ui->releaseYearEdit->setValue(value);
 }
 
+void SongEdit::setValue(const IDContainer &value)
+{
+    id = value;
+    Song target = Song::loadFromRecord(value);
+    setValue(target);
+}
+
 void SongEdit::setValue(const Song &value)
 {
     setName(value.name);
@@ -221,7 +233,7 @@ void SongEdit::setValue(const Song &value)
     setArtist(value.artist);
     setLocation(value.address);
     setReleasedYear(value.publicationYear);
-    if(!value.getName().isEmpty())
+    if(!value.name.isEmpty())
     {
         setWindowTitle(QString("%1 - Song Editor").arg(value.name));
     }
@@ -237,9 +249,9 @@ void SongEdit::setName(const QString &value)
     ui->nameEdit->setText(value);
 }
 
-void SongEdit::setCover(const QPixmap &value)
+void SongEdit::setCover(const QImage &value)
 {
-    ui->coverView->setImage(value.toImage());
+    ui->coverView->setImage(value);
 }
 
 void SongEdit::setArtist(const QString &value)
@@ -273,6 +285,12 @@ void SongEdit::accept()
         {
             throw std::runtime_error("You have not entered the artist.");
         }
+        const Song &value = this->getValue();
+        if(!ID::isValid(id))
+        {
+            id = Song::generateKey();
+        }
+        value.saveToRecord(id);
         QDialog::accept();
     }
     catch(std::exception &e)

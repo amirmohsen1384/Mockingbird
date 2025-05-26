@@ -9,6 +9,7 @@ namespace Ui
 {
     class SongEdit;
 }
+
 class QFileDialog;
 
 class SongEdit : public QDialog
@@ -28,7 +29,7 @@ private slots:
 public:
     Q_DISABLE_COPY_MOVE(SongEdit)
     explicit SongEdit(QWidget *parent = nullptr);
-    explicit SongEdit(const Song &value, QWidget *parent = nullptr);
+    explicit SongEdit(const IDContainer &value, QWidget *parent = nullptr);
 
     ~SongEdit();
 
@@ -36,21 +37,23 @@ public:
     int getReleasedYear() const;
     QString getArtist() const;
     QUrl getLocation() const;
-    QPixmap getCover() const;
+    QImage getCover() const;
     QString getName() const;
     Song getValue() const;
 
 public slots:
     void setReleasedYear(int value);
-    void setValue(const Song &value);
     void setGenre(Song::Genre value);
     void setName(const QString &value);
-    void setCover(const QPixmap &value);
+    void setCover(const QImage &value);
     void setArtist(const QString &value);
     void setLocation(const QUrl &location);
 
-    void removeCover();
+    void setValue(const IDContainer &value);
+    void setValue(const Song &value);
+
     virtual void accept() override;
+    void removeCover();
 
 signals:
     void nameChanged(QString value);
@@ -62,9 +65,10 @@ signals:
 
 private:
     GenreModel model;
+    IDContainer id = 0;
+    QAudioOutput *output = nullptr;
+    QMediaPlayer *player = nullptr;
     std::unique_ptr<Ui::SongEdit> ui;
-    std::unique_ptr<QAudioOutput> output;
-    std::unique_ptr<QMediaPlayer> player;
 };
 
 #endif // SONGEDIT_H
