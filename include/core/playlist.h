@@ -2,6 +2,7 @@
 #define PLAYLIST_H
 
 #include <QDataStream>
+#include "general.h"
 #include <QString>
 
 class Playlist
@@ -18,11 +19,18 @@ public:
     };
     QString getName() const;
 
+    bool isNull() const;
+
     bool operator==(const Playlist &another);
     bool operator!=(const Playlist &another);
 
     friend QDataStream& operator<<(QDataStream &stream, const Playlist &data);
     friend QDataStream& operator>>(QDataStream &stream, Playlist &data);
+
+    void saveToRecord(const IDContainer &value);
+
+    static QDir absoluteRecord(const IDContainer &value);
+    static Playlist loadFromRecord(const IDContainer &value);
 
 public:
     void setName(const QString &value);
