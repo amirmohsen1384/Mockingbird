@@ -14,6 +14,7 @@ SOURCES += \
     src/core/playlist.cpp \
     src/core/song.cpp \
     src/dialogs/songedit.cpp \
+    src/models/genremodel.cpp \
     src/pages/welcomepage.cpp
 
 HEADERS += \
@@ -22,6 +23,7 @@ HEADERS += \
     include/core/playlist.h \
     include/core/song.h \
     include/dialogs/songedit.h \
+    include/models/genremodel.h \
     include/pages/welcomepage.h
 
 FORMS += \
