@@ -6,7 +6,7 @@ QString Song::getName() const
     return name;
 }
 
-QPixmap Song::getCover() const
+QImage Song::getCover() const
 {
     return cover;
 }
@@ -48,7 +48,7 @@ bool Song::operator==(const Song &other) const
     {
         return false;
     }
-    else if(this->cover != other.artist)
+    else if(this->cover != other.cover)
     {
         return false;
     }
@@ -117,7 +117,7 @@ void Song::setArtist(const QString &value)
     artist = value;
 }
 
-void Song::setCover(const QPixmap &value)
+void Song::setCover(const QImage &value)
 {
     cover = value;
 }
