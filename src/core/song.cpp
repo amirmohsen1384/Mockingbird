@@ -63,6 +63,41 @@ bool Song::operator!=(const Song &other) const
     return !(*this == other);
 }
 
+void Song::saveToRecord(const IDContainer &value)
+{
+    QFile file(absoluteRecord(value));
+    if(!file.open(QFile::WriteOnly))
+    {
+        return;
+    }
+    QDataStream stream(&file);
+    stream << *this;
+    return;
+}
+
+Song Song::loadFromRecord(const IDContainer &value)
+{
+    QFile file(absoluteRecord(value));
+    if(!file.open(QFile::ReadOnly))
+    {
+        return Song();
+    }
+    Song song;
+    QDataStream stream(&file);
+    stream >> song;
+    return song;
+}
+
+QString Song::absoluteRecord(const IDContainer &value)
+{
+    return MainFolder::getSongs().absoluteFilePath(QString("%1.sof").arg(value));
+}
+
+bool Song::isNull() const
+{
+    return address.isEmpty() || !address.isValid();
+}
+
 QUrl Song::getAddress() const
 {
     return address;

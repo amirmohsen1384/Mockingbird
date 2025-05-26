@@ -22,6 +22,8 @@ public:
     };
 
 public:
+    bool isNull() const;
+
     Genre getGenre() const;
     QUrl getAddress() const;
     QString getName() const;
@@ -34,6 +36,11 @@ public:
 
     friend QDataStream& operator<<(QDataStream &stream, const Song &another);
     friend QDataStream& operator>>(QDataStream &stream, Song &another);
+
+    void saveToRecord(const IDContainer &value);
+
+    static Song loadFromRecord(const IDContainer &value);
+    static QString absoluteRecord(const IDContainer &value);
 
 public:
     void setArtist(const QString &value);
