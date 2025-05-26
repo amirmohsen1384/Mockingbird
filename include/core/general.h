@@ -16,6 +16,7 @@ namespace MainFolder
 }
 
 using IDContainer = qint64;
+using IDs = QList<IDContainer>;
 
 namespace ID
 {
