@@ -41,5 +41,6 @@
         <file>images/windows/check.png</file>
         <file>images/windows/hide-password.png</file>
         <file>images/windows/show-password.png</file>
+        <file>images/dialogs/Initialize.png</file>
     </qresource>
 </RCC>
