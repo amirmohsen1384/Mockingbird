@@ -51,9 +51,7 @@ SongEdit::SongEdit(QWidget *parent) : QDialog{parent}
 
 SongEdit::SongEdit(const IDContainer &value, QWidget *parent) : SongEdit(parent)
 {
-    const Song &song = Song::loadFromRecord(value);
-    setValue(song);
-    id = value;
+    setValue(value);
 }
 
 QFileDialog *SongEdit::browseFile()
@@ -161,6 +159,11 @@ void SongEdit::updatePlaybackControl(bool value)
 }
 
 SongEdit::~SongEdit() {}
+
+IDContainer SongEdit::getID() const
+{
+    return id;
+}
 
 Song::Genre SongEdit::getGenre() const
 {

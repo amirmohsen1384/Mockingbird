@@ -33,6 +33,8 @@ public:
 
     ~SongEdit();
 
+    IDContainer getID() const;
+
     Song::Genre getGenre() const;
     int getReleasedYear() const;
     QString getArtist() const;
