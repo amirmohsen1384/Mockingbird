@@ -40,6 +40,20 @@ QDir Playlist::absoluteRecord(const IDContainer &value)
     return result;
 }
 
+IDs Playlist::loadIDsFromRecord(const IDContainer &value)
+{
+    QDir record = Playlist::absoluteRecord(value);
+    QFile file(record.absoluteFilePath("keys.dat"));
+    if(!file.open(QFile::ReadOnly))
+    {
+        return IDs();
+    }
+    IDs idList;
+    QDataStream stream(&file);
+    stream >> idList;
+    return idList;
+}
+
 Playlist Playlist::loadFromRecord(const IDContainer &value)
 {
     QFile file(Playlist::absoluteRecord(value).absoluteFilePath("metadata.dat"));

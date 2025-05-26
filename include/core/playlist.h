@@ -30,6 +30,7 @@ public:
     void saveToRecord(const IDContainer &value);
 
     static QDir absoluteRecord(const IDContainer &value);
+    static IDs loadIDsFromRecord(const IDContainer &value);
     static Playlist loadFromRecord(const IDContainer &value);
 
 public:
