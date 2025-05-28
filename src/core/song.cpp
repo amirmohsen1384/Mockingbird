@@ -65,6 +65,10 @@ bool Song::operator!=(const Song &other) const
 
 void Song::saveToRecord(const IDContainer &value) const
 {
+    if(!ID::isValid(value))
+    {
+        return;
+    }
     QFile file(absoluteRecord(value));
     if(!file.open(QFile::WriteOnly))
     {
@@ -73,23 +77,6 @@ void Song::saveToRecord(const IDContainer &value) const
     QDataStream stream(&file);
     stream << *this;
     return;
-}
-
-IDContainer Song::generateKey()
-{
-    IDs keys;
-    IDContainer result = 0;
-    QFileInfoList entries = MainFolder::getSongs().entryInfoList({"*.sof"}, QDir::AllEntries | QDir::NoDotAndDotDot);
-    for(QFileInfo entry : entries)
-    {
-        keys.append(entry.baseName().toLongLong());
-    }
-    do
-    {
-        result = QRandomGenerator::global()->generate();
-    }
-    while(keys.contains(result));
-    return result;
 }
 
 Song Song::loadFromRecord(const IDContainer &value)
@@ -101,18 +88,16 @@ Song Song::loadFromRecord(const IDContainer &value)
     }
     Song song;
     QDataStream stream(&file);
-    stream >> song;
+    if((stream >> song).status() == QDataStream::Ok)
+    {
+        song.valid = true;
+    }
     return song;
 }
 
 QString Song::absoluteRecord(const IDContainer &value)
 {
     return MainFolder::getSongs().absoluteFilePath(QString("%1.sof").arg(value));
-}
-
-bool Song::isNull() const
-{
-    return address.isEmpty() || !address.isValid();
 }
 
 QUrl Song::getAddress() const
@@ -168,4 +153,9 @@ QDataStream& operator>>(QDataStream &stream, Song &another)
     stream >> another.address;
     stream >> another.publicationYear;
     return stream;
+}
+
+bool Entity::isNull() const
+{
+    return !valid;
 }

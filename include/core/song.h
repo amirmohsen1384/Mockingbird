@@ -6,7 +6,17 @@
 #include <QVariant>
 #include "general.h"
 
-class Song
+class Entity
+{
+public:
+    bool isNull() const;
+    virtual void saveToRecord(const IDContainer &value) const = 0;
+
+protected:
+    bool valid = false;
+};
+
+class Song : public Entity
 {
 public:
     enum Genre
@@ -22,8 +32,6 @@ public:
     };
 
 public:
-    bool isNull() const;
-
     Genre getGenre() const;
     QUrl getAddress() const;
     QString getName() const;
@@ -37,11 +45,11 @@ public:
     friend QDataStream& operator<<(QDataStream &stream, const Song &another);
     friend QDataStream& operator>>(QDataStream &stream, Song &another);
 
-    void saveToRecord(const IDContainer &value) const;
-
-    static IDContainer generateKey();
     static Song loadFromRecord(const IDContainer &value);
     static QString absoluteRecord(const IDContainer &value);
+    virtual void saveToRecord(const IDContainer &value) const override;
+
+    friend class SongEdit;
 
 public:
     void setArtist(const QString &value);
@@ -58,7 +66,6 @@ private:
     QString artist;
     int publicationYear;
     Genre genre = Genre::Classic;
-    friend class SongEdit;
 };
 
 QDataStream& operator<<(QDataStream &stream, const Song &another);
