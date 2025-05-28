@@ -287,8 +287,9 @@ void SongEdit::accept()
         const Song &value = this->getValue();
         if(!ID::isValid(id))
         {
-            id = Song::generateKey();
+            id = ID::generateKey();
         }
+        qDebug() << id;
         value.saveToRecord(id);
         QDialog::accept();
     }
