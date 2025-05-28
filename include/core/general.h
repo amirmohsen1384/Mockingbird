@@ -20,6 +20,7 @@ using IDs = QList<IDContainer>;
 
 namespace ID
 {
+    IDContainer generateKey();
     bool isValid(const IDContainer &value);
 }
 

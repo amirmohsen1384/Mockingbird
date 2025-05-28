@@ -59,3 +59,33 @@ bool ID::isValid(const IDContainer &value)
 {
     return value > 0;
 }
+
+IDContainer ID::generateKey()
+{
+    auto artists = MainFolder::getArtists().entryInfoList({"*"}, QDir::AllDirs | QDir::NoDotAndDotDot);
+    auto songs = MainFolder::getSongs().entryInfoList({"*.sof"}, QDir::AllEntries | QDir::NoDotAndDotDot);
+    auto playlists = MainFolder::getPlaylists().entryInfoList({"*"}, QDir::AllDirs | QDir::NoDotAndDotDot);
+
+    IDs existingIDs;
+    for(QFileInfo file : songs)
+    {
+        existingIDs.append(file.baseName().toLongLong());
+    }
+    for(QFileInfo file : artists)
+    {
+        existingIDs.append(file.baseName().toLongLong());
+    }
+    for(QFileInfo file : playlists)
+    {
+        existingIDs.append(file.baseName().toLongLong());
+    }
+
+    IDContainer result = 0;
+    do
+    {
+        result = QRandomGenerator::global()->generate();
+    }
+    while(existingIDs.contains(result) || !ID::isValid(result));
+
+    return result;
+}
