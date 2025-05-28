@@ -4,8 +4,9 @@
 #include <QDataStream>
 #include "general.h"
 #include <QString>
+#include "song.h"
 
-class Playlist
+class Playlist : public Entity
 {
 public:
     enum Role
@@ -17,21 +18,19 @@ public:
         GenreRole = Qt::UserRole + 6,
         YearRole = Qt::UserRole + 5
     };
+
     QString getName() const;
-
-    bool isNull() const;
-
-    bool operator==(const Playlist &another);
-    bool operator!=(const Playlist &another);
 
     friend QDataStream& operator<<(QDataStream &stream, const Playlist &data);
     friend QDataStream& operator>>(QDataStream &stream, Playlist &data);
 
-    void saveToRecord(const IDContainer &value);
+    static IDs loadIDsFromRecord(const IDContainer &value);
+    static void saveIDsToRecord(const IDs &idList, const IDContainer &value);
+
+    static Playlist loadFromRecord(const IDContainer &value);
+    virtual void saveToRecord(const IDContainer &value) const override;
 
     static QDir absoluteRecord(const IDContainer &value);
-    static IDs loadIDsFromRecord(const IDContainer &value);
-    static Playlist loadFromRecord(const IDContainer &value);
 
 public:
     void setName(const QString &value);

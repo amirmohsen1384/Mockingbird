@@ -5,23 +5,12 @@ QString Playlist::getName() const
     return name;
 }
 
-bool Playlist::isNull() const
+void Playlist::saveToRecord(const IDContainer &value) const
 {
-    return name.isEmpty();
-}
-
-bool Playlist::operator==(const Playlist &another)
-{
-    return this->name == another.name;
-}
-
-bool Playlist::operator!=(const Playlist &another)
-{
-    return !(*this == another);
-}
-
-void Playlist::saveToRecord(const IDContainer &value)
-{
+    if(!ID::isValid(value))
+    {
+        return;
+    }
     QFile file(Playlist::absoluteRecord(value).absoluteFilePath("metadata.dat"));
     if(!file.open(QFile::WriteOnly))
     {
@@ -35,9 +24,40 @@ QDir Playlist::absoluteRecord(const IDContainer &value)
 {
     const QString target = QString::number(value);
     QDir result = MainFolder::getPlaylists();
-    result.mkpath(target);
+    result.mkdir(target);
     result.cd(target);
+    {
+        const QString keyPath = result.absoluteFilePath("keys.dat");
+        QFile keyFile(keyPath);
+        if(!keyFile.exists())
+        {
+            keyFile.open(QFile::WriteOnly);
+        }
+    }
+    {
+        const QString metaPath = result.absoluteFilePath("metadata.dat");
+        QFile metaFile(metaPath);
+        if(!metaFile.exists())
+        {
+            metaFile.open(QFile::WriteOnly);
+        }
+    }
     return result;
+}
+
+void Playlist::saveIDsToRecord(const IDs &idList, const IDContainer &value)
+{
+    if(!ID::isValid(value))
+    {
+        return;
+    }
+    QFile file(Playlist::absoluteRecord(value).absoluteFilePath("keys.dat"));
+    if(!file.open(QFile::WriteOnly))
+    {
+        return;
+    }
+    QDataStream stream(&file);
+    stream << idList;
 }
 
 IDs Playlist::loadIDsFromRecord(const IDContainer &value)
@@ -50,7 +70,10 @@ IDs Playlist::loadIDsFromRecord(const IDContainer &value)
     }
     IDs idList;
     QDataStream stream(&file);
-    stream >> idList;
+    if((stream >> idList).status() != QDataStream::Ok)
+    {
+        return IDs();
+    }
     return idList;
 }
 
@@ -63,7 +86,10 @@ Playlist Playlist::loadFromRecord(const IDContainer &value)
     }
     Playlist data;
     QDataStream stream(&file);
-    stream >> data;
+    if((stream >> data).status() == QDataStream::Ok)
+    {
+        data.valid = true;
+    }
     return data;
 }
 
