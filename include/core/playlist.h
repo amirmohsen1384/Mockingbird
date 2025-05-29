@@ -16,7 +16,8 @@ public:
         PlayingRole = Qt::UserRole + 1,
         ArtistRole = Qt::UserRole + 2,
         GenreRole = Qt::UserRole + 6,
-        YearRole = Qt::UserRole + 5
+        YearRole = Qt::UserRole + 5,
+        KeyRole = Qt::UserRole + 7
     };
 
     QString getName() const;
