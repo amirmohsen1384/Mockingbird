@@ -89,3 +89,8 @@ IDContainer ID::generateKey()
 
     return result;
 }
+
+bool Entity::isNull() const
+{
+    return !valid;
+}

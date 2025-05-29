@@ -6,16 +6,6 @@
 #include <QVariant>
 #include "general.h"
 
-class Entity
-{
-public:
-    bool isNull() const;
-    virtual void saveToRecord(const IDContainer &value) const = 0;
-
-protected:
-    bool valid = false;
-};
-
 class Song : public Entity
 {
 public:

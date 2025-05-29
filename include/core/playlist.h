@@ -4,7 +4,6 @@
 #include <QDataStream>
 #include "general.h"
 #include <QString>
-#include "song.h"
 
 class Playlist : public Entity
 {

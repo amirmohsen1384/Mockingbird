@@ -157,8 +157,3 @@ QDataStream& operator>>(QDataStream &stream, Song &another)
     stream >> another.publicationYear;
     return stream;
 }
-
-bool Entity::isNull() const
-{
-    return !valid;
-}

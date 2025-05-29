@@ -26,4 +26,14 @@ namespace ID
 
 constexpr int _min_year = 1900;
 
+class Entity
+{
+public:
+    bool isNull() const;
+    virtual void saveToRecord(const IDContainer &value) const = 0;
+
+protected:
+    bool valid = false;
+};
+
 #endif // GENERAL_H
