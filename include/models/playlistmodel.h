@@ -10,6 +10,7 @@ class PlaylistModel : public QAbstractListModel
     static const QVector<int> roles;
 
 public:
+    Q_DISABLE_COPY_MOVE(PlaylistModel)
     explicit PlaylistModel(const IDContainer &value = 0, QObject *parent = nullptr);
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;

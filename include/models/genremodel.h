@@ -13,6 +13,7 @@ public:
     static QPair<QString, QPixmap> toMetaData(const Song::Genre &genre);
 
 public:
+    Q_DISABLE_COPY_MOVE(GenreModel)
     explicit GenreModel(QObject *parent = nullptr);
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
