@@ -5,22 +5,7 @@ QString Playlist::getName() const
     return name;
 }
 
-void Playlist::saveToRecord(const IDContainer &value) const
-{
-    if(!ID::isValid(value))
-    {
-        return;
-    }
-    QFile file(Playlist::absoluteRecord(value).absoluteFilePath("metadata.dat"));
-    if(!file.open(QFile::WriteOnly))
-    {
-        return;
-    }
-    QDataStream stream(&file);
-    stream << *this;
-}
-
-QDir Playlist::absoluteRecord(const IDContainer &value)
+QDir Playlist::createRecord(const IDContainer &value)
 {
     const QString target = QString::number(value);
     QDir result = MainFolder::getPlaylists();
@@ -45,13 +30,40 @@ QDir Playlist::absoluteRecord(const IDContainer &value)
     return result;
 }
 
+void Playlist::saveToRecord(const IDContainer &value) const
+{
+    if(!ID::isValid(value))
+    {
+        return;
+    }
+    const QString target = QString::number(value);
+    QDir folder = MainFolder::getPlaylists();
+    if(!folder.cd(target))
+    {
+        folder = createRecord(value);
+    }
+    QFile file(folder.absoluteFilePath("metadata.dat"));
+    if(!file.open(QFile::WriteOnly))
+    {
+        return;
+    }
+    QDataStream stream(&file);
+    stream << *this;
+}
+
 void Playlist::saveIDsToRecord(const IDs &idList, const IDContainer &value)
 {
     if(!ID::isValid(value))
     {
         return;
     }
-    QFile file(Playlist::absoluteRecord(value).absoluteFilePath("keys.dat"));
+    const QString target = QString::number(value);
+    QDir folder = MainFolder::getPlaylists();
+    if(!folder.cd(target))
+    {
+        folder = createRecord(value);
+    }
+    QFile file(folder.absoluteFilePath("keys.dat"));
     if(!file.open(QFile::WriteOnly))
     {
         return;
@@ -62,8 +74,16 @@ void Playlist::saveIDsToRecord(const IDs &idList, const IDContainer &value)
 
 IDs Playlist::loadIDsFromRecord(const IDContainer &value)
 {
-    QDir record = Playlist::absoluteRecord(value);
-    QFile file(record.absoluteFilePath("keys.dat"));
+    if(!ID::isValid(value))
+    {
+        return IDs();
+    }
+    QDir folder = MainFolder::getPlaylists();
+    if(!folder.cd(QString::number(value)))
+    {
+        return IDs();
+    }
+    QFile file(folder.absoluteFilePath("keys.dat"));
     if(!file.open(QFile::ReadOnly))
     {
         return IDs();
@@ -79,7 +99,16 @@ IDs Playlist::loadIDsFromRecord(const IDContainer &value)
 
 Playlist Playlist::loadFromRecord(const IDContainer &value)
 {
-    QFile file(Playlist::absoluteRecord(value).absoluteFilePath("metadata.dat"));
+    if(!ID::isValid(value))
+    {
+        return Playlist();
+    }
+    QDir result = MainFolder::getPlaylists();
+    if(!result.cd(QString::number(value)))
+    {
+        return Playlist();
+    }
+    QFile file(result.absoluteFilePath("metadata.dat"));
     if(!file.open(QFile::ReadOnly))
     {
         return Playlist();
@@ -89,8 +118,12 @@ Playlist Playlist::loadFromRecord(const IDContainer &value)
     if((stream >> data).status() == QDataStream::Ok)
     {
         data.valid = true;
+        return data;
     }
-    return data;
+    else
+    {
+        return Playlist();
+    }
 }
 
 void Playlist::setName(const QString &value)

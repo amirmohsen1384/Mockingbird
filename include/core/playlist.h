@@ -22,19 +22,20 @@ public:
 
     QString getName() const;
 
-    friend QDataStream& operator<<(QDataStream &stream, const Playlist &data);
-    friend QDataStream& operator>>(QDataStream &stream, Playlist &data);
-
-    static IDs loadIDsFromRecord(const IDContainer &value);
-    static void saveIDsToRecord(const IDs &idList, const IDContainer &value);
-
-    static Playlist loadFromRecord(const IDContainer &value);
     virtual void saveToRecord(const IDContainer &value) const override;
 
-    static QDir absoluteRecord(const IDContainer &value);
+    friend QDataStream& operator>>(QDataStream &stream, Playlist &data);
+    friend QDataStream& operator<<(QDataStream &stream, const Playlist &data);
+
+    static IDs loadIDsFromRecord(const IDContainer &value);
+    static Playlist loadFromRecord(const IDContainer &value);
+    static void saveIDsToRecord(const IDs &idList, const IDContainer &value);
 
 public:
     void setName(const QString &value);
+
+private:
+    static QDir createRecord(const IDContainer &value);
 
 private:
     QString name;
