@@ -17,6 +17,7 @@ SOURCES += \
     src/core/song.cpp \
     src/dialogs/playlistplayer.cpp \
     src/dialogs/songedit.cpp \
+    src/models/artistmodel.cpp \
     src/models/genremodel.cpp \
     src/models/playlistmodel.cpp \
     src/models/songdelegate.cpp \
@@ -31,6 +32,7 @@ HEADERS += \
     include/core/song.h \
     include/dialogs/playlistplayer.h \
     include/dialogs/songedit.h \
+    include/models/artistmodel.h \
     include/models/genremodel.h \
     include/models/playlistmodel.h \
     include/models/songdelegate.h \
