@@ -56,9 +56,9 @@ SongEdit::SongEdit(QWidget *parent) : QDialog{parent}
     ui->releaseYearEdit->setMinimum(_min_year);
 }
 
-SongEdit::SongEdit(const IDContainer &value, QWidget *parent) : SongEdit(parent)
+SongEdit::SongEdit(const Song &song, QWidget *parent) : SongEdit(parent)
 {
-    setValue(value);
+    setSong(song);
 }
 
 QFileDialog *SongEdit::browseFile()
@@ -165,11 +165,6 @@ void SongEdit::updatePlaybackControl(bool value)
 
 SongEdit::~SongEdit() {}
 
-IDContainer SongEdit::getID() const
-{
-    return id;
-}
-
 Song::Genre SongEdit::getGenre() const
 {
     return static_cast<Song::Genre>(ui->genreEdit->currentIndex());
@@ -200,7 +195,7 @@ QString SongEdit::getName() const
     return ui->nameEdit->text();
 }
 
-Song SongEdit::getValue() const
+Song SongEdit::getSong() const
 {
     Song target;
     target.setName(getName());
@@ -217,14 +212,7 @@ void SongEdit::setReleasedYear(int value)
     ui->releaseYearEdit->setValue(value);
 }
 
-void SongEdit::setValue(const IDContainer &value)
-{
-    id = value;
-    Song target = Song::loadFromRecord(value);
-    setValue(target);
-}
-
-void SongEdit::setValue(const Song &value)
+void SongEdit::setSong(const Song &value)
 {
     setName(value.name);
     setGenre(value.genre);
@@ -284,13 +272,6 @@ void SongEdit::accept()
         {
             throw std::runtime_error("You have not entered the artist.");
         }
-        const Song &value = this->getValue();
-        if(!ID::isValid(id))
-        {
-            id = ID::generateKey();
-        }
-        qDebug() << id;
-        value.saveToRecord(id);
         QDialog::accept();
     }
     catch(std::exception &e)

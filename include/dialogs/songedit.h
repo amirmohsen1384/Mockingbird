@@ -29,11 +29,9 @@ private slots:
 public:
     Q_DISABLE_COPY_MOVE(SongEdit)
     explicit SongEdit(QWidget *parent = nullptr);
-    explicit SongEdit(const IDContainer &value, QWidget *parent = nullptr);
+    explicit SongEdit(const Song &song, QWidget *parent = nullptr);
 
     ~SongEdit();
-
-    IDContainer getID() const;
 
     Song::Genre getGenre() const;
     int getReleasedYear() const;
@@ -41,18 +39,16 @@ public:
     QUrl getLocation() const;
     QImage getCover() const;
     QString getName() const;
-    Song getValue() const;
+    Song getSong() const;
 
 public slots:
+    void setSong(const Song &value);
     void setReleasedYear(int value);
     void setGenre(Song::Genre value);
     void setName(const QString &value);
     void setCover(const QImage &value);
     void setArtist(const QString &value);
     void setLocation(const QUrl &location);
-
-    void setValue(const IDContainer &value);
-    void setValue(const Song &value);
 
     virtual void accept() override;
     void removeCover();
