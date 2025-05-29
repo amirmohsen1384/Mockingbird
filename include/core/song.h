@@ -46,7 +46,6 @@ public:
     friend QDataStream& operator>>(QDataStream &stream, Song &another);
 
     static Song loadFromRecord(const IDContainer &value);
-    static QString absoluteRecord(const IDContainer &value);
     virtual void saveToRecord(const IDContainer &value) const override;
 
     friend class SongEdit;

@@ -69,7 +69,7 @@ void Song::saveToRecord(const IDContainer &value) const
     {
         return;
     }
-    QFile file(absoluteRecord(value));
+    QFile file(MainFolder::getSongs().absoluteFilePath(QString("%1.sof").arg(value)));
     if(!file.open(QFile::WriteOnly))
     {
         return;
@@ -81,7 +81,11 @@ void Song::saveToRecord(const IDContainer &value) const
 
 Song Song::loadFromRecord(const IDContainer &value)
 {
-    QFile file(absoluteRecord(value));
+    if(!ID::isValid(value))
+    {
+        return Song();
+    }
+    QFile file(MainFolder::getSongs().absoluteFilePath(QString("%1.sof").arg(value)));
     if(!file.open(QFile::ReadOnly))
     {
         return Song();
@@ -92,12 +96,10 @@ Song Song::loadFromRecord(const IDContainer &value)
     {
         song.valid = true;
     }
-    return song;
-}
-
-QString Song::absoluteRecord(const IDContainer &value)
-{
-    return MainFolder::getSongs().absoluteFilePath(QString("%1.sof").arg(value));
+    else
+    {
+        return Song();
+    }
 }
 
 QUrl Song::getAddress() const
