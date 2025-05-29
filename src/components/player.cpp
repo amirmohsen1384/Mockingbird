@@ -220,7 +220,14 @@ void Player::goToNextTrack()
 
 void Player::goToPreviousTrack()
 {
-    setCurrentTrack((currentTrack - 1) % _model->rowCount());
+    if((currentTrack - 1) < 0)
+    {
+        setCurrentTrack(_model->rowCount() - 1);
+    }
+    else
+    {
+        setCurrentTrack((currentTrack - 1) % _model->rowCount());
+    }
 }
 
 void Player::changePlaybackSpeed()
