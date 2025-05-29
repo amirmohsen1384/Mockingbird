@@ -3,21 +3,25 @@
 
 #include <QMainWindow>
 
-QT_BEGIN_NAMESPACE
-namespace Ui {
-class WelcomePage;
+namespace Ui
+{
+    class WelcomePage;
 }
-QT_END_NAMESPACE
 
 class WelcomePage : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    WelcomePage(QWidget *parent = nullptr);
+    Q_DISABLE_COPY_MOVE(WelcomePage)
+    explicit WelcomePage(QWidget *parent = nullptr);
     ~WelcomePage();
 
+public slots:
+    void goToSigninPage();
+
 private:
-    Ui::WelcomePage *ui;
+    std::unique_ptr<Ui::WelcomePage> ui;
 };
+
 #endif // WELCOMEPAGE_H
