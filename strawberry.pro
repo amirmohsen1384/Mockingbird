@@ -15,6 +15,7 @@ SOURCES += \
     src/core/general.cpp \
     src/core/playlist.cpp \
     src/core/song.cpp \
+    src/dialogs/artistview.cpp \
     src/dialogs/playlistplayer.cpp \
     src/dialogs/songedit.cpp \
     src/models/artistmodel.cpp \
@@ -30,6 +31,7 @@ HEADERS += \
     include/core/general.h \
     include/core/playlist.h \
     include/core/song.h \
+    include/dialogs/artistview.h \
     include/dialogs/playlistplayer.h \
     include/dialogs/songedit.h \
     include/models/artistmodel.h \
@@ -40,6 +42,7 @@ HEADERS += \
 
 FORMS += \
     ui/components/player.ui \
+    ui/dialogs/artistview.ui \
     ui/dialogs/playlistplayer.ui \
     ui/pages/welcomepage.ui \
     ui/dialogs/songedit.ui
