@@ -95,6 +95,7 @@ Song Song::loadFromRecord(const IDContainer &value)
     if((stream >> song).status() == QDataStream::Ok)
     {
         song.valid = true;
+        return song;
     }
     else
     {
