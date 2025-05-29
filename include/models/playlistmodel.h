@@ -12,9 +12,6 @@ class PlaylistModel : public QAbstractListModel
 public:
     explicit PlaylistModel(const IDContainer &value = 0, QObject *parent = nullptr);
 
-    bool insertRows(int row, int count, const QModelIndex &parent) override;
-    bool removeRows(int row, int count, const QModelIndex &parent) override;
-
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
@@ -22,6 +19,9 @@ public:
 
     IDContainer getID() const;
     void setID(const IDContainer &value);
+
+    int getCurrentTrack() const;
+    void setCurrentTrack(int index);
 
 private:
     int current = -1;
