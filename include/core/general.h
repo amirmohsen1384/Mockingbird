@@ -8,7 +8,7 @@
 namespace MainFolder
 {
     QDir getRoot();
-    QDir getUser();
+    QDir getUsers();
     QDir getAdmin();
     QDir getSongs();
     QDir getArtists();

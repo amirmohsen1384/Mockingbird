@@ -18,7 +18,7 @@ QDir MainFolder::getAdmin()
     return result;
 }
 
-QDir MainFolder::getUser()
+QDir MainFolder::getUsers()
 {
     const QString name = "Users";
     QDir result = getRoot();
