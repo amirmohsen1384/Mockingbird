@@ -64,16 +64,10 @@ void PlaylistEdit::addSong()
     SongEdit editor(this);
     if(editor.exec() == QDialog::Accepted)
     {
-        const IDContainer centralId = sourceModel->getID();
         const IDContainer id = ID::generateKey();
-
-        IDs keys = Playlist::loadIDsFromRecord(centralId);
-
         const Song &song = editor.getSong();
         song.saveToRecord(id);
-
-        keys.append(id);
-        Playlist::saveIDsToRecord(keys, centralId);
+        sourceModel->appendID(id);
     }
 }
 
@@ -88,7 +82,7 @@ void PlaylistEdit::editSong(const QModelIndex &index)
     SongEdit editor(index.data(Qt::UserRole).value<Song>(), this);
     if(editor.exec() == QDialog::Accepted)
     {
-        editor.getSong().saveToRecord(index.data(Playlist::KeyRole).toLongLong());
+        sourceModel->setData(index, QVariant::fromValue(editor.getSong()), Qt::UserRole);
     }
 }
 
@@ -112,18 +106,19 @@ void PlaylistEdit::removeSong()
             }
         );
 
+        PlaylistModel interface;
+        auto playlists = MainFolder::getPlaylists().entryInfoList({"*"}, QDir::AllDirs | QDir::NoDotAndDotDot);
         for(const QModelIndex &index : indices)
         {
             const IDContainer key = index.data(Playlist::KeyRole).toLongLong();
-            auto playlists = MainFolder::getPlaylists().entryInfoList({"*"}, QDir::AllDirs | QDir::NoDotAndDotDot);
             for(const QFileInfo &info : playlists)
             {
                 IDContainer playlistId = info.baseName().toLongLong();
-                IDs songIds = Playlist::loadIDsFromRecord(playlistId);
-                songIds.removeOne(key);
-                Playlist::saveIDsToRecord(songIds, playlistId);
+                interface.setID(playlistId);
+                interface.removeID(key);
             }
             QFile::remove(MainFolder::getSongs().absoluteFilePath(QString("%1.sof").arg(key)));
+            sourceModel->removeID(key);
         }
     }
 }
