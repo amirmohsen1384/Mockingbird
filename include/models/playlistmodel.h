@@ -2,12 +2,18 @@
 #define PLAYLISTMODEL_H
 
 #include "include/core/playlist.h"
+#include "include/core/song.h"
 #include <QAbstractItemModel>
+
+using SongInfo = QPair<IDContainer, Song>;
 
 class PlaylistModel : public QAbstractListModel
 {
     Q_OBJECT
     static const QVector<int> roles;
+
+private slots:
+    void updateModel();
 
 public:
     Q_DISABLE_COPY_MOVE(PlaylistModel)
@@ -17,9 +23,9 @@ public:
     virtual bool setData(const QModelIndex &index, const QVariant &value, int role) override;
     virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
-    void insertID(const IDContainer &value);
-    void removeID(const IDContainer &value);
-    void removeID(int row);
+    void insertSong(const IDContainer &value, const Song &data);
+    void removeSong(const IDContainer &value);
+    void removeSong(int row);
 
     IDContainer getID() const;
     void setID(const IDContainer &value);
@@ -29,11 +35,15 @@ public:
 
     void saveToRecord() const;
 
+    IDs getKeys() const;
+    SongList getSongs() const;
+    const QList<SongInfo> &getStore() const;
+
 private:
-    IDs keys;
     int current = -1;
     Playlist metadata;
     IDContainer mainId = 0;
+    QList<SongInfo> store;
 };
 
 #endif // PLAYLISTMODEL_H

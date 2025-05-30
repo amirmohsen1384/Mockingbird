@@ -13,6 +13,33 @@ const QVector<int> PlaylistModel::roles  =
     Playlist::YearRole
 };
 
+void PlaylistModel::updateModel()
+{
+    beginResetModel();
+
+    // Clears the whole store
+    store.clear();
+
+    if(ID::isValid(mainId))
+    {
+        // Loads the new metadata from the record.
+        metadata = Playlist::loadFromRecord(mainId);
+
+        // Loads the keys and associated songs from the records.
+        IDs keys = Playlist::loadIDsFromRecord(mainId);
+        for(const IDContainer &key : keys)
+        {
+            Song value = Song::loadFromRecord(key);
+            if(!value.isNull())
+            {
+                store.append({key, value});
+            }
+        }
+    }
+
+    endResetModel();
+}
+
 PlaylistModel::PlaylistModel(const IDContainer &value, QObject *parent) : QAbstractListModel(parent)
 {
     setID(value);
@@ -24,7 +51,7 @@ int PlaylistModel::rowCount(const QModelIndex &parent) const
     {
         return 0;
     }
-    return keys.size();
+    return store.size();
 }
 
 QVariant PlaylistModel::data(const QModelIndex &index, int role) const
@@ -40,7 +67,7 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
         {
         case Qt::DisplayRole:
         {
-            return metadata.isNull() ? QVariant() : metadata.getName();
+            return metadata.getName();
         }
         case Playlist::KeyRole:
         {
@@ -57,12 +84,7 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
         }
     }
 
-    const IDContainer key = keys.at(index.row());
-    const Song target = Song::loadFromRecord(key);
-    if(target.isNull())
-    {
-        return {};
-    }
+    const Song &target = store.at(index.row()).second;
 
     switch(role)
     {
@@ -72,7 +94,7 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
     }
     case Qt::BackgroundRole:
     {
-        return index.row() == current ? QColor(217, 255, 161) : QVariant();
+        return index.row() == current ? QColor(180, 255, 240) : QVariant();
     }
     case Qt::FontRole:
     {
@@ -119,7 +141,7 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
     }
     case Playlist::KeyRole:
     {
-        return key;
+        return store[index.row()].first;
     }
     default:
     {
@@ -128,43 +150,61 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
     }
 }
 
-void PlaylistModel::insertID(const IDContainer &value)
+void PlaylistModel::insertSong(const IDContainer &value, const Song &data)
 {
-    if(!ID::isValid(mainId))
+    if(!ID::isValid(value))
     {
         return;
     }
-    auto it = std::lower_bound(keys.cbegin(), keys.cend(), value);
-    int index = std::distance(keys.cbegin(), it);
+    auto it = std::lower_bound
+    (
+        store.cbegin(),
+        store.cend(),
+        SongInfo(value, data),
+        [&](const SongInfo &one, const SongInfo &two)
+        {
+            return one.first < two.first;
+        }
+    );
+    int index = std::distance(store.cbegin(), it);
     beginInsertRows(QModelIndex(), index, index);
-    keys.insert(index, value);
+    store.insert(index, {value, data});
     endInsertRows();
 }
 
-void PlaylistModel::removeID(const IDContainer &value)
+void PlaylistModel::removeSong(const IDContainer &value)
 {
     if(!ID::isValid(mainId))
     {
         return;
     }
-    auto result = std::lower_bound(keys.cbegin(), keys.cend(), value);
-    if(result != keys.cend() && *result == value)
+    auto result = std::lower_bound
+        (
+        store.cbegin(),
+        store.cend(),
+        SongInfo(value, Song()),
+        [&](const SongInfo &one, const SongInfo &two)
+        {
+            return one.first < two.first;
+        }
+    );
+    if(result != store.cend() && result->first == value)
     {
-        int row = std::distance(keys.cbegin(), result);
+        int row = std::distance(store.cbegin(), result);
         beginRemoveRows(QModelIndex(), row, row);
-        keys.remove(row);
+        store.remove(row);
         endRemoveRows();
     }
 }
 
-void PlaylistModel::removeID(int row)
+void PlaylistModel::removeSong(int row)
 {
     if(!ID::isValid(mainId))
     {
         return;
     }
     beginRemoveRows(QModelIndex(), row, row);
-    keys.remove(row);
+    store.remove(row);
     endRemoveRows();
 }
 
@@ -181,9 +221,7 @@ bool PlaylistModel::setData(const QModelIndex &index, const QVariant &value, int
         {
         case Qt::DisplayRole:
         {
-            Playlist p = Playlist::loadFromRecord(mainId);
-            p.setName(value.toString());
-            p.saveToRecord(mainId);
+            metadata.setName(value.toString());
             emit dataChanged(index, index, {Qt::DisplayRole});
             return true;
         }
@@ -200,55 +238,43 @@ bool PlaylistModel::setData(const QModelIndex &index, const QVariant &value, int
         }
     }
 
-    IDs keys = Playlist::loadIDsFromRecord(mainId);
-    const IDContainer key = keys.value(index.row());
-    Song target = Song::loadFromRecord(key);
-    if(target.isNull())
-    {
-        return false;
-    }
+    Song &target = store[index.row()].second;
 
     switch(role)
     {
     case Qt::DisplayRole:
     {
         target.setName(value.toString());
-        target.saveToRecord(key);
         emit dataChanged(index, index, {Qt::DisplayRole});
         return true;
     }
     case Qt::DecorationRole:
     {
         target.setCover(value.value<QImage>());
-        target.saveToRecord(key);
         emit dataChanged(index, index, {Qt::DecorationRole});
         return true;
     }
     case Playlist::ArtistRole:
     {
         target.setArtist(value.toString());
-        target.saveToRecord(key);
         emit dataChanged(index, index, {Playlist::ArtistRole});
         return true;
     }
     case Playlist::GenreRole:
     {
         target.setGenre(qvariant_cast<Song::Genre>(value));
-        target.saveToRecord(key);
         emit dataChanged(index, index, {Playlist::GenreRole});
         return true;
     }
     case Playlist::YearRole:
     {
         target.setPublicationYear(value.toInt());
-        target.saveToRecord(key);
         emit dataChanged(index, index, {Playlist::YearRole});
         return true;
     }
     case Qt::UserRole:
     {
         target = qvariant_cast<Song>(value);
-        target.saveToRecord(key);
         emit dataChanged(index, index, roles);
         return true;
     }
@@ -266,11 +292,8 @@ IDContainer PlaylistModel::getID() const
 
 void PlaylistModel::setID(const IDContainer &value)
 {
-    beginResetModel();
     mainId = value;
-    metadata = Playlist::loadFromRecord(mainId);
-    keys = Playlist::loadIDsFromRecord(mainId);
-    endResetModel();
+    updateModel();
 }
 
 int PlaylistModel::getCurrentTrack() const
@@ -286,5 +309,30 @@ void PlaylistModel::setCurrentTrack(int index)
 void PlaylistModel::saveToRecord() const
 {
     metadata.saveToRecord(mainId);
-    Playlist::saveIDsToRecord(keys, mainId);
+    Playlist::saveIDsToRecord(getKeys(), mainId);
+}
+
+IDs PlaylistModel::getKeys() const
+{
+    IDs container;
+    for(const SongInfo &info : store)
+    {
+        container.append(info.first);
+    }
+    return container;
+}
+
+SongList PlaylistModel::getSongs() const
+{
+    SongList container;
+    for(const SongInfo &info : store)
+    {
+        container.append(info.second);
+    }
+    return container;
+}
+
+const QList<SongInfo> &PlaylistModel::getStore() const
+{
+    return store;
 }
