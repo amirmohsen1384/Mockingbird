@@ -56,6 +56,8 @@ PlaylistEdit::PlaylistEdit(QWidget *parent) : QDialog(parent)
             ui->removeButton->setDisabled(indexes.isEmpty());
         }
     );
+
+    ui->waitLabel->setVisible(false);
 }
 
 PlaylistEdit::PlaylistEdit(const IDContainer &value, QWidget *parent) : PlaylistEdit(parent)
@@ -83,11 +85,11 @@ void PlaylistEdit::addSong()
     if(editor.exec() == QDialog::Accepted)
     {
         const Song &song = editor.getSong();
-        for(const SongInfo &info : store)
+        for(const SongInfo &info : sourceModel->getStore())
         {
             if(info.second.getAddress() == song.getAddress())
             {
-                sourceModel->setData(sourceModel->fromKey(info.first), song, Qt::UserRole);
+                sourceModel->setData(sourceModel->fromKey(info.first), QVariant::fromValue(song), Qt::UserRole);
                 return;
             }
         }
@@ -107,6 +109,9 @@ void PlaylistEdit::editSong(const QModelIndex &index)
 
 void PlaylistEdit::accept()
 {
+    // Indicate the user to wait for some time
+    ui->waitLabel->setVisible(true);
+
     // Updating with the new keys.
     const IDs final = sourceModel->getKeys();
     const IDs initial = Playlist::loadIDsFromRecord(sourceModel->getID());
@@ -121,7 +126,7 @@ void PlaylistEdit::accept()
         }
     }
 
-    // Updating the whole songs.
+    // Updating the whole songs
     const QList<SongInfo> &store = sourceModel->getStore();
     for(const SongInfo &info : store)
     {
