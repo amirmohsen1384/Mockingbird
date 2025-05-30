@@ -8,14 +8,14 @@ Admin Admin::loadFromRecord(const IDContainer &value)
     {
         return Admin();
     }
-    Admin value;
+    Admin target;
     QDataStream stream(&file);
-    if((stream >> value).status() != QDataStream::Ok)
+    if((stream >> target).status() != QDataStream::Ok)
     {
         return Admin();
     }
-    value.valid = true;
-    return value;
+    target.valid = true;
+    return target;
 }
 
 void Admin::saveToRecord(const IDContainer &value) const
