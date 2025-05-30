@@ -88,6 +88,12 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="horizontalScrollBarPolicy">
+      <enum>Qt::ScrollBarPolicy::ScrollBarAlwaysOff</enum>
+     </property>
+     <property name="sizeAdjustPolicy">
+      <enum>QAbstractScrollArea::SizeAdjustPolicy::AdjustToContentsOnFirstShow</enum>
+     </property>
     </widget>
    </item>
    <item>
