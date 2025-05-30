@@ -82,8 +82,16 @@ void PlaylistEdit::addSong()
     SongEdit editor(this);
     if(editor.exec() == QDialog::Accepted)
     {
-        const IDContainer id = ID::generateKey();
         const Song &song = editor.getSong();
+        for(const SongInfo &info : store)
+        {
+            if(info.second.getAddress() == song.getAddress())
+            {
+                sourceModel->setData(sourceModel->fromKey(info.first), song, Qt::UserRole);
+                return;
+            }
+        }
+        IDContainer id = ID::generateKey();
         sourceModel->insertSong(id, song);
     }
 }
