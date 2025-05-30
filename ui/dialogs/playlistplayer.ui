@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>732</width>
-    <height>603</height>
+    <width>775</width>
+    <height>653</height>
    </rect>
   </property>
   <property name="palette">
@@ -65,21 +65,35 @@
   <property name="modal">
    <bool>true</bool>
   </property>
-  <layout class="QGridLayout" name="gridLayout">
-   <item row="1" column="1" rowspan="2">
-    <widget class="Player" name="player" native="true">
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QLabel" name="titleLabel">
+     <property name="font">
+      <font>
+       <family>Segoe Print</family>
+       <pointsize>16</pointsize>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Playlist Name</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QListView" name="playlistView">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+      <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
     </widget>
    </item>
-   <item row="0" column="0" colspan="3">
-    <widget class="QListView" name="playlistView">
+   <item>
+    <widget class="Player" name="player" native="true">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>

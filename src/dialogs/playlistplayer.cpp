@@ -7,6 +7,8 @@ void PlaylistPlayer::updateModel()
 {
     ui->player->setCurrentTrack(0);
     model->setData(QModelIndex(), Playlist::PlayingRole, 0);
+    const QString name = model->data(QModelIndex()).toString();
+    ui->titleLabel->setText(name.isEmpty() ? QString() : name);
 }
 
 void PlaylistPlayer::updateCurrentTrack()
