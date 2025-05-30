@@ -24,7 +24,7 @@ int PlaylistModel::rowCount(const QModelIndex &parent) const
     {
         return 0;
     }
-    return Playlist::loadIDsFromRecord(mainId).size();
+    return keys.size();
 }
 
 QVariant PlaylistModel::data(const QModelIndex &index, int role) const
@@ -40,8 +40,7 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
         {
         case Qt::DisplayRole:
         {
-            Playlist data = Playlist::loadFromRecord(mainId);
-            return data.isNull() ? QVariant() : data.getName();
+            return metadata.isNull() ? QVariant() : metadata.getName();
         }
         case Playlist::KeyRole:
         {
@@ -58,13 +57,7 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
         }
     }
 
-    const IDs songs = Playlist::loadIDsFromRecord(mainId);
-    if(songs.isEmpty())
-    {
-        return {};
-    }
-
-    const IDContainer key = songs.at(index.row());
+    const IDContainer key = keys.at(index.row());
     const Song target = Song::loadFromRecord(key);
     if(target.isNull())
     {
@@ -135,20 +128,16 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
     }
 }
 
-void PlaylistModel::appendID(const IDContainer &value)
+void PlaylistModel::insertID(const IDContainer &value)
 {
     if(!ID::isValid(mainId))
     {
         return;
     }
-
-    const int size = rowCount();
-    beginInsertRows(QModelIndex(), size, size);
-
-    IDs idList = Playlist::loadIDsFromRecord(mainId);
-    idList.append(value);
-    Playlist::saveIDsToRecord(idList, mainId);
-
+    auto it = std::lower_bound(keys.cbegin(), keys.cend(), value);
+    int index = std::distance(keys.cbegin(), it);
+    beginInsertRows(QModelIndex(), index, index);
+    keys.insert(index, value);
     endInsertRows();
 }
 
@@ -158,11 +147,13 @@ void PlaylistModel::removeID(const IDContainer &value)
     {
         return;
     }
-    IDs idList = Playlist::loadIDsFromRecord(mainId);
-    auto result = std::find(idList.cbegin(), idList.cend(), value);
-    if(result != idList.cend())
+    auto result = std::lower_bound(keys.cbegin(), keys.cend(), value);
+    if(result != keys.cend() && *result == value)
     {
-        removeID(std::distance(idList.cbegin(), result));
+        int row = std::distance(keys.cbegin(), result);
+        beginRemoveRows(QModelIndex(), row, row);
+        keys.remove(row);
+        endRemoveRows();
     }
 }
 
@@ -172,13 +163,8 @@ void PlaylistModel::removeID(int row)
     {
         return;
     }
-
     beginRemoveRows(QModelIndex(), row, row);
-
-    IDs idList = Playlist::loadIDsFromRecord(mainId);
-    idList.remove(row);
-    Playlist::saveIDsToRecord(idList, mainId);
-
+    keys.remove(row);
     endRemoveRows();
 }
 
@@ -282,6 +268,8 @@ void PlaylistModel::setID(const IDContainer &value)
 {
     beginResetModel();
     mainId = value;
+    metadata = Playlist::loadFromRecord(mainId);
+    keys = Playlist::loadIDsFromRecord(mainId);
     endResetModel();
 }
 
@@ -293,4 +281,10 @@ int PlaylistModel::getCurrentTrack() const
 void PlaylistModel::setCurrentTrack(int index)
 {
     setData(QModelIndex(), qBound(0, index, rowCount()), Playlist::PlayingRole);
+}
+
+void PlaylistModel::saveToRecord() const
+{
+    metadata.saveToRecord(mainId);
+    Playlist::saveIDsToRecord(keys, mainId);
 }
