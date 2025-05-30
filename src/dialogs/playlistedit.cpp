@@ -7,13 +7,22 @@
 void PlaylistEdit::updateModel()
 {
     const QString name = sourceModel->data(QModelIndex()).toString();
-    setWindowTitle(QString("%1 - Playlist Editor").arg(name));
+    setWindowTitle(QString("%1 - Playlist Editor").arg(name.isEmpty() ? "Untitled" : name));
     ui->nameEdit->setText(name);
+    updateControl();
 }
 
 void PlaylistEdit::updateControl()
 {
     ui->playButton->setVisible(sourceModel->rowCount() > 0);
+}
+
+void PlaylistEdit::updatePlaylistName()
+{
+    const QString value = ui->nameEdit->text();
+    Playlist data = Playlist::loadFromRecord(sourceModel->getID());
+    data.setName(value.isEmpty() ? "Untitled Playlist" : value);
+    data.saveToRecord(sourceModel->getID());
 }
 
 PlaylistEdit::PlaylistEdit(QWidget *parent) : QDialog(parent)
@@ -36,6 +45,7 @@ PlaylistEdit::PlaylistEdit(QWidget *parent) : QDialog(parent)
 
     ui->playButton->setVisible(false);
 
+    connect(ui->nameEdit, &QLineEdit::textEdited, this, &PlaylistEdit::updatePlaylistName);
     connect(sourceModel.get(), &PlaylistModel::rowsRemoved, this, &PlaylistEdit::updateControl);
     connect(sourceModel.get(), &PlaylistModel::rowsInserted, this, &PlaylistEdit::updateControl);
 }
@@ -67,8 +77,9 @@ void PlaylistEdit::addSong()
         const IDContainer id = ID::generateKey();
         const Song &song = editor.getSong();
         song.saveToRecord(id);
-        sourceModel->appendID(id);
+        sourceModel->insertID(id);
     }
+    sourceModel->saveToRecord();
 }
 
 void PlaylistEdit::playSong()
@@ -121,4 +132,6 @@ void PlaylistEdit::removeSong()
             sourceModel->removeID(key);
         }
     }
+
+    sourceModel->saveToRecord();
 }

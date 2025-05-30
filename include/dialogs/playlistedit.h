@@ -15,6 +15,7 @@ class PlaylistEdit : public QDialog
 private slots:
     void updateModel();
     void updateControl();
+    void updatePlaylistName();
 
 public:
     Q_DISABLE_COPY_MOVE(PlaylistEdit)
