@@ -6,6 +6,7 @@
 class Admin : public Person
 {
 public:
+    static Admin loadFromRecord(const IDContainer &value);
     void saveToRecord(const IDContainer &value) const override;
 };
 
