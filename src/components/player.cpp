@@ -95,10 +95,10 @@ void Player::updatePlayer()
     {
         return;
     }
-    Song song = qvariant_cast<Song>(_model->index(currentTrack, 0, QModelIndex()).data(Qt::UserRole));
+    Song song = qvariant_cast<Song>(_model->index(currentTrack, 0).data(Qt::UserRole));
     player->setSource(song.getAddress());
     player->play();
-    _model->setData(QModelIndex(), currentTrack, Playlist::PlayingRole);
+    _model->setHeaderData(0, Qt::Horizontal, currentTrack, Playlist::PlayingRole);
 }
 
 void Player::advance()

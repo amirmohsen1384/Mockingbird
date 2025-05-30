@@ -6,7 +6,7 @@
 
 void PlaylistEdit::updateModel()
 {
-    const QString name = sourceModel->data(QModelIndex()).toString();
+    const QString name = sourceModel->headerData().toString();
     setWindowTitle(QString("%1 - Playlist Editor").arg(name.isEmpty() ? "Untitled" : name));
     ui->nameEdit->setText(name);
 }
@@ -121,7 +121,7 @@ void PlaylistEdit::accept()
     }
 
     // Updating the meta data
-    sourceModel->setData(QModelIndex(), ui->nameEdit->text(), Qt::DisplayRole);
+    sourceModel->setHeaderData(0, Qt::Horizontal, ui->nameEdit->text(), Qt::DisplayRole);
     sourceModel->saveToRecord();
     QDialog::accept();
 }

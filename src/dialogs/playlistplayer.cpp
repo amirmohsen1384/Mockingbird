@@ -6,15 +6,15 @@
 void PlaylistPlayer::updateModel()
 {
     ui->player->setCurrentTrack(0);
-    model->setData(QModelIndex(), Playlist::PlayingRole, 0);
-    const QString name = model->data(QModelIndex()).toString();
+    const QString name = model->headerData().toString();
     ui->titleLabel->setText(name.isEmpty() ? QString() : name);
+    model->setHeaderData(0, Qt::Horizontal, 0, Playlist::PlayingRole);
 }
 
 void PlaylistPlayer::updateCurrentTrack()
 {
     QModelIndex index = model->index(ui->player->getCurrentTrack(), 0);
-    model->setData(QModelIndex(), Playlist::PlayingRole, ui->player->getCurrentTrack());
+    model->setHeaderData(0, Qt::Horizontal, ui->player->getCurrentTrack(), Playlist::PlayingRole);
     setWindowTitle(QString("%1 - Media Player").arg(index.data(Qt::DisplayRole).toString()));
 }
 

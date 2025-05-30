@@ -56,32 +56,9 @@ int PlaylistModel::rowCount(const QModelIndex &parent) const
 
 QVariant PlaylistModel::data(const QModelIndex &index, int role) const
 {
-    if(!ID::isValid(mainId))
+    if(!ID::isValid(mainId) || !index.isValid())
     {
         return {};
-    }
-
-    else if (!index.isValid())
-    {
-        switch(role)
-        {
-        case Qt::DisplayRole:
-        {
-            return metadata.getName();
-        }
-        case Playlist::KeyRole:
-        {
-            return mainId;
-        }
-        case Playlist::PlayingRole:
-        {
-            return current;
-        }
-        default:
-        {
-            return {};
-        }
-        }
     }
 
     const Song &target = store.at(index.row()).second;
@@ -150,6 +127,61 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
     }
 }
 
+QVariant PlaylistModel::headerData(int section, Qt::Orientation orientation, int role) const
+{
+    Q_UNUSED(orientation)
+    if(section != 0)
+    {
+        return {};
+    }
+    switch(role)
+    {
+    case Qt::DisplayRole:
+    {
+        return metadata.getName();
+    }
+    case Playlist::KeyRole:
+    {
+        return mainId;
+    }
+    case Playlist::PlayingRole:
+    {
+        return current;
+    }
+    default:
+    {
+        return {};
+    }
+    }
+}
+
+bool PlaylistModel::setHeaderData(int section, Qt::Orientation orientation, const QVariant &value, int role)
+{
+    if(section != 0)
+    {
+        return false;
+    }
+    switch(role)
+    {
+    case Qt::DisplayRole:
+    {
+        metadata.setName(value.toString());
+        break;
+    }
+    case Playlist::PlayingRole:
+    {
+        current = value.toInt();
+        break;
+    }
+    default:
+    {
+        return false;
+    }
+    }
+    emit headerDataChanged(orientation, 0, 0);
+    return true;
+}
+
 void PlaylistModel::insertSong(const IDContainer &value, const Song &data)
 {
     if(!ID::isValid(value))
@@ -210,32 +242,9 @@ void PlaylistModel::removeSong(int row)
 
 bool PlaylistModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
-    if(!ID::isValid(mainId))
+    if(!ID::isValid(mainId) || !index.isValid())
     {
         return false;
-    }
-
-    if(!index.isValid())
-    {
-        switch(role)
-        {
-        case Qt::DisplayRole:
-        {
-            metadata.setName(value.toString());
-            emit dataChanged(index, index, {Qt::DisplayRole});
-            return true;
-        }
-        case Playlist::PlayingRole:
-        {
-            current = value.toInt();
-            emit dataChanged(index, index, {Playlist::PlayingRole});
-            return true;
-        }
-        default:
-        {
-            return false;
-        }
-        }
     }
 
     Song &target = store[index.row()].second;

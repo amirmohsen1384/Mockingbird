@@ -23,6 +23,9 @@ public:
     virtual bool setData(const QModelIndex &index, const QVariant &value, int role) override;
     virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
+    virtual bool setHeaderData(int section, Qt::Orientation orientation, const QVariant &value, int role) override;
+    virtual QVariant headerData(int section = 0, Qt::Orientation orientation = Qt::Horizontal, int role = Qt::DisplayRole) const override;
+
     void insertSong(const IDContainer &value, const Song &data);
     void removeSong(const IDContainer &value);
     void removeSong(int row);
