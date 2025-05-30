@@ -37,6 +37,7 @@ void PlaylistEdit::deleteForever(const IDContainer &id)
         // Saving the result
         Playlist::saveIDsToRecord(keys, key);
     }
+    QFile::remove(MainFolder::getSongs().absoluteFilePath(QString("%1.sof").arg(id)));
 }
 
 PlaylistEdit::PlaylistEdit(QWidget *parent) : QDialog(parent)
