@@ -9,20 +9,34 @@ void PlaylistEdit::updateModel()
     const QString name = sourceModel->data(QModelIndex()).toString();
     setWindowTitle(QString("%1 - Playlist Editor").arg(name.isEmpty() ? "Untitled" : name));
     ui->nameEdit->setText(name);
-    updateControl();
 }
 
-void PlaylistEdit::updateControl()
+void PlaylistEdit::deleteForever(const IDContainer &id)
 {
-    ui->playButton->setVisible(sourceModel->rowCount() > 0);
-}
+    auto entries = MainFolder::getPlaylists().entryInfoList({"*"}, QDir::AllDirs | QDir::NoDotAndDotDot);
+    for(auto info : entries)
+    {
+        // Obtaining the key of the playlist
+        const IDContainer &key = info.baseName().toLongLong();
+        if(id == key)
+        {
+            continue;
+        }
 
-void PlaylistEdit::updatePlaylistName()
-{
-    const QString value = ui->nameEdit->text();
-    Playlist data = Playlist::loadFromRecord(sourceModel->getID());
-    data.setName(value.isEmpty() ? "Untitled Playlist" : value);
-    data.saveToRecord(sourceModel->getID());
+        // Loading Song IDs from the playlist
+        IDs keys = Playlist::loadIDsFromRecord(key);
+
+        // Finding for the target key
+        auto it = std::lower_bound(keys.cbegin(), keys.cend(), id);
+        if(it != keys.cend() && *it == id)
+        {
+            int index = std::distance(keys.cbegin(), it);
+            keys.remove(index);
+        }
+
+        // Saving the result
+        Playlist::saveIDsToRecord(keys, key);
+    }
 }
 
 PlaylistEdit::PlaylistEdit(QWidget *parent) : QDialog(parent)
@@ -42,12 +56,6 @@ PlaylistEdit::PlaylistEdit(QWidget *parent) : QDialog(parent)
             ui->removeButton->setDisabled(indexes.isEmpty());
         }
     );
-
-    ui->playButton->setVisible(false);
-
-    connect(ui->nameEdit, &QLineEdit::textEdited, this, &PlaylistEdit::updatePlaylistName);
-    connect(sourceModel.get(), &PlaylistModel::rowsRemoved, this, &PlaylistEdit::updateControl);
-    connect(sourceModel.get(), &PlaylistModel::rowsInserted, this, &PlaylistEdit::updateControl);
 }
 
 PlaylistEdit::PlaylistEdit(const IDContainer &value, QWidget *parent) : PlaylistEdit(parent)
@@ -76,16 +84,8 @@ void PlaylistEdit::addSong()
     {
         const IDContainer id = ID::generateKey();
         const Song &song = editor.getSong();
-        song.saveToRecord(id);
-        sourceModel->insertID(id);
+        sourceModel->insertSong(id, song);
     }
-    sourceModel->saveToRecord();
-}
-
-void PlaylistEdit::playSong()
-{
-    PlaylistPlayer player(sourceModel->getID());
-    player.exec();
 }
 
 void PlaylistEdit::editSong(const QModelIndex &index)
@@ -97,16 +97,44 @@ void PlaylistEdit::editSong(const QModelIndex &index)
     }
 }
 
+void PlaylistEdit::accept()
+{
+    // Updating with the new keys.
+    const IDs final = sourceModel->getKeys();
+    const IDs initial = Playlist::loadIDsFromRecord(sourceModel->getID());
+
+    // Deleting the old songs that are not present in the list.
+    for(const IDContainer &key : initial)
+    {
+        auto it = std::lower_bound(final.cbegin(), final.cend(), key);
+        if(it == final.cend() || *it != key)
+        {
+            deleteForever(key);
+        }
+    }
+
+    // Updating the whole songs.
+    const QList<SongInfo> &store = sourceModel->getStore();
+    for(const SongInfo &info : store)
+    {
+        info.second.saveToRecord(info.first);
+    }
+
+    // Updating the meta data
+    sourceModel->setData(QModelIndex(), ui->nameEdit->text(), Qt::DisplayRole);
+    sourceModel->saveToRecord();
+    QDialog::accept();
+}
+
 void PlaylistEdit::removeSong()
 {
     auto indices = ui->songView->selectionModel()->selectedIndexes();
 
     QMessageBox message;
     message.setWindowTitle("Confirm");
-    message.setIcon(QMessageBox::Warning);
+    message.setIcon(QMessageBox::Information);
     message.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
-    message.setText(QString("Are you sure to remove %1 song(s) permanently?").arg(indices.size()));
-    message.setInformativeText("The song(s) are also removed from the playlists of users. This cannot be reverted.");
+    message.setText(QString("Are you sure to remove %1 song(s)?").arg(indices.size()));
 
     if(message.exec() == QMessageBox::Yes)
     {
@@ -117,21 +145,9 @@ void PlaylistEdit::removeSong()
             }
         );
 
-        PlaylistModel interface;
-        auto playlists = MainFolder::getPlaylists().entryInfoList({"*"}, QDir::AllDirs | QDir::NoDotAndDotDot);
         for(const QModelIndex &index : indices)
         {
-            const IDContainer key = index.data(Playlist::KeyRole).toLongLong();
-            for(const QFileInfo &info : playlists)
-            {
-                IDContainer playlistId = info.baseName().toLongLong();
-                interface.setID(playlistId);
-                interface.removeID(key);
-            }
-            QFile::remove(MainFolder::getSongs().absoluteFilePath(QString("%1.sof").arg(key)));
-            sourceModel->removeID(key);
+            sourceModel->removeSong(index.row());
         }
     }
-
-    sourceModel->saveToRecord();
 }

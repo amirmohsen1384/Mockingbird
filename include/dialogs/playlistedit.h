@@ -14,8 +14,6 @@ class PlaylistEdit : public QDialog
     Q_OBJECT
 private slots:
     void updateModel();
-    void updateControl();
-    void updatePlaylistName();
 
 public:
     Q_DISABLE_COPY_MOVE(PlaylistEdit)
@@ -28,9 +26,11 @@ public:
 
 public slots:
     void addSong();
-    void playSong();
     void removeSong();
     void editSong(const QModelIndex &index);
+
+    virtual void accept() override;
+    static void deleteForever(const IDContainer &id);
 
 private:
     std::unique_ptr<Ui::PlaylistEdit> ui;
