@@ -30,6 +30,8 @@ public:
     void removeSong(const IDContainer &value);
     void removeSong(int row);
 
+    QModelIndex fromKey(const IDContainer &value) const;
+
     IDContainer getID() const;
     void setID(const IDContainer &value);
 

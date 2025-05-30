@@ -240,6 +240,20 @@ void PlaylistModel::removeSong(int row)
     endRemoveRows();
 }
 
+QModelIndex PlaylistModel::fromKey(const IDContainer &value) const
+{
+    IDs keys = getKeys();
+    auto it = std::lower_bound(keys.cbegin(), keys.cend(), value);
+    if(*it == value && it != keys.cend())
+    {
+        return index(std::distance(keys.cbegin(), it));
+    }
+    else
+    {
+        return QModelIndex();
+    }
+}
+
 bool PlaylistModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
     if(!ID::isValid(mainId) || !index.isValid())
