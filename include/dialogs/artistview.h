@@ -19,16 +19,15 @@ public slots:
     void goToInfoPage();
 
 public:
-    explicit ArtistView(const IDContainer &key, QWidget *parent = nullptr);
     explicit ArtistView(QWidget *parent = nullptr);
     ~ArtistView();
 
-    IDContainer mainKey() const;
-    void setMainKey(const IDContainer &value);
+    ArtistModel* sourceModel() const;
+    void setSourceModel(ArtistModel *value);
 
 private:
+    ArtistModel *mainModel = nullptr;
     std::unique_ptr<Ui::ArtistView> ui;
-    std::unique_ptr<ArtistModel> mainModel;
 };
 
 #endif // ARTISTVIEW_H

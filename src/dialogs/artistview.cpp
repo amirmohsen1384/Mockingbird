@@ -5,11 +5,15 @@
 
 void ArtistView::updateModel()
 {
-    Artist artist = Artist::loadFromRecord(mainModel->mainKey());
-    ui->nameLabel->setText(artist.getName());
-    ui->photoView->setImage(artist.getPhoto());
-    ui->biographyBrowser->setText(artist.getBiography());
-    setWindowTitle(QString("%1 - Artist Page").arg(artist.getName()));
+    ui->playlistView->setModel(mainModel);
+    if(mainModel != nullptr)
+    {
+        Artist artist = Artist::loadFromRecord(mainModel->mainKey());
+        ui->nameLabel->setText(artist.getName());
+        ui->photoView->setImage(artist.getPhoto());
+        ui->biographyBrowser->setText(artist.getBiography());
+        setWindowTitle(QString("%1 - Artist Page").arg(artist.getName()));
+    }
 }
 
 void ArtistView::playPlaylist(const QModelIndex &index)
@@ -32,30 +36,22 @@ void ArtistView::goToInfoPage()
     ui->pageContainer->setCurrentWidget(ui->infoWidget);
 }
 
-ArtistView::ArtistView(const IDContainer &key, QWidget *parent) : ArtistView(parent)
-{
-    setMainKey(key);
-}
-
 ArtistView::ArtistView(QWidget *parent) : QDialog(parent)
 {
     ui = std::make_unique<Ui::ArtistView>();
     ui->setupUi(this);
-
-    mainModel = std::make_unique<ArtistModel>();
-    ui->playlistView->setModel(mainModel.get());
 }
 
 ArtistView::~ArtistView()
 {}
 
-IDContainer ArtistView::mainKey() const
+ArtistModel *ArtistView::sourceModel() const
 {
-    return mainModel->mainKey();
+    return mainModel;
 }
 
-void ArtistView::setMainKey(const IDContainer &value)
+void ArtistView::setSourceModel(ArtistModel *value)
 {
-    mainModel->setMainKey(value);
+    mainModel = value;
     updateModel();
 }
