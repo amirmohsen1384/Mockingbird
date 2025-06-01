@@ -13,9 +13,11 @@ public:
         GenreTextRole = Qt::UserRole + 3,
         GenreIconRole = Qt::UserRole + 4,
         PlayingRole = Qt::UserRole + 1,
+        CoverRole = Qt::DecorationRole,
         ArtistRole = Qt::UserRole + 2,
         GenreRole = Qt::UserRole + 6,
         YearRole = Qt::UserRole + 5,
+        NameRole = Qt::DisplayRole,
         KeyRole = Qt::UserRole + 7
     };
 
