@@ -11,10 +11,12 @@ class ArtistView;
 class ArtistView : public QDialog
 {
     Q_OBJECT
-    void updateMetaData();
+    void updateModel();
 
 public slots:
     void playPlaylist(const QModelIndex &index);
+    void goToPlaylistPage();
+    void goToInfoPage();
 
 public:
     explicit ArtistView(const IDContainer &key, QWidget *parent = nullptr);

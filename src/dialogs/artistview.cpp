@@ -3,9 +3,9 @@
 #include "include/dialogs/artistview.h"
 #include "ui_artistview.h"
 
-void ArtistView::updateMetaData()
+void ArtistView::updateModel()
 {
-    Artist artist = Artist::loadFromRecord(mainModel->getMainKey());
+    Artist artist = Artist::loadFromRecord(mainModel->mainKey());
     ui->nameLabel->setText(artist.getName());
     ui->photoView->setImage(artist.getPhoto());
     ui->biographyBrowser->setText(artist.getBiography());
@@ -16,10 +16,20 @@ void ArtistView::playPlaylist(const QModelIndex &index)
 {
     if(index.isValid())
     {
-        const IDContainer &value = index.data(Artist::KeyRole).toLongLong();
+        const auto value = index.data(Artist::KeyRole).value<IDContainer>();
         PlaylistPlayer player(value);
         player.exec();
     }
+}
+
+void ArtistView::goToPlaylistPage()
+{
+    ui->pageContainer->setCurrentWidget(ui->playlistWidget);
+}
+
+void ArtistView::goToInfoPage()
+{
+    ui->pageContainer->setCurrentWidget(ui->infoWidget);
 }
 
 ArtistView::ArtistView(const IDContainer &key, QWidget *parent) : ArtistView(parent)
@@ -41,10 +51,11 @@ ArtistView::~ArtistView()
 
 IDContainer ArtistView::mainKey() const
 {
-    return mainModel->getMainKey();
+    return mainModel->mainKey();
 }
 
 void ArtistView::setMainKey(const IDContainer &value)
 {
     mainModel->setMainKey(value);
+    updateModel();
 }
