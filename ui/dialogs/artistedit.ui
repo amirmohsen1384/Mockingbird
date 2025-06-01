@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>676</width>
-    <height>664</height>
+    <width>751</width>
+    <height>837</height>
    </rect>
   </property>
   <property name="font">
@@ -22,16 +22,6 @@
    <string notr="true">background-color:white</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="1" colspan="2">
-    <widget class="QLineEdit" name="nameEdit">
-     <property name="text">
-      <string/>
-     </property>
-     <property name="placeholderText">
-      <string>Type the artist's name here</string>
-     </property>
-    </widget>
-   </item>
    <item row="1" column="1" colspan="2">
     <widget class="QTextEdit" name="biographyEdit">
      <property name="frameShape">
@@ -121,16 +111,13 @@
      </item>
     </layout>
    </item>
-   <item row="3" column="0" colspan="3">
-    <widget class="QListView" name="playlistView">
-     <property name="frameShape">
-      <enum>QFrame::Shape::WinPanel</enum>
+   <item row="0" column="1" colspan="2">
+    <widget class="QLineEdit" name="nameEdit">
+     <property name="text">
+      <string/>
      </property>
-     <property name="frameShadow">
-      <enum>QFrame::Shadow::Plain</enum>
-     </property>
-     <property name="selectionMode">
-      <enum>QAbstractItemView::SelectionMode::ExtendedSelection</enum>
+     <property name="placeholderText">
+      <string>Type the artist's name here</string>
      </property>
     </widget>
    </item>
@@ -144,8 +131,21 @@
      </property>
     </widget>
    </item>
+   <item row="3" column="0" colspan="3">
+    <widget class="QListView" name="playlistView">
+     <property name="frameShape">
+      <enum>QFrame::Shape::WinPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Shadow::Plain</enum>
+     </property>
+     <property name="selectionMode">
+      <enum>QAbstractItemView::SelectionMode::ExtendedSelection</enum>
+     </property>
+    </widget>
+   </item>
    <item row="5" column="0" colspan="3">
-    <widget class="QDialogButtonBox" name="controlButtonBox">
+    <widget class="QDialogButtonBox" name="buttonBox">
      <property name="standardButtons">
       <set>QDialogButtonBox::StandardButton::Cancel|QDialogButtonBox::StandardButton::Ok</set>
      </property>
@@ -159,6 +159,9 @@
    <extends>QWidget</extends>
    <header location="global">include/components/imageview.h</header>
    <container>1</container>
+   <slots>
+    <signal>viewActivated()</signal>
+   </slots>
   </customwidget>
  </customwidgets>
  <resources>
@@ -176,7 +179,7 @@
      <y>458</y>
     </hint>
     <hint type="destinationlabel">
-     <x>845</x>
+     <x>750</x>
      <y>435</y>
     </hint>
    </hints>
@@ -188,12 +191,12 @@
    <slot>addPlaylist()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>334</x>
-     <y>615</y>
+     <x>371</x>
+     <y>824</y>
     </hint>
     <hint type="destinationlabel">
      <x>291</x>
-     <y>769</y>
+     <y>766</y>
     </hint>
    </hints>
   </connection>
@@ -204,44 +207,12 @@
    <slot>removePlaylist()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>386</x>
-     <y>615</y>
+     <x>423</x>
+     <y>824</y>
     </hint>
     <hint type="destinationlabel">
      <x>635</x>
      <y>729</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>controlButtonBox</sender>
-   <signal>accepted()</signal>
-   <receiver>ArtistEdit</receiver>
-   <slot>accept()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>519</x>
-     <y>632</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>446</x>
-     <y>659</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>controlButtonBox</sender>
-   <signal>rejected()</signal>
-   <receiver>ArtistEdit</receiver>
-   <slot>reject()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>612</x>
-     <y>639</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>676</x>
-     <y>660</y>
     </hint>
    </hints>
   </connection>
