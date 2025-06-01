@@ -301,6 +301,12 @@ bool PlaylistModel::setData(const QModelIndex &index, const QVariant &value, int
         emit dataChanged(index, index, roles);
         return true;
     }
+    case Playlist::KeyRole:
+    {
+        store[index.row()].first = value.value<IDContainer>();
+        store[index.row()].second = Song::loadFromRecord(store[index.row()].first);
+        emit dataChanged(index, index, roles);
+    }
     default:
     {
         return false;

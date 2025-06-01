@@ -47,8 +47,8 @@ public:
 private:
     int current = -1;
     Playlist metadata;
-    IDContainer mainId = 0;
     QList<SongInfo> store;
+    IDContainer mainId = 0;
 };
 
 #endif // PLAYLISTMODEL_H
