@@ -6,14 +6,15 @@
 
 void PlaylistEdit::updateModel()
 {
+    updateControl();
+    ui->songView->setModel(sourceModel);
     if(sourceModel)
     {
         const QString name = sourceModel->headerData().toString();
         setWindowTitle(QString("%1 - Playlist Editor").arg(name.isEmpty() ? "Untitled" : name));
-        ui->songView->setModel(sourceModel);
         ui->nameEdit->setText(name);
     }
-    updateControl();
+
 }
 
 void PlaylistEdit::updateControl()
