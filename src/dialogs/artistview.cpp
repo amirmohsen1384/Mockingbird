@@ -5,7 +5,7 @@
 
 void ArtistView::updateMetaData()
 {
-    Artist artist = Artist::loadFromRecord(mainModel->mainKey());
+    Artist artist = Artist::loadFromRecord(mainModel->getMainKey());
     ui->nameLabel->setText(artist.getName());
     ui->photoView->setImage(artist.getPhoto());
     ui->biographyBrowser->setText(artist.getBiography());
@@ -41,7 +41,7 @@ ArtistView::~ArtistView()
 
 IDContainer ArtistView::mainKey() const
 {
-    return mainModel->mainKey();
+    return mainModel->getMainKey();
 }
 
 void ArtistView::setMainKey(const IDContainer &value)
