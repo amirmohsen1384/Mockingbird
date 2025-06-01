@@ -25,6 +25,9 @@
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="1" colspan="2">
     <widget class="QLineEdit" name="nameEdit">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
      <property name="text">
       <string/>
      </property>
@@ -42,6 +45,9 @@
    </item>
    <item row="0" column="0">
     <widget class="QLabel" name="nameLabel">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
      <property name="sizePolicy">
       <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
        <horstretch>0</horstretch>
@@ -55,6 +61,9 @@
    </item>
    <item row="1" column="0" colspan="3">
     <widget class="QListView" name="songView">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
      <property name="frameShape">
       <enum>QFrame::Shape::Panel</enum>
      </property>
@@ -150,19 +159,6 @@
       </spacer>
      </item>
     </layout>
-   </item>
-   <item row="3" column="0" colspan="2">
-    <widget class="QLabel" name="waitLabel">
-     <property name="font">
-      <font>
-       <pointsize>9</pointsize>
-       <bold>false</bold>
-      </font>
-     </property>
-     <property name="text">
-      <string>Please wait to make changes. This operation may take some time to complete.</string>
-     </property>
-    </widget>
    </item>
   </layout>
  </widget>

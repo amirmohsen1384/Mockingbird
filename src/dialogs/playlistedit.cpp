@@ -6,48 +6,29 @@
 
 void PlaylistEdit::updateModel()
 {
-    const QString name = sourceModel->headerData().toString();
-    setWindowTitle(QString("%1 - Playlist Editor").arg(name.isEmpty() ? "Untitled" : name));
-    ui->nameEdit->setText(name);
+    if(sourceModel)
+    {
+        const QString name = sourceModel->headerData().toString();
+        setWindowTitle(QString("%1 - Playlist Editor").arg(name.isEmpty() ? "Untitled" : name));
+        ui->songView->setModel(sourceModel);
+        ui->nameEdit->setText(name);
+    }
+    updateControl();
 }
 
-void PlaylistEdit::deleteForever(const IDContainer &id)
+void PlaylistEdit::updateControl()
 {
-    auto entries = MainFolder::getPlaylists().entryInfoList({"*"}, QDir::AllDirs | QDir::NoDotAndDotDot);
-    for(auto info : entries)
-    {
-        // Obtaining the key of the playlist
-        const IDContainer &key = info.baseName().toLongLong();
-        if(id == key)
-        {
-            continue;
-        }
-
-        // Loading Song IDs from the playlist
-        IDs keys = Playlist::loadIDsFromRecord(key);
-
-        // Finding for the target key
-        auto it = std::lower_bound(keys.cbegin(), keys.cend(), id);
-        if(it != keys.cend() && *it == id)
-        {
-            int index = std::distance(keys.cbegin(), it);
-            keys.remove(index);
-        }
-
-        // Saving the result
-        Playlist::saveIDsToRecord(keys, key);
-    }
-    QFile::remove(MainFolder::getSongs().absoluteFilePath(QString("%1.sof").arg(id)));
+    ui->nameEdit->setEnabled(sourceModel != nullptr);
+    ui->songView->setEnabled(sourceModel != nullptr);
+    ui->nameLabel->setEnabled(sourceModel != nullptr);
+    ui->addButton->setVisible(sourceModel != nullptr);
+    ui->removeButton->setVisible(sourceModel != nullptr);
 }
 
 PlaylistEdit::PlaylistEdit(QWidget *parent) : QDialog(parent)
 {
     ui = std::make_unique<Ui::PlaylistEdit>();
     ui->setupUi(this);
-
-    sourceModel = std::make_unique<PlaylistModel>();
-    ui->songView->setModel(sourceModel.get());
-
     connect(ui->songView->selectionModel(), &QItemSelectionModel::selectionChanged, this,
         [&](const QItemSelection &selected, const QItemSelection &deselected)
         {
@@ -57,26 +38,25 @@ PlaylistEdit::PlaylistEdit(QWidget *parent) : QDialog(parent)
             ui->removeButton->setDisabled(indexes.isEmpty());
         }
     );
-
-    ui->waitLabel->setVisible(false);
+    ui->addButton->setVisible(false);
+    ui->removeButton->setVisible(false);
 }
-
-PlaylistEdit::PlaylistEdit(const IDContainer &value, QWidget *parent) : PlaylistEdit(parent)
-{
-    setMainId(value);
-}
-
 
 PlaylistEdit::~PlaylistEdit() {}
 
-IDContainer PlaylistEdit::mainId() const
+PlaylistModel *PlaylistEdit::getSourceModel()
 {
-    return sourceModel->getID();
+    return sourceModel;
 }
 
-void PlaylistEdit::setMainId(const IDContainer &value)
+const PlaylistModel *PlaylistEdit::getSourceModel() const
 {
-    sourceModel->setID(value);
+    return sourceModel;
+}
+
+void PlaylistEdit::setSourceModel(PlaylistModel *model)
+{
+    sourceModel = model;
     updateModel();
 }
 
@@ -110,33 +90,10 @@ void PlaylistEdit::editSong(const QModelIndex &index)
 
 void PlaylistEdit::accept()
 {
-    // Indicate the user to wait for some time
-    ui->waitLabel->setVisible(true);
-
-    // Updating with the new keys.
-    const IDs final = sourceModel->getKeys();
-    const IDs initial = Playlist::loadIDsFromRecord(sourceModel->getID());
-
-    // Deleting the old songs that are not present in the list.
-    for(const IDContainer &key : initial)
+    if(!sourceModel)
     {
-        auto it = std::lower_bound(final.cbegin(), final.cend(), key);
-        if(it == final.cend() || *it != key)
-        {
-            deleteForever(key);
-        }
+        sourceModel->setHeaderData(0, Qt::Horizontal, ui->nameEdit->text(), Qt::DisplayRole);
     }
-
-    // Updating the whole songs
-    const QList<SongInfo> &store = sourceModel->getStore();
-    for(const SongInfo &info : store)
-    {
-        info.second.saveToRecord(info.first);
-    }
-
-    // Updating the meta data
-    sourceModel->setHeaderData(0, Qt::Horizontal, ui->nameEdit->text(), Qt::DisplayRole);
-    sourceModel->saveToRecord();
     QDialog::accept();
 }
 
