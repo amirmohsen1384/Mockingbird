@@ -13,8 +13,16 @@ void PlaylistEdit::updateModel()
         const QString name = sourceModel->headerData().toString();
         setWindowTitle(QString("%1 - Playlist Editor").arg(name.isEmpty() ? "Untitled" : name));
         ui->nameEdit->setText(name);
+        connect(ui->songView->selectionModel(), &QItemSelectionModel::selectionChanged, this,
+            [&](const QItemSelection &selected, const QItemSelection &deselected)
+            {
+                Q_UNUSED(selected)
+                Q_UNUSED(deselected)
+                auto indexes = ui->songView->selectionModel()->selectedIndexes();
+                ui->removeButton->setDisabled(indexes.isEmpty());
+            }
+        );
     }
-
 }
 
 void PlaylistEdit::updateControl()
@@ -30,15 +38,6 @@ PlaylistEdit::PlaylistEdit(QWidget *parent) : QDialog(parent)
 {
     ui = std::make_unique<Ui::PlaylistEdit>();
     ui->setupUi(this);
-    connect(ui->songView->selectionModel(), &QItemSelectionModel::selectionChanged, this,
-        [&](const QItemSelection &selected, const QItemSelection &deselected)
-        {
-            Q_UNUSED(selected)
-            Q_UNUSED(deselected)
-            auto indexes = ui->songView->selectionModel()->selectedIndexes();
-            ui->removeButton->setDisabled(indexes.isEmpty());
-        }
-    );
     ui->addButton->setVisible(false);
     ui->removeButton->setVisible(false);
 }
@@ -91,7 +90,7 @@ void PlaylistEdit::editSong(const QModelIndex &index)
 
 void PlaylistEdit::accept()
 {
-    if(!sourceModel)
+    if(sourceModel)
     {
         sourceModel->setHeaderData(0, Qt::Horizontal, ui->nameEdit->text(), Qt::DisplayRole);
     }
