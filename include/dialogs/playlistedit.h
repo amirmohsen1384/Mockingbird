@@ -32,7 +32,6 @@ public slots:
     void editSong(const QModelIndex &index);
 
     virtual void accept() override;
-    static void deleteForever(const IDContainer &id);
 
 private:
     PlaylistModel *sourceModel = nullptr;
