@@ -12,6 +12,7 @@ class ArtistView : public QDialog
 {
     Q_OBJECT
     void updateModel();
+    void updateControl();
 
 public slots:
     void playPlaylist(const QModelIndex &index);

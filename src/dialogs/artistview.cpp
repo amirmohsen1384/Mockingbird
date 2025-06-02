@@ -6,6 +6,7 @@
 void ArtistView::updateModel()
 {
     ui->playlistView->setModel(mainModel);
+    updateControl();
     if(mainModel != nullptr)
     {
         Artist artist = Artist::loadFromRecord(mainModel->mainKey());
@@ -14,6 +15,13 @@ void ArtistView::updateModel()
         ui->biographyBrowser->setText(artist.getBiography());
         setWindowTitle(QString("%1 - Artist Page").arg(artist.getName()));
     }
+}
+
+void ArtistView::updateControl()
+{
+    ui->pageContainer->setEnabled(mainModel != nullptr);
+    ui->nameLabel->setText(mainModel != nullptr ? "" : "Unable to know about the artist's name");
+    ui->biographyBrowser->setPlainText(mainModel != nullptr ? "" : "Unable to know about biography");
 }
 
 void ArtistView::playPlaylist(const QModelIndex &index)
@@ -44,6 +52,7 @@ ArtistView::ArtistView(QWidget *parent) : QDialog(parent)
 {
     ui = std::make_unique<Ui::ArtistView>();
     ui->setupUi(this);
+    updateControl();
 }
 
 ArtistView::~ArtistView()
