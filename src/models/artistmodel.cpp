@@ -155,7 +155,7 @@ bool ArtistModel::setData(const QModelIndex &index, const QVariant &value, int r
     else
     {
         container.replace(index.row(), value.value<PlaylistModelContainer>());
-        emit dataChanged(index, {Qt::DisplayRole, Qt::DecorationRole, Artist::KeyRole});
+        emit dataChanged(index, index, {Qt::DisplayRole, Qt::DecorationRole, Artist::KeyRole});
     }
     return true;
 }
