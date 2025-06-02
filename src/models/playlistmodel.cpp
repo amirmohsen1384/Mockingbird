@@ -83,8 +83,8 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
         {
             return QPixmap(":/images/playlist/song.png");
         }
-        {
         else
+        {
             return target.getCover().scaled(_cover_size, Qt::KeepAspectRatio, Qt::SmoothTransformation);
         }
     }
@@ -306,6 +306,7 @@ bool PlaylistModel::setData(const QModelIndex &index, const QVariant &value, int
         store[index.row()].first = value.value<IDContainer>();
         store[index.row()].second = Song::loadFromRecord(store[index.row()].first);
         emit dataChanged(index, index, roles);
+        return true;
     }
     default:
     {
