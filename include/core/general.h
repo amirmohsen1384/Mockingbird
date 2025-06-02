@@ -36,4 +36,6 @@ protected:
     bool valid = false;
 };
 
+constexpr QSize _cover_size = QSize(64, 64);
+
 #endif // GENERAL_H
