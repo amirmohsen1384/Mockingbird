@@ -59,6 +59,14 @@ void ArtistEdit::setSourceModel(ArtistModel *value)
     updateModel();
 }
 
+void ArtistEdit::accept()
+{
+    model->setHeaderData(0, Qt::Horizontal, ui->nameEdit->text(), Artist::NameRole);
+    model->setHeaderData(0, Qt::Horizontal, ui->photoView->getImage(), Artist::PhotoRole);
+    model->setHeaderData(0, Qt::Horizontal, ui->biographyEdit->toPlainText(), Artist::BiographyRole);
+    QDialog::accept();
+}
+
 void ArtistEdit::addPlaylist()
 {
     PlaylistEdit editor;

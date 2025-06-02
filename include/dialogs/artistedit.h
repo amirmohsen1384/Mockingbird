@@ -25,6 +25,8 @@ public:
     ArtistModel* sourceModel() const;
     void setSourceModel(ArtistModel *value);
 
+    virtual void accept() override;
+
 public slots:
     void addPlaylist();
     void removePlaylist();
