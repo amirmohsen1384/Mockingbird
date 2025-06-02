@@ -10,6 +10,9 @@
     <height>767</height>
    </rect>
   </property>
+  <property name="acceptDrops">
+   <bool>true</bool>
+  </property>
   <property name="windowTitle">
    <string>Untitled - Song Editor</string>
   </property>

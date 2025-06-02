@@ -16,6 +16,11 @@ class SongEdit : public QDialog
 {
     Q_OBJECT
 
+protected:
+    virtual void dragEnterEvent(QDragEnterEvent *event) override;
+    virtual void dragLeaveEvent(QDragLeaveEvent *event) override;
+    virtual void dropEvent(QDropEvent *event) override;
+
 private slots:
     void updateSource();
     void openSongFile();

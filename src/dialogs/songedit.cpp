@@ -1,4 +1,5 @@
 #include "include/dialogs/songedit.h"
+#include <QDragEnterEvent>
 #include <QMediaMetaData>
 #include <QMediaDevices>
 #include "ui_songedit.h"
@@ -7,7 +8,10 @@
 #include <QImageReader>
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QDropEvent>
 #include <exception>
+#include <QMimeData>
+
 
 SongEdit::SongEdit(QWidget *parent) : QDialog{parent}
 {
@@ -62,8 +66,46 @@ SongEdit::SongEdit(const Song &song, QWidget *parent) : SongEdit(parent)
     setSong(song);
 }
 
+void SongEdit::dragEnterEvent(QDragEnterEvent *event)
+{
+    const QMimeData *data = event->mimeData();
+    if(data->urls().size() != 1)
+    {
+        event->ignore();
+    }
+    else
+    {
+        const QUrl filename = data->urls().constFirst();
+        if(SongFile::isValid(filename))
+        {
+            event->acceptProposedAction();
+            setStyleSheet("background-color:rgb(210, 210, 210)");
+        }
+        else
+        {
+            event->ignore();
+        }
+    }
+}
+
+void SongEdit::dragLeaveEvent(QDragLeaveEvent *event)
+{
+    setFont(QFont("Segoe UI", 9, QFont::Bold));
+    setStyleSheet(QString());
+    event->accept();
+}
+
+void SongEdit::dropEvent(QDropEvent *event)
+{
+    const QMimeData *data = event->mimeData();
+    setLocation(data->urls().constFirst());
+    setStyleSheet(QString());
+    event->accept();
+}
+
 void SongEdit::updateSource()
 {
+    removeCover();
     player->stop();
     ui->initializeButton->setVisible(false);
     ui->playbackButton->setVisible(player->mediaStatus() != QMediaPlayer::InvalidMedia);
