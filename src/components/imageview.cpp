@@ -80,7 +80,6 @@ void ImageView::updateImage()
 ImageView::ImageView(QWidget *parent) : QWidget(parent)
 {
     connect(this, &ImageView::imageChanged, this, &ImageView::updateImage);
-    setAcceptDrops(true);
 }
 ImageView::ImageView(const QImage &image, QWidget *parent) : ImageView(parent)
 {
