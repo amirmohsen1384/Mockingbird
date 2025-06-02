@@ -323,6 +323,9 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="acceptDrops">
+      <bool>true</bool>
+     </property>
     </widget>
    </item>
    <item row="3" column="0">
