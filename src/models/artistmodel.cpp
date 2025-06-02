@@ -118,21 +118,21 @@ QVariant ArtistModel::data(const QModelIndex &index, int role) const
 
     switch(role)
     {
-    case Qt::DisplayRole:
-    {
-        return value->headerData(Playlist::NameRole);
-    }
-    case Qt::DecorationRole:
-    {
-        return value->data(value->index(0), Playlist::CoverRole);
-    }
     case Artist::KeyRole:
     {
         return value->getID();
     }
+    case Qt::DisplayRole:
+    {
+        return value->headerData(Playlist::NameRole);
+    }
     case Artist::ModelRole:
     {
-        return QVariant::fromValue<PlaylistModelContainer>(value);
+        return QVariant::fromValue<PlaylistModel*>(value.get());
+    }
+    case Qt::DecorationRole:
+    {
+        return value->data(value->index(0), Playlist::CoverRole);
     }
     default:
     {
