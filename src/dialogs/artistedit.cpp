@@ -3,15 +3,6 @@
 #include "ui_artistedit.h"
 #include <QMessageBox>
 
-void ArtistEdit::updateMetaData()
-{
-    const auto artist = model->headerData(0, Qt::Horizontal, Artist::DataRole).value<Artist>();
-    ui->nameEdit->setText(artist.getName());
-    ui->photoView->setImage(artist.getPhoto());
-    ui->biographyEdit->setPlainText(artist.getBiography());
-    setWindowTitle(QString("%1 - Artist Editor").arg(artist.getName()));
-}
-
 void ArtistEdit::updateControl()
 {
     ui->addButton->setVisible(model != nullptr);
@@ -24,7 +15,20 @@ void ArtistEdit::updateModel()
     updateControl();
     if(model)
     {
-        updateMetaData();
+        const auto artist = model->headerData(0, Qt::Horizontal, Artist::DataRole).value<Artist>();
+        connect(ui->playlistView->selectionModel(), &QItemSelectionModel::selectionChanged, this,
+            [&](const QItemSelection &selected, const QItemSelection &deselected)
+            {
+                Q_UNUSED(selected)
+                Q_UNUSED(deselected)
+                auto indexes = ui->playlistView->selectionModel()->selectedIndexes();
+                ui->removeButton->setVisible(!indexes.isEmpty());
+            }
+        );
+        ui->nameEdit->setText(artist.getName());
+        ui->photoView->setImage(artist.getPhoto());
+        ui->biographyEdit->setPlainText(artist.getBiography());
+        setWindowTitle(QString("%1 - Artist Editor").arg(artist.getName()));
     }
 }
 
@@ -35,16 +39,6 @@ ArtistEdit::ArtistEdit(QWidget *parent) : QDialog(parent)
 
     ui->addButton->setVisible(false);
     ui->removeButton->setVisible(false);
-
-    connect(ui->playlistView->selectionModel(), &QItemSelectionModel::selectionChanged, this,
-        [&](const QItemSelection &selected, const QItemSelection &deselected)
-        {
-            Q_UNUSED(selected)
-            Q_UNUSED(deselected)
-            auto indexes = ui->playlistView->selectionModel()->selectedIndexes();
-            ui->removeButton->setVisible(!indexes.isEmpty());
-        }
-    );
 }
 
 ArtistEdit::~ArtistEdit() {}
@@ -59,17 +53,16 @@ ArtistModel *ArtistEdit::sourceModel() const
     return model;
 }
 
-void ArtistEdit::setSourceModel(ArtistModel *model)
+void ArtistEdit::setSourceModel(ArtistModel *value)
 {
-    this->model = model;
+    model = value;
     updateModel();
 }
 
 void ArtistEdit::addPlaylist()
 {
-    PlaylistModelContainer playlist = std::make_shared<PlaylistModel>();
-    playlist->setID(ID::generateKey());
     PlaylistEdit editor;
+    PlaylistModelContainer playlist = std::make_shared<PlaylistModel>(ID::generateKey());
     editor.setSourceModel(playlist.get());
     if(editor.exec() == QDialog::Accepted)
     {
@@ -86,7 +79,6 @@ void ArtistEdit::removePlaylist()
     message.setIcon(QMessageBox::Warning);
     message.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
     message.setText(QString("Are you sure to remove %1 playlist(s) permanently?").arg(indices.size()));
-
     if(message.exec() == QMessageBox::Yes)
     {
         std::sort(indices.begin(), indices.end(),
@@ -105,8 +97,18 @@ void ArtistEdit::removePlaylist()
 
 void ArtistEdit::editPlaylist(const QModelIndex &index)
 {
-    auto data = index.data(Artist::ModelRole).value<PlaylistModelContainer>();
-    PlaylistEdit editor;
-    editor.setSourceModel(data.get());
-    editor.exec();
+    auto data = index.data(Artist::ModelRole).value<PlaylistModel*>();
+    if(data != nullptr)
+    {
+        // Cloning from the original model
+        std::shared_ptr<PlaylistModel> target = data->clone();
+
+        // Performing on the clone
+        PlaylistEdit editor;
+        editor.setSourceModel(target.get());
+        if(editor.exec() == QDialog::Accepted)
+        {
+            model->setData(index, QVariant::fromValue(target), Artist::ModelRole);
+        }
+    }
 }

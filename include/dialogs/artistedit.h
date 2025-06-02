@@ -13,19 +13,17 @@ class ArtistEdit : public QDialog
 {
     Q_OBJECT
 private slots:
-    void updateMetaData();
     void updateControl();
     void updateModel();
 
 public:
     Q_DISABLE_COPY_MOVE(ArtistEdit)
     explicit ArtistEdit(QWidget *parent = nullptr);
-    explicit ArtistEdit(const Artist &value, QWidget *parent = nullptr);
     ~ArtistEdit();
 
-    ArtistModel *sourceModel();
-    ArtistModel *sourceModel() const;
-    void setSourceModel(ArtistModel *model);
+    ArtistModel* sourceModel();
+    ArtistModel* sourceModel() const;
+    void setSourceModel(ArtistModel *value);
 
 public slots:
     void addPlaylist();
