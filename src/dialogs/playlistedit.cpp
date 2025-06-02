@@ -90,11 +90,30 @@ void PlaylistEdit::editSong(const QModelIndex &index)
 
 void PlaylistEdit::accept()
 {
-    if(sourceModel)
+    try
     {
-        sourceModel->setHeaderData(0, Qt::Horizontal, ui->nameEdit->text(), Qt::DisplayRole);
+        if(sourceModel)
+        {
+            const QString name = ui->nameEdit->text();
+            if(!name.isEmpty())
+            {
+                sourceModel->setHeaderData(0, Qt::Horizontal, ui->nameEdit->text(), Qt::DisplayRole);
+            }
+            else
+            {
+                throw std::runtime_error("You have not entered the playlist's name.");
+            }
+        }
+        else
+        {
+            throw std::runtime_error("You have not supplied any sources to work with.");
+        }
+        QDialog::accept();
     }
-    QDialog::accept();
+    catch(std::exception &e)
+    {
+        QMessageBox::critical(this, "Error", e.what());
+    }
 }
 
 void PlaylistEdit::removeSong()
