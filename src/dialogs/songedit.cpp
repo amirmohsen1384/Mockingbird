@@ -199,11 +199,11 @@ Song SongEdit::getSong() const
 {
     Song target;
     target.setName(getName());
+    target.setCover(getCover());
     target.setGenre(getGenre());
     target.setArtist(getArtist());
     target.setAddress(getLocation());
     target.setPublicationYear(getReleasedYear());
-    target.setCover(getCover().scaled(_cover_size, Qt::KeepAspectRatio, Qt::SmoothTransformation));
     return target;
 }
 
