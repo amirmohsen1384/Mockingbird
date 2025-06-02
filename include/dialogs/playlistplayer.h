@@ -16,15 +16,15 @@ private slots:
     void playSong(const QModelIndex &index);
 
 public:
-    explicit PlaylistPlayer(const IDContainer &id, QWidget *parent = nullptr);
     explicit PlaylistPlayer(QWidget *parent = nullptr);
     ~PlaylistPlayer();
 
-    IDContainer getID() const;
-    void setID(const IDContainer &id);
+    void setSourceModel(PlaylistModel *value);
+    PlaylistModel* getSourceModel() const;
+    PlaylistModel* getSourceModel();
 
 private:
-    std::unique_ptr<PlaylistModel> model;
+    PlaylistModel *model = nullptr;
     std::unique_ptr<SongDelegate> delegate;
     std::unique_ptr<Ui::PlaylistPlayer> ui;
 };
