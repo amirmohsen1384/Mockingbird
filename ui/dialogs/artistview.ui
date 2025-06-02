@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>492</width>
-    <height>674</height>
+    <width>776</width>
+    <height>879</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -21,43 +21,37 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QStackedWidget" name="pageContainer">
+    <widget class="QTabWidget" name="pageContainer">
+     <property name="tabPosition">
+      <enum>QTabWidget::TabPosition::South</enum>
+     </property>
      <property name="currentIndex">
       <number>0</number>
      </property>
-     <widget class="QWidget" name="infoWidget">
-      <layout class="QGridLayout" name="gridLayout">
-       <item row="3" column="1">
-        <widget class="QPushButton" name="playlistButton">
+     <widget class="QWidget" name="infoWidget" native="true">
+      <attribute name="title">
+       <string>Profile</string>
+      </attribute>
+      <layout class="QGridLayout" name="infoLayout">
+       <item row="1" column="0" colspan="2">
+        <widget class="QLabel" name="nameLabel">
          <property name="font">
           <font>
-           <bold>true</bold>
-           <underline>true</underline>
+           <family>Segoe Print</family>
+           <pointsize>20</pointsize>
+           <bold>false</bold>
           </font>
          </property>
+         <property name="frameShape">
+          <enum>QFrame::Shape::WinPanel</enum>
+         </property>
          <property name="text">
-          <string>View Playlists</string>
+          <string>Eminem</string>
          </property>
-         <property name="default">
-          <bool>true</bool>
-         </property>
-         <property name="flat">
-          <bool>true</bool>
+         <property name="alignment">
+          <set>Qt::AlignmentFlag::AlignCenter</set>
          </property>
         </widget>
-       </item>
-       <item row="3" column="0">
-        <spacer name="infoLeftSpacer">
-         <property name="orientation">
-          <enum>Qt::Orientation::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
        </item>
        <item row="2" column="0" colspan="2">
         <widget class="QTextBrowser" name="biographyBrowser">
@@ -84,26 +78,6 @@
          </property>
         </widget>
        </item>
-       <item row="1" column="0" colspan="2">
-        <widget class="QLabel" name="nameLabel">
-         <property name="font">
-          <font>
-           <family>Segoe Print</family>
-           <pointsize>20</pointsize>
-           <bold>false</bold>
-          </font>
-         </property>
-         <property name="frameShape">
-          <enum>QFrame::Shape::WinPanel</enum>
-         </property>
-         <property name="text">
-          <string>Eminem</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignmentFlag::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
        <item row="0" column="0" colspan="2">
         <widget class="ImageView" name="photoView" native="true">
          <property name="sizePolicy">
@@ -116,8 +90,11 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="playlistWidget">
-      <layout class="QGridLayout" name="gridLayout_2">
+     <widget class="QWidget" name="playlistWidget" native="true">
+      <attribute name="title">
+       <string>Playlists</string>
+      </attribute>
+      <layout class="QGridLayout" name="playlistLayout">
        <item row="0" column="0" colspan="2">
         <widget class="QListView" name="playlistView">
          <property name="sizePolicy">
@@ -138,38 +115,6 @@
           <enum>QAbstractScrollArea::SizeAdjustPolicy::AdjustToContentsOnFirstShow</enum>
          </property>
         </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QPushButton" name="infoButton">
-         <property name="font">
-          <font>
-           <bold>true</bold>
-           <underline>true</underline>
-          </font>
-         </property>
-         <property name="text">
-          <string>View Profile</string>
-         </property>
-         <property name="default">
-          <bool>true</bool>
-         </property>
-         <property name="flat">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <spacer name="playlistLeftSpacer">
-         <property name="orientation">
-          <enum>Qt::Orientation::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
        </item>
       </layout>
      </widget>
@@ -197,44 +142,12 @@
    <slot>playPlaylist(QModelIndex)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>110</x>
-     <y>40</y>
+     <x>250</x>
+     <y>183</y>
     </hint>
     <hint type="destinationlabel">
-     <x>778</x>
-     <y>373</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>playlistButton</sender>
-   <signal>clicked()</signal>
-   <receiver>ArtistView</receiver>
-   <slot>goToPlaylistPage()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>572</x>
-     <y>744</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>493</x>
-     <y>786</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>infoButton</sender>
-   <signal>clicked()</signal>
-   <receiver>ArtistView</receiver>
-   <slot>goToInfoPage()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>578</x>
-     <y>754</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>447</x>
-     <y>803</y>
+     <x>492</x>
+     <y>169</y>
     </hint>
    </hints>
   </connection>
