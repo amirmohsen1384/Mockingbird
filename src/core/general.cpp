@@ -1,4 +1,7 @@
 #include "include/core/general.h"
+#include <QImageReader>
+#include <QMediaFormat>
+#include <QFileDialog>
 
 QDir MainFolder::getRoot()
 {
@@ -93,4 +96,71 @@ IDContainer ID::generateKey()
 bool Entity::isNull() const
 {
     return !valid;
+}
+
+bool ImageFile::isValid(const QUrl &filename)
+{
+    const auto formats = QImageReader::supportedImageFormats();
+    QFileInfo info(filename.toLocalFile());
+    if(!info.isFile())
+    {
+        return false;
+    }
+    QString extenstion = info.suffix().toLower();
+    for(const auto &format : formats)
+    {
+        if(extension == QString::fromLatin1(format).toLower())
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+std::shared_ptr<QFileDialog> ImageFile::initializeImageDialog(QWidget *parent)
+{
+    const auto formats = QImageReader::supportedImageFormats();
+    std::shared_ptr<QFileDialog> dialog = std::make_shared<QFileDialog>(parent);
+    dialog->setMimeTypeFilter(formats);
+    dialog->setDirectory(QDir::home());
+    dialog->setAcceptMode(QFileDialog::AcceptOpen);
+    dialog->setFileMode(QFileDialog::ExistingFile);
+    dialog->setWindowTitle("Select an image to open");
+    dialog->setFilter(QDir::AllEntries | QDir::NoDotAndDotDot);
+    return dialog;
+}
+
+bool SongFile::isValid(const QUrl &filename)
+{
+    QFileInfo file(filename.toLocalFile());
+    if(!file.isFile())
+    {
+        return false;
+    }
+    for(const QString &data : formats)
+    {
+        if(file.suffix().toLower() == data)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+std::shared_ptr<QFileDialog> SongFile::initializeSongDialog(QWidget *parent)
+{
+    std::shared_ptr<QFileDialog> dialog = std::make_shared<QFileDialog>(parent);
+    dialog->setDirectory(QDir::home());
+    dialog->setAcceptMode(QFileDialog::AcceptOpen);
+    dialog->setFileMode(QFileDialog::ExistingFile);
+    dialog->setWindowTitle("Select a file to open");
+    dialog->setFilter(QDir::AllEntries | QDir::NoDotAndDotDot);
+    QString nameFilter = "Songs (";
+    for(const QString &extension : songs)
+    {
+        nameFilter.append(QString(" *.%1").arg(extension));
+    }
+    nameFilter.append(" )");
+    dialog->setNameFilter(nameFilter);
+    return dialog;
 }

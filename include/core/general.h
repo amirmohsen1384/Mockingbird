@@ -38,4 +38,31 @@ protected:
 
 constexpr QSize _cover_size = QSize(64, 64);
 
+class ImageFile
+{
+public:
+    static bool isValid(const QUrl &filename);
+    static std::shared_ptr<QFileDialog> initializeImageDialog(QWidget *parent);
+};
+
+class SongFile
+{
+    static QStringList formats =
+    {
+        "mp3",
+        "wav",
+        "aiff",
+        "pcm",
+        "aac",
+        "ogg",
+        "wma",
+        "m4a",
+        "ape",
+        "alac"
+    };
+public:
+    static bool isValid(const QUrl &filename);
+    static std::shared_ptr<QFileDialog> initializeSongDialog(QWidget *parent);
+};
+
 #endif // GENERAL_H
