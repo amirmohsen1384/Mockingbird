@@ -4,6 +4,7 @@
 #include "ui_songedit.h"
 #include <QAudioOutput>
 #include <QAudioDevice>
+#include <QImageReader>
 #include <QFileDialog>
 #include <QMessageBox>
 #include <exception>
@@ -61,17 +62,6 @@ SongEdit::SongEdit(const Song &song, QWidget *parent) : SongEdit(parent)
     setSong(song);
 }
 
-QFileDialog *SongEdit::browseFile()
-{
-    QFileDialog *dialog = new QFileDialog(this);
-    dialog->setDirectory(QDir::home());
-    dialog->setAcceptMode(QFileDialog::AcceptOpen);
-    dialog->setFileMode(QFileDialog::ExistingFile);
-    dialog->setWindowTitle("Select a file to open");
-    dialog->setFilter(QDir::AllEntries | QDir::NoDotAndDotDot);
-    return dialog;
-}
-
 void SongEdit::updateSource()
 {
     player->stop();
@@ -81,29 +71,22 @@ void SongEdit::updateSource()
 
 void SongEdit::openSongFile()
 {
-    static QStringList history;
-    std::unique_ptr<QFileDialog> dialog(browseFile());
-    dialog->setNameFilter("Songs (*.mp3 *.wav *.aiff *.pcm *.aac *.ogg *.wma *.m4a *.ape *.alac)");
-    dialog->setHistory(history);
+    auto dialog = SongFile::initializeSongDialog(this);
     if(dialog->exec() == QDialog::Accepted)
     {
         const QString fileName = dialog->selectedFiles().constFirst();
         setLocation(QUrl::fromLocalFile(fileName));
-        history.append(fileName);
     }
 }
 
 void SongEdit::openImageFile()
 {
-    static QStringList history;
-    std::unique_ptr<QFileDialog> dialog(browseFile());
-    dialog->setNameFilter("Pictures (*.bmp *.png *.tiff *.gif *.jpeg *.jpg *.tif)");
-    dialog->setHistory(history);
+    auto dialog = ImageFile::initializeImageDialog(this);
     if(dialog->exec() == QDialog::Accepted)
     {
         const QString fileName = dialog->selectedFiles().constFirst();
-        setCover(QImage(fileName));
-        history.append(fileName);
+        QImageReader reader(fileName);
+        setCover(reader.read());
     }
 }
 

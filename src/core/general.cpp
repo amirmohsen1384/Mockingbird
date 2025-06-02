@@ -3,6 +3,20 @@
 #include <QMediaFormat>
 #include <QFileDialog>
 
+QStringList SongFile::songFormats =
+{
+    "mp3",
+    "wav",
+    "aiff",
+    "pcm",
+    "aac",
+    "ogg",
+    "wma",
+    "m4a",
+    "ape",
+    "alac"
+};
+
 QDir MainFolder::getRoot()
 {
     const QString name = QApplication::applicationName();
@@ -106,7 +120,7 @@ bool ImageFile::isValid(const QUrl &filename)
     {
         return false;
     }
-    QString extenstion = info.suffix().toLower();
+    QString extension = info.suffix().toLower();
     for(const auto &format : formats)
     {
         if(extension == QString::fromLatin1(format).toLower())
@@ -119,10 +133,18 @@ bool ImageFile::isValid(const QUrl &filename)
 
 std::shared_ptr<QFileDialog> ImageFile::initializeImageDialog(QWidget *parent)
 {
-    const auto formats = QImageReader::supportedImageFormats();
+    QString extensions = "Image Files (";
+    {
+        const auto formats = QImageReader::supportedImageFormats();
+        for(const QByteArray &target : formats)
+        {
+            extensions.append(QString(" *.%1").arg(target));
+        }
+        extensions.append(" )");
+    }
     std::shared_ptr<QFileDialog> dialog = std::make_shared<QFileDialog>(parent);
-    dialog->setMimeTypeFilter(formats);
     dialog->setDirectory(QDir::home());
+    dialog->setNameFilter(extensions);
     dialog->setAcceptMode(QFileDialog::AcceptOpen);
     dialog->setFileMode(QFileDialog::ExistingFile);
     dialog->setWindowTitle("Select an image to open");
@@ -137,7 +159,7 @@ bool SongFile::isValid(const QUrl &filename)
     {
         return false;
     }
-    for(const QString &data : formats)
+    for(const QString &data : songFormats)
     {
         if(file.suffix().toLower() == data)
         {
@@ -156,7 +178,7 @@ std::shared_ptr<QFileDialog> SongFile::initializeSongDialog(QWidget *parent)
     dialog->setWindowTitle("Select a file to open");
     dialog->setFilter(QDir::AllEntries | QDir::NoDotAndDotDot);
     QString nameFilter = "Songs (";
-    for(const QString &extension : songs)
+    for(const QString &extension : songFormats)
     {
         nameFilter.append(QString(" *.%1").arg(extension));
     }

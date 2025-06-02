@@ -15,8 +15,6 @@ class QFileDialog;
 class SongEdit : public QDialog
 {
     Q_OBJECT
-private:
-    QFileDialog* browseFile();
 
 private slots:
     void updateSource();
