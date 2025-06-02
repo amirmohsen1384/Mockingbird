@@ -43,6 +43,8 @@ public:
     IDs getKeys() const;
     SongList getSongs() const;
     const QList<SongInfo> &getStore() const;
+    
+    std::shared_ptr<PlaylistModel> clone() const;
 
 private:
     int current = -1;

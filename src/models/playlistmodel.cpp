@@ -366,3 +366,16 @@ const QList<SongInfo> &PlaylistModel::getStore() const
 {
     return store;
 }
+
+std::shared_ptr<PlaylistModel> PlaylistModel::clone() const
+{
+    std::shared_ptr<PlaylistModel> model = std::make_shared<PlaylistModel>();
+    for(const SongInfo &song : store)
+    {
+        model->store.append(song);
+    }
+    model->metadata = metadata;
+    model->current = current;
+    model->mainId = mainId;
+    return model;
+}
