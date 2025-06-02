@@ -22,9 +22,24 @@ void PlaylistPlayer::updateCurrentTrack()
 {
     if(model)
     {
-        QModelIndex index = model->index(ui->player->getCurrentTrack(), 0);
-        model->setHeaderData(0, Qt::Horizontal, ui->player->getCurrentTrack(), Playlist::PlayingRole);
-        setWindowTitle(QString("%1 - Media Player").arg(index.data(Qt::DisplayRole).toString()));
+        const int row = ui->player->getCurrentTrack();
+        model->setHeaderData(0, Qt::Horizontal, row, Playlist::PlayingRole);
+
+        QModelIndex index = model->index(row, 0);
+        const int year = index.data(Playlist::YearRole).toInt();
+
+        const QString name = index.data(Playlist::NameRole).toString();
+        const QString artist = index.data(Playlist::ArtistRole).toString();
+
+        const QString text = index.data(Playlist::GenreTextRole).toString();
+        const QPixmap icon = index.data(Playlist::GenreIconRole).value<QPixmap>();
+
+        ui->nameLabel->setText(name);
+        ui->artistLabel->setText(QString("By %1").arg(artist));
+        ui->genreTextLabel->setText(text);
+        ui->genreIconLabel->setPixmap(icon);
+        ui->yearLabel->setText(QString::number(year));
+        setWindowTitle(QString("%1 - Media Player").arg(name));
     }
 }
 
