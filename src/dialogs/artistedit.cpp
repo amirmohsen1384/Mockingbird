@@ -61,10 +61,50 @@ void ArtistEdit::setSourceModel(ArtistModel *value)
 
 void ArtistEdit::accept()
 {
-    model->setHeaderData(0, Qt::Horizontal, ui->nameEdit->text(), Artist::NameRole);
-    model->setHeaderData(0, Qt::Horizontal, ui->photoView->getImage(), Artist::PhotoRole);
-    model->setHeaderData(0, Qt::Horizontal, ui->biographyEdit->toPlainText(), Artist::BiographyRole);
-    QDialog::accept();
+    try
+    {
+        if(model)
+        {
+            const QString name = ui->nameEdit->text();
+            if(!name.isEmpty())
+            {
+                model->setHeaderData(0, Qt::Horizontal, name, Artist::NameRole);
+            }
+            else
+            {
+                throw std::runtime_error("You have not entered the name.");
+            }
+
+            const QImage image = ui->photoView->getImage();
+            if(!image.isNull())
+            {
+                model->setHeaderData(0, Qt::Horizontal, image, Artist::PhotoRole);
+            }
+            else
+            {
+                throw std::runtime_error("You have not loaded the profile photo.");
+            }
+
+            const QString text = ui->biographyEdit->toPlainText();
+            if(!text.isEmpty())
+            {
+                model->setHeaderData(0, Qt::Horizontal, text, Artist::BiographyRole);
+            }
+            else
+            {
+                throw std::runtime_error("You have not entered the biography.");
+            }
+        }
+        else
+        {
+            throw std::runtime_error("You have not provided any sources to work with.");
+        }
+        QDialog::accept();
+    }
+    catch(std::exception &e)
+    {
+        QMessageBox::critical(this, "Error", e.what());
+    }
 }
 
 void ArtistEdit::addPlaylist()
