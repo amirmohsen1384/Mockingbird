@@ -20,9 +20,13 @@ void ArtistView::playPlaylist(const QModelIndex &index)
 {
     if(index.isValid())
     {
-        const auto value = index.data(Artist::KeyRole).value<IDContainer>();
-        PlaylistPlayer player(value);
-        player.exec();
+        PlaylistModel *model = index.data(Artist::ModelRole).value<PlaylistModel*>();
+        if(model != nullptr)
+        {
+            PlaylistPlayer player;
+            player.setSourceModel(model);
+            player.exec();
+        }
     }
 }
 
