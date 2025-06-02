@@ -147,8 +147,16 @@ bool ArtistModel::setData(const QModelIndex &index, const QVariant &value, int r
     {
         return false;
     }
-    container[index.row()]->setHeaderData(0, Qt::Horizontal, value, role);
-    emit dataChanged(index, index, {role, Qt::DecorationRole});
+    if(role != Artist::ModelRole)
+    {
+        container[index.row()]->setHeaderData(0, Qt::Horizontal, value, role);
+        emit dataChanged(index, index, {role, Qt::DecorationRole});
+    }
+    else
+    {
+        container.replace(index.row(), value.value<PlaylistModelContainer>());
+        emit dataChanged(index, {Qt::DisplayRole, Qt::DecorationRole, Artist::KeyRole});
+    }
     return true;
 }
 
