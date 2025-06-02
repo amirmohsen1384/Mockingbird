@@ -10,7 +10,7 @@ class ImageView : public QWidget
 {
     Q_OBJECT
     QImage image;
-    QUrl draggingUrl;
+    bool dragging = false;
 
 protected:
     virtual void mouseDoubleClickEvent(QMouseEvent *event) override;

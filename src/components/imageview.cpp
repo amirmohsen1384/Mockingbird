@@ -12,7 +12,7 @@ void ImageView::mouseDoubleClickEvent(QMouseEvent *event)
 
 void ImageView::dragLeaveEvent(QDragLeaveEvent *event)
 {
-    draggingUrl = QUrl();
+    dragging = false;
     update();
     event->accept();
 }
@@ -30,7 +30,7 @@ void ImageView::dragEnterEvent(QDragEnterEvent *event)
         if(ImageFile::isValid(target) && target.isLocalFile())
         {
             event->acceptProposedAction();
-            draggingUrl = target;
+            dragging = true;
             update();
         }
         else
@@ -55,7 +55,7 @@ void ImageView::paintEvent(QPaintEvent *event)
 
     painter.drawImage(region, image, image.rect());
 
-    if(!draggingUrl.isEmpty())
+    if(dragging)
     {
         painter.fillRect(event->rect(), QColor(0, 0, 0, 128)); // A little transparent black;
     }
@@ -64,19 +64,12 @@ void ImageView::paintEvent(QPaintEvent *event)
 void ImageView::dropEvent(QDropEvent *event)
 {
     const QMimeData *data = event->mimeData();
-    if(data->urls().size() != 1)
-    {
-        event->ignore();
-    }
-    else
-    {
-        const QUrl target = data->urls().constFirst();
-        QImageReader reader(target.toLocalFile());
-        this->setImage(reader.read());
-        draggingUrl = QUrl();
-        update();
-        event->accept();
-    }
+    const QUrl target = data->urls().constFirst();
+    QImageReader reader(target.toLocalFile());
+    this->setImage(reader.read());
+    dragging = false;
+    event->accept();
+    update();
 }
 
 void ImageView::updateImage()
