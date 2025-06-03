@@ -1,10 +1,10 @@
-#include "include/pages/welcomepage.h"
+#include "include/panels/welcomepanel.h"
 #include <QApplication>
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    WelcomePage w;
+    WelcomePanel w;
     w.show();
     return a.exec();
 }

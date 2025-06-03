@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>WelcomePage</class>
- <widget class="QMainWindow" name="WelcomePage">
+ <class>WelcomePanel</class>
+ <widget class="QMainWindow" name="WelcomePanel">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -70,7 +70,7 @@
       <property name="currentIndex">
        <number>0</number>
       </property>
-      <widget class="QWidget" name="welcomePage">
+      <widget class="QWidget" name="WelcomePanel">
        <layout class="QGridLayout" name="gridLayout">
         <item row="3" column="1">
          <spacer name="topSpacer_2">
@@ -395,7 +395,7 @@
   <connection>
    <sender>continueButton</sender>
    <signal>clicked()</signal>
-   <receiver>WelcomePage</receiver>
+   <receiver>WelcomePanel</receiver>
    <slot>goToSigninPage()</slot>
    <hints>
     <hint type="sourcelabel">

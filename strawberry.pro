@@ -28,9 +28,9 @@ SOURCES += \
     src/models/genremodel.cpp \
     src/models/playlistmodel.cpp \
     src/models/songdelegate.cpp \
-    src/pages/adminpage.cpp \
-    src/pages/welcomepage.cpp \
-    src/pages/userpanel.cpp
+    src/panels/adminpanel.cpp \
+    src/panels/userpanel.cpp \
+    src/panels/welcomepanel.cpp
 
 HEADERS += \
     include/components/imageview.h \
@@ -53,9 +53,9 @@ HEADERS += \
     include/models/genremodel.h \
     include/models/playlistmodel.h \
     include/models/songdelegate.h \
-    include/pages/adminpage.h \
-    include/pages/welcomepage.h \
-    include/pages/userpanel.h
+    include/panels/adminpanel.h \
+    include/panels/userpanel.h \
+    include/panels/welcomepanel.h
 
 FORMS += \
     ui/components/player.ui \
@@ -64,9 +64,9 @@ FORMS += \
     ui/dialogs/playlistedit.ui \
     ui/dialogs/playlistplayer.ui \
     ui/dialogs/songedit.ui \
-    ui/pages/adminpage.ui \
-    ui/pages/welcomepage.ui \
-    ui/pages/userpanel.ui
+    ui/panels/adminpanel.ui \
+    ui/panels/userpanel.ui \
+    ui/panels/welcomepanel.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

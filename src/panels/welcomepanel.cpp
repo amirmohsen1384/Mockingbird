@@ -1,10 +1,10 @@
-#include "include/pages/welcomepage.h"
-#include "ui_welcomepage.h"
+#include "include/panels/welcomepanel.h"
+#include "ui_welcomepanel.h"
 #include <QTimer>
 
-WelcomePage::WelcomePage(QWidget *parent) : QMainWindow(parent)
+WelcomePanel::WelcomePanel(QWidget *parent) : QMainWindow(parent)
 {
-    ui = std::make_unique<Ui::WelcomePage>();
+    ui = std::make_unique<Ui::WelcomePanel>();
 
     ui->setupUi(this);
     ui->continueButton->setVisible(false);
@@ -16,10 +16,10 @@ WelcomePage::WelcomePage(QWidget *parent) : QMainWindow(parent)
     );
 }
 
-WelcomePage::~WelcomePage()
+WelcomePanel::~WelcomePanel()
 {}
 
-void WelcomePage::goToSigninPage()
+void WelcomePanel::goToSigninPage()
 {
     ui->pageContainer->setCurrentWidget(ui->signinPage);
 }

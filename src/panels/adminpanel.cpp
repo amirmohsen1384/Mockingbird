@@ -1,27 +1,27 @@
-#include "include/pages/adminpage.h"
-#include "ui_adminpage.h"
+#include "include/panels/adminpanel.h"
+#include "ui_adminpanel.h"
 #include <QMessageBox>
 #include <exception>
 
-AdminPage::AdminPage(const Admin &admin, QWidget *parent) : AdminPage(parent)
+AdminPanel::AdminPanel(const Admin &admin, QWidget *parent) : AdminPanel(parent)
 {
     setAdminstrator(admin);
 }
 
-AdminPage::AdminPage(QWidget *parent) : QMainWindow(parent)
+AdminPanel::AdminPanel(QWidget *parent) : QMainWindow(parent)
 {
-    ui = std::make_unique<Ui::AdminPage>();
+    ui = std::make_unique<Ui::AdminPanel>();
     ui->setupUi(this);
 }
 
-AdminPage::~AdminPage() {}
+AdminPanel::~AdminPanel() {}
 
-Admin AdminPage::adminstrator() const
+Admin AdminPanel::adminstrator() const
 {
     return admin;
 }
 
-void AdminPage::updateMetaData()
+void AdminPanel::updateMetaData()
 {
     ui->adminNameLabel->setText(admin.getFullName());
     ui->firstNameEdit->setText(admin.getFirstName());
@@ -30,20 +30,20 @@ void AdminPage::updateMetaData()
     ui->passwordEdit->setText(admin.getPassword());
 }
 
-void AdminPage::setAdminstrator(const Admin &value)
+void AdminPanel::setAdminstrator(const Admin &value)
 {
     admin = value;
     updateMetaData();
     emit adminstratorChanged(value);
 }
 
-void AdminPage::rejectChanging()
+void AdminPanel::rejectChanging()
 {
     ui->pageContainer->setCurrentWidget(ui->mainPage);
     updateMetaData();
 }
 
-void AdminPage::acceptChanging()
+void AdminPanel::acceptChanging()
 {
     try
     {
@@ -84,7 +84,7 @@ void AdminPage::acceptChanging()
     ui->pageContainer->setCurrentWidget(ui->mainPage);
 }
 
-void AdminPage::togglePasswordShow(bool toggle)
+void AdminPanel::togglePasswordShow(bool toggle)
 {
     if(!toggle)
     {
@@ -98,7 +98,7 @@ void AdminPage::togglePasswordShow(bool toggle)
     }
 }
 
-void AdminPage::goToInfoChangingMode()
+void AdminPanel::goToInfoChangingMode()
 {
     ui->pageContainer->setCurrentWidget(ui->informationPage);
 }

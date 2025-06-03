@@ -1,4 +1,4 @@
-#include "include/pages/userpanel.h"
+#include "include/panels/userpanel.h"
 #include "ui_userpanel.h"
 
 UserPanel::UserPanel(QWidget *parent)

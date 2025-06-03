@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>AdminPage</class>
- <widget class="QMainWindow" name="AdminPage">
+ <class>AdminPanel</class>
+ <widget class="QMainWindow" name="AdminPanel">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -554,7 +554,7 @@
   <connection>
    <sender>changeInfoButton</sender>
    <signal>clicked()</signal>
-   <receiver>AdminPage</receiver>
+   <receiver>AdminPanel</receiver>
    <slot>goToInfoChangingMode()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -570,7 +570,7 @@
   <connection>
    <sender>cancelButton</sender>
    <signal>clicked()</signal>
-   <receiver>AdminPage</receiver>
+   <receiver>AdminPanel</receiver>
    <slot>rejectChanging()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -586,7 +586,7 @@
   <connection>
    <sender>checkButton</sender>
    <signal>clicked()</signal>
-   <receiver>AdminPage</receiver>
+   <receiver>AdminPanel</receiver>
    <slot>acceptChanging()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -602,7 +602,7 @@
   <connection>
    <sender>showPasswordButton</sender>
    <signal>clicked(bool)</signal>
-   <receiver>AdminPage</receiver>
+   <receiver>AdminPanel</receiver>
    <slot>togglePasswordShow(bool)</slot>
    <hints>
     <hint type="sourcelabel">

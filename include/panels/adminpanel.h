@@ -1,20 +1,21 @@
-#ifndef ADMINPAGE_H
-#define ADMINPAGE_H
+#ifndef ADMINPANEL_H
+#define ADMINPANEL_H
 
 #include <QMainWindow>
 #include "include/core/admin.h"
 
-namespace Ui {
-class AdminPage;
+namespace Ui
+{
+    class AdminPanel;
 }
 
-class AdminPage : public QMainWindow
+class AdminPanel : public QMainWindow
 {
     Q_OBJECT
 public:
-    explicit AdminPage(const Admin &admin, QWidget *parent = nullptr);
-    explicit AdminPage(QWidget *parent = nullptr);
-    ~AdminPage();
+    explicit AdminPanel(const Admin &admin, QWidget *parent = nullptr);
+    explicit AdminPanel(QWidget *parent = nullptr);
+    ~AdminPanel();
 
     Admin adminstrator() const;
 
@@ -33,7 +34,7 @@ signals:
 
 private:
     Admin admin;
-    std::unique_ptr<Ui::AdminPage> ui;
+    std::unique_ptr<Ui::AdminPanel> ui;
 };
 
-#endif // ADMINPAGE_H
+#endif // ADMINPANEL_H
