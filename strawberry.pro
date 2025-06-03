@@ -23,12 +23,14 @@ SOURCES += \
     src/dialogs/playlistedit.cpp \
     src/dialogs/playlistplayer.cpp \
     src/dialogs/songedit.cpp \
+    src/models/artistlistmodel.cpp \
     src/models/artistmodel.cpp \
     src/models/genremodel.cpp \
     src/models/playlistmodel.cpp \
     src/models/songdelegate.cpp \
     src/pages/adminpage.cpp \
-    src/pages/welcomepage.cpp
+    src/pages/welcomepage.cpp \
+    src/pages/userpanel.cpp
 
 HEADERS += \
     include/components/imageview.h \
@@ -46,12 +48,14 @@ HEADERS += \
     include/dialogs/playlistedit.h \
     include/dialogs/playlistplayer.h \
     include/dialogs/songedit.h \
+    include/models/artistlistmodel.h \
     include/models/artistmodel.h \
     include/models/genremodel.h \
     include/models/playlistmodel.h \
     include/models/songdelegate.h \
     include/pages/adminpage.h \
-    include/pages/welcomepage.h
+    include/pages/welcomepage.h \
+    include/pages/userpanel.h
 
 FORMS += \
     ui/components/player.ui \
@@ -61,7 +65,8 @@ FORMS += \
     ui/dialogs/playlistplayer.ui \
     ui/dialogs/songedit.ui \
     ui/pages/adminpage.ui \
-    ui/pages/welcomepage.ui
+    ui/pages/welcomepage.ui \
+    ui/pages/userpanel.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
