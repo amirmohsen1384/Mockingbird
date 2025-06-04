@@ -26,8 +26,8 @@ SOURCES += \
     src/models/artistlistmodel.cpp \
     src/models/artistmodel.cpp \
     src/models/genremodel.cpp \
+    src/models/maindelegate.cpp \
     src/models/playlistmodel.cpp \
-    src/models/songdelegate.cpp \
     src/panels/adminpanel.cpp \
     src/panels/userpanel.cpp \
     src/panels/welcomepanel.cpp
@@ -51,8 +51,8 @@ HEADERS += \
     include/models/artistlistmodel.h \
     include/models/artistmodel.h \
     include/models/genremodel.h \
+    include/models/maindelegate.h \
     include/models/playlistmodel.h \
-    include/models/songdelegate.h \
     include/panels/adminpanel.h \
     include/panels/userpanel.h \
     include/panels/welcomepanel.h

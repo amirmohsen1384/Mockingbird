@@ -3,7 +3,7 @@
 
 #include <QDialog>
 #include "include/components/player.h"
-#include "include/models/songdelegate.h"
+#include "include/models/maindelegate.h"
 
 namespace Ui { class PlaylistPlayer; }
 
@@ -26,7 +26,7 @@ public:
 
 private:
     PlaylistModel *model = nullptr;
-    std::unique_ptr<SongDelegate> delegate;
+    std::unique_ptr<MainDelegate> delegate;
     std::unique_ptr<Ui::PlaylistPlayer> ui;
 };
 

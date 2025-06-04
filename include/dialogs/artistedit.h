@@ -4,6 +4,7 @@
 #include <QDialog>
 #include <QAbstractItemModel>
 #include "include/models/artistmodel.h"
+#include "include/models/maindelegate.h"
 
 namespace Ui {
 class ArtistEdit;
@@ -36,6 +37,7 @@ public slots:
 private:
     ArtistModel *model = nullptr;
     std::unique_ptr<Ui::ArtistEdit> ui;
+    std::unique_ptr<MainDelegate> delegate;
 };
 
 #endif // ARTISTEDIT_H

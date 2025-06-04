@@ -1,6 +1,6 @@
 #include "include/dialogs/playlistplayer.h"
 #include "include/models/playlistmodel.h"
-#include "include/models/songdelegate.h"
+#include "include/models/maindelegate.h"
 #include "ui_playlistplayer.h"
 
 void PlaylistPlayer::updateModel()
@@ -62,7 +62,7 @@ void PlaylistPlayer::playSong(const QModelIndex &index)
 PlaylistPlayer::PlaylistPlayer(QWidget *parent) : QDialog(parent), ui(new Ui::PlaylistPlayer)
 {
     ui->setupUi(this);
-    delegate = std::make_unique<SongDelegate>();
+    delegate = std::make_unique<MainDelegate>();
     ui->playlistView->setItemDelegate(delegate.get());
     connect(ui->player, &Player::currentTrackChanged, this, &PlaylistPlayer::updateCurrentTrack);
 }

@@ -40,6 +40,8 @@ PlaylistEdit::PlaylistEdit(QWidget *parent) : QDialog(parent)
     ui->setupUi(this);
     ui->addButton->setVisible(false);
     ui->removeButton->setVisible(false);
+    delegate = std::make_unique<MainDelegate>();
+    ui->songView->setItemDelegate(delegate.get());
 }
 
 PlaylistEdit::~PlaylistEdit() {}

@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include "include/models/playlistmodel.h"
+#include "include/models/maindelegate.h"
 
 namespace Ui
 {
@@ -36,6 +37,7 @@ public slots:
 private:
     PlaylistModel *sourceModel = nullptr;
     std::unique_ptr<Ui::PlaylistEdit> ui;
+    std::unique_ptr<MainDelegate> delegate;
 };
 
 #endif // PLAYLISTEDIT_H

@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include "include/core/admin.h"
 #include "include/models/artistlistmodel.h"
+#include "include/models/maindelegate.h"
 
 namespace Ui
 {
@@ -43,6 +44,7 @@ private:
     IDContainer mainKey;
     ArtistListModel mainModel;
     std::unique_ptr<Ui::AdminPanel> ui;
+    std::unique_ptr<MainDelegate> delegate;
 };
 
 #endif // ADMINPANEL_H

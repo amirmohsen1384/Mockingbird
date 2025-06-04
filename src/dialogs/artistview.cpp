@@ -56,6 +56,9 @@ ArtistView::ArtistView(QWidget *parent) : QDialog(parent)
     ui = std::make_unique<Ui::ArtistView>();
     ui->setupUi(this);
     updateControl();
+
+    delegate = std::make_unique<MainDelegate>();
+    ui->playlistView->setItemDelegate(delegate.get());
 }
 
 ArtistView::~ArtistView()

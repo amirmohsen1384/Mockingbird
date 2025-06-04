@@ -24,6 +24,9 @@ AdminPanel::AdminPanel(const IDContainer &key, QWidget *parent) : QMainWindow(pa
     );
     connect(this, &AdminPanel::mainKeyChanged, this, &AdminPanel::updateMetaData);
     setMainKey(key);
+
+    delegate = std::make_unique<MainDelegate>();
+    ui->artistView->setItemDelegate(delegate.get());
 }
 
 AdminPanel::~AdminPanel() {}

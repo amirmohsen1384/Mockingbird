@@ -129,7 +129,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
          </property>
          <property name="font">
           <font>
-           <bold>true</bold>
+           <bold>false</bold>
           </font>
          </property>
          <property name="horizontalScrollBarPolicy">

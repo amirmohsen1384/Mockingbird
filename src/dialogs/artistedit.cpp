@@ -39,6 +39,9 @@ ArtistEdit::ArtistEdit(QWidget *parent) : QDialog(parent)
 
     ui->addButton->setVisible(false);
     ui->removeButton->setVisible(false);
+
+    delegate = std::make_unique<MainDelegate>();
+    ui->playlistView->setItemDelegate(delegate.get());
 }
 
 ArtistEdit::~ArtistEdit() {}

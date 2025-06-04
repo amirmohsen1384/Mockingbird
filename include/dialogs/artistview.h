@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include "include/models/artistmodel.h"
+#include "include/models/maindelegate.h"
 
 namespace Ui {
 class ArtistView;
@@ -29,6 +30,7 @@ public:
 private:
     ArtistModel *mainModel = nullptr;
     std::unique_ptr<Ui::ArtistView> ui;
+    std::unique_ptr<MainDelegate> delegate;
 };
 
 #endif // ARTISTVIEW_H

@@ -36,7 +36,7 @@ protected:
     bool valid = false;
 };
 
-constexpr QSize _cover_size = QSize(64, 64);
+constexpr QSize _cover_size = QSize(72, 72);
 
 class QFileDialog;
 
