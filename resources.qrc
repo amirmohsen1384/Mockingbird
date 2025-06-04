@@ -43,5 +43,6 @@
         <file>images/windows/show-password.png</file>
         <file>images/dialogs/Initialize.png</file>
         <file>images/playlist/single-mode.png</file>
+        <file>images/dialogs/edit.png</file>
     </qresource>
 </RCC>
