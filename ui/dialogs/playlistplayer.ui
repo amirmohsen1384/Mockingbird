@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>875</width>
-    <height>788</height>
+    <width>700</width>
+    <height>700</height>
    </rect>
   </property>
   <property name="palette">
@@ -84,19 +84,44 @@
     </widget>
    </item>
    <item>
-    <widget class="QListView" name="playlistView">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
+    <widget class="QStackedWidget" name="pageContainer">
+     <property name="currentIndex">
+      <number>1</number>
      </property>
-     <property name="horizontalScrollBarPolicy">
-      <enum>Qt::ScrollBarPolicy::ScrollBarAlwaysOff</enum>
-     </property>
-     <property name="sizeAdjustPolicy">
-      <enum>QAbstractScrollArea::SizeAdjustPolicy::AdjustIgnored</enum>
-     </property>
+     <widget class="QWidget" name="playlistPage">
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QListView" name="playlistView">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="horizontalScrollBarPolicy">
+          <enum>Qt::ScrollBarPolicy::ScrollBarAlwaysOff</enum>
+         </property>
+         <property name="sizeAdjustPolicy">
+          <enum>QAbstractScrollArea::SizeAdjustPolicy::AdjustIgnored</enum>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="singleModePage">
+      <layout class="QGridLayout" name="gridLayout">
+       <item row="0" column="0">
+        <widget class="ImageView" name="coverView" native="true">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
     </widget>
    </item>
    <item>
@@ -209,6 +234,19 @@
     </widget>
    </item>
    <item>
+    <widget class="QCheckBox" name="checkBox">
+     <property name="font">
+      <font>
+       <pointsize>9</pointsize>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Playlist Mode</string>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="Player" name="player" native="true">
      <property name="sizePolicy">
       <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
@@ -225,6 +263,12 @@
    <class>Player</class>
    <extends>QWidget</extends>
    <header>include/components/player.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ImageView</class>
+   <extends>QWidget</extends>
+   <header>include/components/imageview.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
@@ -246,8 +290,25 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>checkBox</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>PlaylistPlayer</receiver>
+   <slot>toggleSingleMode(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>45</x>
+     <y>832</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>362</x>
+     <y>868</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>playSong(QModelIndex)</slot>
+  <slot>toggleSingleMode(bool)</slot>
  </slots>
 </ui>

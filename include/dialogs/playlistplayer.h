@@ -13,6 +13,7 @@ class PlaylistPlayer : public QDialog
 private slots:
     void updateModel();
     void updateCurrentTrack();
+    void toggleSingleMode(bool enabled);
     void playSong(const QModelIndex &index);
 
 public:
