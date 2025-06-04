@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>647</width>
-    <height>852</height>
+    <width>650</width>
+    <height>750</height>
    </rect>
   </property>
   <property name="font">
@@ -24,6 +24,9 @@
   <layout class="QVBoxLayout" name="verticalLayout_3">
    <item>
     <widget class="QTabWidget" name="tabWidget">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
      <property name="font">
       <font>
        <bold>false</bold>
@@ -222,7 +225,7 @@
   <customwidget>
    <class>ImageView</class>
    <extends>QWidget</extends>
-   <header location="global">include/components/imageview.h</header>
+   <header>include/components/imageview.h</header>
    <container>1</container>
    <slots>
     <signal>viewActivated()</signal>

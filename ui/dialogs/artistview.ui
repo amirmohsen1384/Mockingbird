@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>776</width>
-    <height>879</height>
+    <width>650</width>
+    <height>750</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -31,7 +31,7 @@
      <property name="currentIndex">
       <number>0</number>
      </property>
-     <widget class="QWidget" name="infoWidget" native="true">
+     <widget class="QWidget" name="infoWidget">
       <attribute name="title">
        <string>Profile</string>
       </attribute>
@@ -109,7 +109,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="playlistWidget" native="true">
+     <widget class="QWidget" name="playlistWidget">
       <attribute name="title">
        <string>Playlists</string>
       </attribute>
@@ -145,7 +145,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
   <customwidget>
    <class>ImageView</class>
    <extends>QWidget</extends>
-   <header location="global">include/components/imageview.h</header>
+   <header>include/components/imageview.h</header>
    <container>1</container>
    <slots>
     <signal>viewActivated()</signal>
