@@ -215,6 +215,12 @@ QModelIndex ArtistListModel::fromKey(const IDContainer &key) const
 
 void ArtistListModel::modifyArtist(const ArtistModel &model)
 {
+    const QModelIndex position = fromKey(model.mainKey());
+    if(!position.isValid())
+    {
+        return;
+    }
+
     ArtistModel initial(model.mainKey());
     const auto &final = model.getKeys();
     for(const auto &value : initial.getContainer())
@@ -251,4 +257,13 @@ void ArtistListModel::modifyArtist(const ArtistModel &model)
         }
     }
     model.saveToRecord();
+
+    DataContainer data;
+    data.name = model.headerData(0, Qt::Horizontal, Artist::NameRole).toString();
+    data.photo = model.headerData(0, Qt::Horizontal, Artist::PhotoRole).value<QImage>();
+    data.key = model.headerData(0, Qt::Horizontal, Artist::KeyRole).value<IDContainer>();
+
+    container.replace(position.row(), data);
+
+    emit dataChanged(position, position, {Qt::DisplayRole, Qt::DecorationRole, Artist::KeyRole});
 }
