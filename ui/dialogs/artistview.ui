@@ -25,6 +25,11 @@
      <property name="enabled">
       <bool>false</bool>
      </property>
+     <property name="font">
+      <font>
+       <bold>true</bold>
+      </font>
+     </property>
      <property name="tabPosition">
       <enum>QTabWidget::TabPosition::South</enum>
      </property>
