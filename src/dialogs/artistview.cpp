@@ -19,7 +19,10 @@ void ArtistView::updateModel()
 
 void ArtistView::updateControl()
 {
+    ui->nameLabel->setEnabled(mainModel != nullptr);
+    ui->photoView->setEnabled(mainModel != nullptr);
     ui->pageContainer->setEnabled(mainModel != nullptr);
+    ui->biographyBrowser->setEnabled(mainModel != nullptr);
     ui->nameLabel->setText(mainModel != nullptr ? "" : "Unable to know about the artist's name");
     ui->biographyBrowser->setPlainText(mainModel != nullptr ? "" : "Unable to know about biography");
 }
