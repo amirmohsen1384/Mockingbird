@@ -67,29 +67,29 @@
   </property>
   <layout class="QVBoxLayout" name="mainLayout">
    <item>
-    <widget class="QLabel" name="titleLabel">
-     <property name="font">
-      <font>
-       <family>Segoe Print</family>
-       <pointsize>16</pointsize>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="text">
-      <string>Playlist Name</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignmentFlag::AlignCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item>
     <widget class="QStackedWidget" name="pageContainer">
      <property name="currentIndex">
       <number>1</number>
      </property>
      <widget class="QWidget" name="playlistPage">
       <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QLabel" name="titleLabel">
+         <property name="font">
+          <font>
+           <family>Segoe Print</family>
+           <pointsize>16</pointsize>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>Playlist Name</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignmentFlag::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
        <item>
         <widget class="QListView" name="playlistView">
          <property name="sizePolicy">
