@@ -29,13 +29,8 @@ void PlaylistPlayer::updateCurrentTrack()
         const QString name = index.data(Playlist::NameRole).toString();
         const QString artist = index.data(Playlist::ArtistRole).toString();
         const QString text = index.data(Playlist::GenreTextRole).toString();
-        const QPixmap icon = index.data(Playlist::GenreIconRole).value<QPixmap>();
-
-        QImage cover = index.data(Qt::UserRole).value<Song>().getCover();
-        if(cover.isNull())
-        {
-            cover = QImage(":/images/playlist/single-mode.png");
-        }
+        const QImage cover = index.data(Qt::UserRole).value<Song>().getCover();
+        const QPixmap icon = index.data(Playlist::GenreIconRole).value<QPixmap>();        
 
         ui->nameLabel->setText(name);
         ui->coverView->setImage(cover);

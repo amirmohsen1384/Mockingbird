@@ -45,14 +45,15 @@ void ImageView::paintEvent(QPaintEvent *event)
     QWidget::paintEvent(event);
 
     QImage image = this->image;
+    if(image.isNull())
+    {
+        image = QImage(":/images/playlist/single-mode.png");
+    }
     const QRect &region = event->rect();
 
     QPainter painter(this);
-    if(image.isNull()) {
-        painter.fillRect(region, Qt::black);
-        return;
-    }
-
+    painter.setRenderHint(QPainter::Antialiasing);
+    painter.setRenderHint(QPainter::SmoothPixmapTransform);
     painter.drawImage(region, image, image.rect());
 
     if(dragging)
