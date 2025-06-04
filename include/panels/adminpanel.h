@@ -32,9 +32,9 @@ public slots:
     void goToNormalMode();
 
     void addArtist();
-    void viewArtist();
+    void viewArtist(const QModelIndex &index);
     void removeArtist();
-    void editArtist(const QModelIndex &index);
+    void editArtist();
 
 signals:
     void mainKeyChanged(const IDContainer &value);

@@ -9,9 +9,20 @@ AdminPanel::AdminPanel(const IDContainer &key, QWidget *parent) : QMainWindow(pa
 {
     ui = std::make_unique<Ui::AdminPanel>();
     ui->setupUi(this);
-
-    connect(this, &AdminPanel::mainKeyChanged, this, &AdminPanel::updateMetaData);
+    ui->editButton->setVisible(false);
+    ui->removeButton->setVisible(false);
     ui->artistView->setModel(&mainModel);
+    connect(ui->artistView->selectionModel(), &QItemSelectionModel::selectionChanged, this, [&]
+        (const QItemSelection &selected, const QItemSelection &deselected)
+        {
+            Q_UNUSED(selected)
+            Q_UNUSED(deselected)
+            auto indices = ui->artistView->selectionModel()->selectedIndexes();
+            ui->editButton->setVisible(!indices.isEmpty());
+            ui->removeButton->setVisible(!indices.isEmpty());
+        }
+    );
+    connect(this, &AdminPanel::mainKeyChanged, this, &AdminPanel::updateMetaData);
     setMainKey(key);
 }
 
@@ -123,9 +134,8 @@ void AdminPanel::addArtist()
     }
 }
 
-void AdminPanel::viewArtist()
+void AdminPanel::viewArtist(const QModelIndex &index)
 {
-    const QModelIndex &index = ui->artistView->currentIndex();
     if(index.isValid())
     {
         ArtistModel model(index.data(Artist::KeyRole).value<IDContainer>());
@@ -140,16 +150,27 @@ void AdminPanel::removeArtist()
     const QModelIndex index = ui->artistView->currentIndex();
     if(index.isValid())
     {
-        mainModel.removeArtist(index.data(Artist::KeyRole).value<IDContainer>());
+        QMessageBox message;
+        message.setWindowTitle("Caution");
+        message.setIcon(QMessageBox::Warning);
+        message.setText("Are you sure to remove the artist");
+        message.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+        message.setInformativeText("This will delete all of the associated playlists along with their songs in the whole system!");
+        message.adjustSize();
+        if(message.exec() == QMessageBox::Yes)
+        {
+            mainModel.removeArtist(index.data(Artist::KeyRole).value<IDContainer>());
+        }
     }
 }
 
-void AdminPanel::editArtist(const QModelIndex &index)
+void AdminPanel::editArtist()
 {
+    const QModelIndex &index = ui->artistView->currentIndex();
     if(index.isValid())
     {
-        ArtistModel model(index.data(Artist::KeyRole).value<IDContainer>());
         ArtistEdit editor;
+        ArtistModel model(index.data(Artist::KeyRole).value<IDContainer>());
         editor.setSourceModel(&model);
         if(editor.exec() == QDialog::Accepted)
         {
