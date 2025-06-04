@@ -14,6 +14,9 @@ void SongDelegate::paintCover(QPainter *painter, const QModelIndex &index) const
     const QPixmap cover = qvariant_cast<QPixmap>(index.data(Qt::DecorationRole));
     const QRect region = coverRegion(index);
 
+    auto hints = painter->renderHints();
+    painter->setRenderHint(QPainter::SmoothPixmapTransform);
+
     painter->save();
     painter->setClipRegion(QRegion(region, QRegion::Ellipse));
     painter->drawPixmap(region, cover);
@@ -28,6 +31,7 @@ void SongDelegate::paintCover(QPainter *painter, const QModelIndex &index) const
     const QPen initial = painter->pen();
     painter->setPen(QPen(gradient, 4));
 
+    painter->setRenderHints(hints);
     painter->drawEllipse(region);
     painter->setPen(initial);
 }
