@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "include/core/admin.h"
+#include "include/models/artistlistmodel.h"
 
 namespace Ui
 {
@@ -13,11 +14,11 @@ class AdminPanel : public QMainWindow
 {
     Q_OBJECT
 public:
-    explicit AdminPanel(const Admin &admin, QWidget *parent = nullptr);
-    explicit AdminPanel(QWidget *parent = nullptr);
-    ~AdminPanel();
+    Q_DISABLE_COPY_MOVE(AdminPanel)
+    explicit AdminPanel(const IDContainer &key, QWidget *parent = nullptr);
 
-    Admin adminstrator() const;
+    IDContainer getMainKey() const;
+    ~AdminPanel();
 
 private slots:
     void updateMetaData();
@@ -26,14 +27,21 @@ private slots:
     void togglePasswordShow(bool toggle);
 
 public slots:
-    void setAdminstrator(const Admin &value);
+    void setMainKey(const IDContainer &value);
     void goToInfoChangingMode();
+    void goToNormalMode();
+
+    void addArtist();
+    void viewArtist();
+    void removeArtist();
+    void editArtist(const QModelIndex &index);
 
 signals:
-    void adminstratorChanged(const Admin &value);
+    void mainKeyChanged(const IDContainer &value);
 
 private:
-    Admin admin;
+    IDContainer mainKey;
+    ArtistListModel mainModel;
     std::unique_ptr<Ui::AdminPanel> ui;
 };
 

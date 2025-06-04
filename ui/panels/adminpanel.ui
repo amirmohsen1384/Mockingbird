@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>788</width>
-    <height>747</height>
+    <width>700</width>
+    <height>700</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -22,6 +22,50 @@
       </property>
       <widget class="QWidget" name="mainPage">
        <layout class="QGridLayout" name="gridLayout_2">
+        <item row="0" column="0">
+         <widget class="QFrame" name="frame">
+          <property name="frameShape">
+           <enum>QFrame::Shape::NoFrame</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Shadow::Raised</enum>
+          </property>
+          <layout class="QGridLayout" name="adminInfoLayout">
+           <item row="0" column="0" rowspan="2">
+            <widget class="QLabel" name="adminPhotoLabel">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="pixmap">
+              <pixmap resource="../../resources.qrc">:/images/windows/person.png</pixmap>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1" rowspan="2" colspan="2">
+            <widget class="QLabel" name="adminNameLabel">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="font">
+              <font>
+               <family>Segoe UI</family>
+               <pointsize>15</pointsize>
+               <strikeout>false</strikeout>
+               <kerning>false</kerning>
+               <fontweight>ExtraLight</fontweight>
+              </font>
+             </property>
+             <property name="text">
+              <string>Adminstrator's Name</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
         <item row="0" column="1">
          <spacer name="adminRightSpacer">
           <property name="orientation">
@@ -35,19 +79,44 @@
           </property>
          </spacer>
         </item>
-        <item row="1" column="0" colspan="2">
-         <widget class="Line" name="mainSeparator">
-          <property name="orientation">
-           <enum>Qt::Orientation::Horizontal</enum>
+        <item row="0" column="2">
+         <widget class="QPushButton" name="changeInfoButton">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="font">
+           <font>
+            <bold>true</bold>
+            <underline>true</underline>
+           </font>
+          </property>
+          <property name="autoFillBackground">
+           <bool>false</bool>
+          </property>
+          <property name="text">
+           <string>Change Information</string>
+          </property>
+          <property name="default">
+           <bool>false</bool>
+          </property>
+          <property name="flat">
+           <bool>true</bool>
           </property>
          </widget>
         </item>
-        <item row="2" column="0" colspan="2">
+        <item row="3" column="0" colspan="3">
+         <widget class="QListView" name="artistView"/>
+        </item>
+        <item row="2" column="0" colspan="3">
          <widget class="QLabel" name="artistDescriptionLabel">
           <property name="font">
            <font>
             <pointsize>9</pointsize>
             <bold>true</bold>
+            <kerning>false</kerning>
            </font>
           </property>
           <property name="text">
@@ -55,10 +124,7 @@
           </property>
          </widget>
         </item>
-        <item row="3" column="0" colspan="2">
-         <widget class="QListView" name="artistView"/>
-        </item>
-        <item row="4" column="0" colspan="2">
+        <item row="4" column="0" colspan="3">
          <layout class="QHBoxLayout" name="artistControlLayout">
           <item>
            <spacer name="artistControlLeftSpacer">
@@ -75,12 +141,38 @@
           </item>
           <item>
            <widget class="QPushButton" name="addButton">
+            <property name="toolTip">
+             <string>Add</string>
+            </property>
             <property name="text">
              <string/>
             </property>
             <property name="icon">
              <iconset resource="../../resources.qrc">
               <normaloff>:/images/dialogs/add.png</normaloff>:/images/dialogs/add.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>40</width>
+              <height>40</height>
+             </size>
+            </property>
+            <property name="flat">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="editButton">
+            <property name="toolTip">
+             <string>View</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="../../resources.qrc">
+              <normaloff>:/images/dialogs/edit.png</normaloff>:/images/dialogs/edit.png</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -95,6 +187,9 @@
           </item>
           <item>
            <widget class="QPushButton" name="removeButton">
+            <property name="toolTip">
+             <string>Remove</string>
+            </property>
             <property name="text">
              <string/>
             </property>
@@ -104,8 +199,8 @@
             </property>
             <property name="iconSize">
              <size>
-              <width>48</width>
-              <height>48</height>
+              <width>40</width>
+              <height>40</height>
              </size>
             </property>
             <property name="flat">
@@ -128,89 +223,11 @@
           </item>
          </layout>
         </item>
-        <item row="0" column="0">
-         <widget class="QFrame" name="frame">
-          <property name="frameShape">
-           <enum>QFrame::Shape::NoFrame</enum>
+        <item row="1" column="0" colspan="3">
+         <widget class="Line" name="mainSeparator">
+          <property name="orientation">
+           <enum>Qt::Orientation::Horizontal</enum>
           </property>
-          <property name="frameShadow">
-           <enum>QFrame::Shadow::Raised</enum>
-          </property>
-          <layout class="QGridLayout" name="adminInfoLayout">
-           <item row="0" column="0" rowspan="2">
-            <widget class="QLabel" name="adminPhotoLabel">
-             <property name="text">
-              <string/>
-             </property>
-             <property name="pixmap">
-              <pixmap resource="../../resources.qrc">:/images/windows/person.png</pixmap>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="1" colspan="2">
-            <widget class="QLabel" name="adminNameLabel">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="font">
-              <font>
-               <family>Segoe UI</family>
-               <pointsize>15</pointsize>
-               <strikeout>false</strikeout>
-               <kerning>false</kerning>
-               <fontweight>ExtraLight</fontweight>
-              </font>
-             </property>
-             <property name="text">
-              <string>Adminstrator's Name</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="1">
-            <widget class="QPushButton" name="changeInfoButton">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="font">
-              <font>
-               <bold>true</bold>
-               <underline>true</underline>
-              </font>
-             </property>
-             <property name="autoFillBackground">
-              <bool>false</bool>
-             </property>
-             <property name="text">
-              <string>Change Information</string>
-             </property>
-             <property name="default">
-              <bool>false</bool>
-             </property>
-             <property name="flat">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="2">
-            <spacer name="changeInfoSpacer">
-             <property name="orientation">
-              <enum>Qt::Orientation::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>40</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-          </layout>
          </widget>
         </item>
        </layout>
@@ -558,8 +575,8 @@
    <slot>goToInfoChangingMode()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>246</x>
-     <y>128</y>
+     <x>283</x>
+     <y>126</y>
     </hint>
     <hint type="destinationlabel">
      <x>479</x>
@@ -615,11 +632,79 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>addButton</sender>
+   <signal>clicked()</signal>
+   <receiver>AdminPanel</receiver>
+   <slot>addArtist()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>46</x>
+     <y>700</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>35</x>
+     <y>739</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>removeButton</sender>
+   <signal>clicked()</signal>
+   <receiver>AdminPanel</receiver>
+   <slot>removeArtist()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>125</x>
+     <y>704</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>104</x>
+     <y>739</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>artistView</sender>
+   <signal>activated(QModelIndex)</signal>
+   <receiver>AdminPanel</receiver>
+   <slot>editArtist(QModelIndex)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>363</x>
+     <y>363</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>581</x>
+     <y>742</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>editButton</sender>
+   <signal>clicked()</signal>
+   <receiver>AdminPanel</receiver>
+   <slot>viewArtist()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>733</x>
+     <y>691</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>789</x>
+     <y>671</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>goToInfoChangingMode()</slot>
   <slot>rejectChanging()</slot>
   <slot>acceptChanging()</slot>
   <slot>togglePasswordShow(bool)</slot>
+  <slot>addArtist()</slot>
+  <slot>removeArtist()</slot>
+  <slot>editArtist(QModelIndex)</slot>
+  <slot>viewArtist()</slot>
  </slots>
 </ui>

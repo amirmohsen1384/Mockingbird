@@ -1,28 +1,30 @@
+#include "include/dialogs/artistedit.h"
+#include "include/dialogs/artistview.h"
 #include "include/panels/adminpanel.h"
 #include "ui_adminpanel.h"
 #include <QMessageBox>
 #include <exception>
 
-AdminPanel::AdminPanel(const Admin &admin, QWidget *parent) : AdminPanel(parent)
-{
-    setAdminstrator(admin);
-}
-
-AdminPanel::AdminPanel(QWidget *parent) : QMainWindow(parent)
+AdminPanel::AdminPanel(const IDContainer &key, QWidget *parent) : QMainWindow(parent)
 {
     ui = std::make_unique<Ui::AdminPanel>();
     ui->setupUi(this);
+
+    connect(this, &AdminPanel::mainKeyChanged, this, &AdminPanel::updateMetaData);
+    ui->artistView->setModel(&mainModel);
+    setMainKey(key);
 }
 
 AdminPanel::~AdminPanel() {}
 
-Admin AdminPanel::adminstrator() const
+IDContainer AdminPanel::getMainKey() const
 {
-    return admin;
+    return mainKey;
 }
 
 void AdminPanel::updateMetaData()
 {
+    const Admin admin = Admin::loadFromRecord(mainKey);
     ui->adminNameLabel->setText(admin.getFullName());
     ui->firstNameEdit->setText(admin.getFirstName());
     ui->lastNameEdit->setText(admin.getLastName());
@@ -30,11 +32,15 @@ void AdminPanel::updateMetaData()
     ui->passwordEdit->setText(admin.getPassword());
 }
 
-void AdminPanel::setAdminstrator(const Admin &value)
+void AdminPanel::setMainKey(const IDContainer &value)
 {
-    admin = value;
-    updateMetaData();
-    emit adminstratorChanged(value);
+    mainKey = value;
+    if(Admin::loadFromRecord(value).isNull() || !ID::isValid(value))
+    {
+        this->close();
+        throw std::runtime_error("The given adminstrator is not available or not valid.");
+    }
+    emit mainKeyChanged(mainKey);
 }
 
 void AdminPanel::rejectChanging()
@@ -45,9 +51,9 @@ void AdminPanel::rejectChanging()
 
 void AdminPanel::acceptChanging()
 {
+    Admin temp;
     try
     {
-        Admin temp;
         const QString lastName = ui->lastNameEdit->text();
         const QString userName = ui->userNameEdit->text();
         const QString password = ui->passwordEdit->text();
@@ -77,11 +83,9 @@ void AdminPanel::acceptChanging()
         return;
     }
 
-    // if(admin.saveToRecord())
-    // {
-    //     updateMetaData();
-    // }
-    ui->pageContainer->setCurrentWidget(ui->mainPage);
+    temp.saveToRecord(mainKey);
+    updateMetaData();
+    goToNormalMode();
 }
 
 void AdminPanel::togglePasswordShow(bool toggle)
@@ -101,4 +105,55 @@ void AdminPanel::togglePasswordShow(bool toggle)
 void AdminPanel::goToInfoChangingMode()
 {
     ui->pageContainer->setCurrentWidget(ui->informationPage);
+}
+
+void AdminPanel::goToNormalMode()
+{
+    ui->pageContainer->setCurrentWidget(ui->mainPage);
+}
+
+void AdminPanel::addArtist()
+{
+    ArtistModel model(ID::generateKey());
+    ArtistEdit editor;
+    editor.setSourceModel(&model);
+    if(editor.exec() == QDialog::Accepted)
+    {
+        mainModel.insertArtist(model);
+    }
+}
+
+void AdminPanel::viewArtist()
+{
+    const QModelIndex &index = ui->artistView->currentIndex();
+    if(index.isValid())
+    {
+        ArtistModel model(index.data(Artist::KeyRole).value<IDContainer>());
+        ArtistView view;
+        view.setSourceModel(&model);
+        view.exec();
+    }
+}
+
+void AdminPanel::removeArtist()
+{
+    const QModelIndex index = ui->artistView->currentIndex();
+    if(index.isValid())
+    {
+        mainModel.removeArtist(index.data(Artist::KeyRole).value<IDContainer>());
+    }
+}
+
+void AdminPanel::editArtist(const QModelIndex &index)
+{
+    if(index.isValid())
+    {
+        ArtistModel model(index.data(Artist::KeyRole).value<IDContainer>());
+        ArtistEdit editor;
+        editor.setSourceModel(&model);
+        if(editor.exec() == QDialog::Accepted)
+        {
+            mainModel.modifyArtist(model);
+        }
+    }
 }
