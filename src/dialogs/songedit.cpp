@@ -212,11 +212,11 @@ QString SongEdit::getName() const
 Song SongEdit::getSong() const
 {
     Song target;
+    target.setAddress(getLocation());
     target.setName(getName());
     target.setCover(getCover());
     target.setGenre(getGenre());
     target.setArtist(getArtist());
-    target.setAddress(getLocation());
     target.setPublicationYear(getReleasedYear());
     return target;
 }
@@ -228,16 +228,17 @@ void SongEdit::setReleasedYear(int value)
 
 void SongEdit::setSong(const Song &value)
 {
+    setLocation(value.address);
     setName(value.name);
     setGenre(value.genre);
     setCover(value.cover);
     setArtist(value.artist);
-    setLocation(value.address);
     setReleasedYear(value.publicationYear);
     if(!value.name.isEmpty())
     {
         setWindowTitle(QString("%1 - Song Editor").arg(value.name));
     }
+
 }
 
 void SongEdit::setGenre(Song::Genre value)
