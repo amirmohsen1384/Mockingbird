@@ -79,14 +79,12 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
     }
     case Qt::DecorationRole:
     {
-        if(target.getCover().isNull())
+        QImage image = target.getCover();
+        if(image.isNull())
         {
             return QPixmap(":/images/playlist/song.png");
         }
-        else
-        {
-            return target.getCover().scaled(_cover_size, Qt::KeepAspectRatio, Qt::SmoothTransformation);
-        }
+        return image.scaled(_cover_size, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
     }
     case Qt::UserRole:
     {

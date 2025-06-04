@@ -123,7 +123,12 @@ QVariant ArtistListModel::data(const QModelIndex &index, int role) const
     }
     case Qt::DecorationRole:
     {
-        return value.photo.scaled(_cover_size, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+        QImage photo = value.photo;
+        if(photo.isNull())
+        {
+            photo = QImage(":/images/windows/person.png");
+        }
+        return photo.scaled(_cover_size, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
     }
     case Artist::KeyRole:
     {
