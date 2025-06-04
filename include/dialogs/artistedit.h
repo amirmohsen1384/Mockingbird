@@ -28,6 +28,7 @@ public:
     virtual void accept() override;
 
 public slots:
+    void removeCover();
     void addPlaylist();
     void removePlaylist();
     void editPlaylist(const QModelIndex &index);

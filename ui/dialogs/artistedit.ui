@@ -89,6 +89,59 @@
         </widget>
        </item>
        <item>
+        <layout class="QHBoxLayout" name="coverControlLayout">
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <spacer name="coverLeftSpacer">
+           <property name="orientation">
+            <enum>Qt::Orientation::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="removeCoverButton">
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="../../resources.qrc">
+             <normaloff>:/images/dialogs/delete.png</normaloff>:/images/dialogs/delete.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>32</width>
+             <height>32</height>
+            </size>
+           </property>
+           <property name="flat">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="coverRightSpacer">
+           <property name="orientation">
+            <enum>Qt::Orientation::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+       <item>
         <widget class="QTextEdit" name="biographyEdit">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -243,8 +296,8 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>483</x>
-     <y>826</y>
+     <x>494</x>
+     <y>738</y>
     </hint>
     <hint type="destinationlabel">
      <x>401</x>
@@ -259,8 +312,8 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>593</x>
-     <y>829</y>
+     <x>604</x>
+     <y>738</y>
     </hint>
     <hint type="destinationlabel">
      <x>627</x>
@@ -275,8 +328,8 @@
    <slot>addPlaylist()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>297</x>
-     <y>767</y>
+     <x>320</x>
+     <y>686</y>
     </hint>
     <hint type="destinationlabel">
      <x>165</x>
@@ -291,8 +344,8 @@
    <slot>removePlaylist()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>350</x>
-     <y>757</y>
+     <x>372</x>
+     <y>686</y>
     </hint>
     <hint type="destinationlabel">
      <x>7</x>
@@ -316,10 +369,27 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>removeCoverButton</sender>
+   <signal>clicked()</signal>
+   <receiver>ArtistEdit</receiver>
+   <slot>removeCover()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>332</x>
+     <y>470</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>657</x>
+     <y>457</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>editPlaylist(QModelIndex)</slot>
   <slot>addPlaylist()</slot>
   <slot>removePlaylist()</slot>
+  <slot>removeCover()</slot>
  </slots>
 </ui>

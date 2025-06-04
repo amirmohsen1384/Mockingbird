@@ -107,6 +107,11 @@ void ArtistEdit::accept()
     }
 }
 
+void ArtistEdit::removeCover()
+{
+    ui->photoView->setImage(QImage());
+}
+
 void ArtistEdit::addPlaylist()
 {
     PlaylistEdit editor;
