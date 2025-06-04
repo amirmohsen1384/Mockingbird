@@ -12,6 +12,9 @@ class ImageView : public QWidget
     QImage image;
     bool dragging = false;
 
+private slots:
+    void openImageFile();
+
 protected:
     virtual void mouseDoubleClickEvent(QMouseEvent *event) override;
     virtual void dragLeaveEvent(QDragLeaveEvent *event) override;
@@ -31,7 +34,6 @@ public slots:
     void setImage(const QImage &image);
 
 signals:
-    void viewActivated();
     void imageChanged(const QImage &image);
 };
 

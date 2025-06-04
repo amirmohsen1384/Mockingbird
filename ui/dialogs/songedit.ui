@@ -393,7 +393,7 @@
   <customwidget>
    <class>ImageView</class>
    <extends>QWidget</extends>
-   <header location="global">include/components/imageview.h</header>
+   <header>include/components/imageview.h</header>
    <container>1</container>
    <slots>
     <signal>viewActivated()</signal>
@@ -441,22 +441,6 @@
     <hint type="destinationlabel">
      <x>523</x>
      <y>88</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>coverView</sender>
-   <signal>viewActivated()</signal>
-   <receiver>SongEdit</receiver>
-   <slot>openImageFile()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>331</x>
-     <y>187</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>509</x>
-     <y>243</y>
     </hint>
    </hints>
   </connection>
@@ -533,7 +517,6 @@
   <signal>genreChanged(Song::Genre)</signal>
   <slot>openSongFile()</slot>
   <slot>controlPlayback()</slot>
-  <slot>openImageFile()</slot>
   <slot>removeCover()</slot>
   <slot>updateMetaData()</slot>
  </slots>

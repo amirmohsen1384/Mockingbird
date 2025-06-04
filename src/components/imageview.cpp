@@ -1,13 +1,30 @@
 #include "include/components/imageview.h"
 #include <QImageReader>
+#include <QFileDialog>
 #include <QPaintEvent>
 #include <QMimeData>
 #include <QPainter>
 
+void ImageView::openImageFile()
+{
+    auto dialog = ImageFile::initializeImageDialog(this->parentWidget());
+    if(dialog->exec() == QDialog::Accepted)
+    {
+        const QString fileName = dialog->selectedFiles().constFirst();
+        QImageReader reader(fileName);
+        setImage(reader.read());
+    }
+}
+
+
 void ImageView::mouseDoubleClickEvent(QMouseEvent *event)
 {
     Q_UNUSED(event)
-    emit viewActivated();
+    if(!acceptDrops())
+    {
+        return;
+    }
+    openImageFile();
 }
 
 void ImageView::dragLeaveEvent(QDragLeaveEvent *event)

@@ -121,17 +121,6 @@ void SongEdit::openSongFile()
     }
 }
 
-void SongEdit::openImageFile()
-{
-    auto dialog = ImageFile::initializeImageDialog(this);
-    if(dialog->exec() == QDialog::Accepted)
-    {
-        const QString fileName = dialog->selectedFiles().constFirst();
-        QImageReader reader(fileName);
-        setCover(reader.read());
-    }
-}
-
 void SongEdit::updateMetaData()
 {
     // Fetches the meta data from the media player

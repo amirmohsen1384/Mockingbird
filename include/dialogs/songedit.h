@@ -24,7 +24,6 @@ protected:
 private slots:
     void updateSource();
     void openSongFile();
-    void openImageFile();
     void updateMetaData();
     void controlPlayback();
     void updatePlaybackControl(bool value);
