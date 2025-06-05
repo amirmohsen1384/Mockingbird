@@ -191,7 +191,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QCheckBox" name="checkBox">
+    <widget class="QCheckBox" name="playlistModeCheckBox">
      <property name="font">
       <font>
        <pointsize>9</pointsize>
@@ -217,12 +217,6 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>Player</class>
-   <extends>QWidget</extends>
-   <header>include/components/player.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>ImageView</class>
    <extends>QWidget</extends>
    <header>include/components/imageview.h</header>
@@ -230,6 +224,12 @@
    <slots>
     <signal>viewActivated()</signal>
    </slots>
+  </customwidget>
+  <customwidget>
+   <class>Player</class>
+   <extends>QWidget</extends>
+   <header>include/components/player.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>
@@ -251,7 +251,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>checkBox</sender>
+   <sender>playlistModeCheckBox</sender>
    <signal>clicked(bool)</signal>
    <receiver>PlaylistPlayer</receiver>
    <slot>toggleSingleMode(bool)</slot>

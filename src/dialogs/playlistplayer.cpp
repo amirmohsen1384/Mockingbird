@@ -14,6 +14,10 @@ void PlaylistPlayer::updateModel()
         const QString name = model->headerData().toString();
         ui->titleLabel->setText(name.isEmpty() ? QString() : name);
         model->setHeaderData(0, Qt::Horizontal, 0, Playlist::PlayingRole);
+        if(model->rowCount() == 1)
+        {
+            ui->playlistModeCheckBox->setVisible(false);
+        }
     }
 }
 
