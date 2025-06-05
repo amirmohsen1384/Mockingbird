@@ -63,9 +63,16 @@ void MainDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
     QFont font = painter->font();
     painter->setFont(nameFont);
     painter->drawText(nameRegion, index.data(Qt::DisplayRole).toString(), textOptions);
-    painter->setFont(font);
+
+    if(!index.data(Qt::BackgroundRole).isNull())
+    {
+        painter->setFont(QFont("Segoe UI", 9, QFont::Bold));
+        painter->drawText(nameRegion, "Playing...", QTextOption(Qt::AlignRight | Qt::AlignBottom));
+    }
 
     painter->setRenderHints(hints);
+    painter->setFont(font);
+
     painter->restore();
 }
 
