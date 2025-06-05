@@ -126,6 +126,10 @@ QVariant ArtistModel::data(const QModelIndex &index, int role) const
     {
         return value->headerData(Playlist::NameRole);
     }
+    case Artist::KeyListRole:
+    {
+        return QVariant::fromValue(value.get()->getKeys());
+    }
     case Artist::ModelRole:
     {
         return QVariant::fromValue<PlaylistModel*>(value.get());
