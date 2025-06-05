@@ -23,84 +23,69 @@ ArtistListModel::ArtistListModel(QObject *parent) : QAbstractListModel(parent)
     }
 }
 
-
-// This namespace includes functions to permenantly remove an entity from the whole database.
-namespace SensitiveRemoval
+namespace Sensitive
 {
-    // This function removes a song from the database
     bool removeSong(const IDContainer &key)
     {
-        // Retrieves the filename of the song
-        const QString &filename = MainFolder::getSongs().absoluteFilePath(QString::number(key));
-
-        // Checks if the song itself exists.
+        const QString &filename = MainFolder::getSongs().absoluteFilePath(QString("%1.sof").arg(QString::number(key)));
         if(!QFile::exists(filename))
         {
             return false;
         }
 
-        // Removes the song from other playlists.
         auto playlists = MainFolder::getPlaylists().entryInfoList({"*"}, QDir::NoDotAndDotDot | QDir::AllDirs);
-        for(const auto &entry : playlists)
+        for(const auto &target : playlists)
         {
-            const IDContainer &value = entry.baseName().toLongLong();
-            IDs keys = Playlist::loadIDsFromRecord(value);
-            auto it = std::lower_bound(keys.cbegin(), keys.cend(), value);
-            if(*it == value && it != keys.cend())
+            IDContainer key = target.baseName().toLongLong();
+
+            IDs playlistKeys = Playlist::loadIDsFromRecord(key);
+
+            auto it = std::lower_bound(playlistKeys.cbegin(), playlistKeys.cend(), key);
+            if(*it == key && it != playlistKeys.cend())
             {
-                keys.remove(std::distance(keys.cbegin(), it));
+                int index = std::distance(playlistKeys.cbegin(), it);
+                playlistKeys.remove(index);
+                Playlist::saveIDsToRecord(playlistKeys, key);
             }
-            Playlist::saveIDsToRecord(keys, value);
         }
 
-        // Removes the file at the end.
         return QFile::remove(filename);
     }
 
-    // This function removes a playlist from the database
     bool removePlaylist(const IDContainer &key)
     {
-        // Retrieves the name of the playlist
         QDir directory(MainFolder::getPlaylists().absoluteFilePath(QString::number(key)));
         if(!directory.exists())
         {
             return false;
         }
 
-        // Loads IDs from the record
         IDs keys = Playlist::loadIDsFromRecord(key);
         for(const IDContainer &value : keys)
         {
             removeSong(value);
         }
 
-        // Removes the directory at the end
         return directory.removeRecursively();
     }
 
-    // This function removes an artist from the database
     bool removeArtist(const IDContainer &key)
     {
-        // Retrieves the name of the artist
         QDir directory(MainFolder::getArtists().absoluteFilePath(QString::number(key)));
         if(!directory.exists())
         {
             return false;
         }
 
-        // Loads IDs from the record
         IDs keys = Artist::loadIDsFromRecord(key);
         for(const IDContainer &value : keys)
         {
             removePlaylist(value);
         }
 
-        // Removes the directory at the end
         return directory.removeRecursively();
     }
 }
-
-
 
 int ArtistListModel::rowCount(const QModelIndex &parent) const
 {
@@ -195,7 +180,7 @@ bool ArtistListModel::removeRows(int row, int count, const QModelIndex &parent)
     for(int i = 0; i < count; ++i)
     {
         const auto &target = container.takeAt(row);
-        SensitiveRemoval::removeArtist(target.key);
+        Sensitive::removeArtist(target.key);
     }
     endRemoveRows();
     return true;
@@ -218,57 +203,54 @@ QModelIndex ArtistListModel::fromKey(const IDContainer &key) const
     return QModelIndex();
 }
 
-void ArtistListModel::modifyArtist(const ArtistModel &model)
+void ArtistListModel::editArtist(const ArtistModel &newModel)
 {
-    const QModelIndex position = fromKey(model.mainKey());
+    if(!ID::isValid(newModel.mainKey()))
+    {
+        return;
+    }
+    const QModelIndex position = fromKey(newModel.mainKey());
     if(!position.isValid())
     {
         return;
     }
 
-    ArtistModel initial(model.mainKey());
-    const auto &final = model.getKeys();
-    for(const auto &value : initial.getContainer())
+    ArtistModel oldModel;
+    oldModel.setMainKey(newModel.mainKey());
+
+    const IDs oldKeys = oldModel.getKeys();
+    const IDs newKeys = newModel.getKeys();
+    for(const IDContainer &oldKey : oldKeys)
     {
-        const IDContainer initial = value->getID();
-        auto it = std::lower_bound(final.cbegin(), final.cend(), initial);
-        if(*it == initial && it != final.cend())
+        auto threat = std::lower_bound(newKeys.cbegin(), newKeys.cend(), oldKey);
+        if(*threat == oldKey && threat != newKeys.cend())
         {
-            const auto &finalPlaylist = model.getContainer().at(std::distance(final.cbegin(), it));
-            const auto &finalSongs = finalPlaylist->getStore();
-            const auto &initialSongs = value->getStore();
-            for(const auto &pair : initialSongs)
+            IDs newSongs = newModel.fromKey(oldKey).data(Artist::KeyListRole).value<IDs>();
+            IDs oldSongs = Playlist::loadIDsFromRecord(oldKey);
+            for(const IDContainer &oldSong : oldSongs)
             {
-                auto it = std::lower_bound(finalSongs.cbegin(), finalSongs.cend(), pair,
-                    [&] (const SongInfo &one, const SongInfo &two)
-                    {
-                        return one.first < two.first;
-                    }
-                );
-                if(it->first != pair.first || it == finalSongs.cend())
+                auto target = std::lower_bound(newSongs.cbegin(), newSongs.cend(), oldSong);
+                if(*target != oldSong || target == newSongs.cend())
                 {
-                    SensitiveRemoval::removeSong(pair.first);
+                    Sensitive::removeSong(oldSong);
                 }
             }
-            for(const auto &target : finalSongs)
-            {
-                target.second.saveToRecord(target.first);
-            }
-            finalPlaylist->saveToRecord();
         }
         else
         {
-            SensitiveRemoval::removePlaylist(initial);
+            Sensitive::removePlaylist(oldKey);
         }
     }
-    model.saveToRecord();
 
-    DataContainer data;
-    data.name = model.headerData(0, Qt::Horizontal, Artist::NameRole).toString();
-    data.photo = model.headerData(0, Qt::Horizontal, Artist::PhotoRole).value<QImage>();
-    data.key = model.headerData(0, Qt::Horizontal, Artist::KeyRole).value<IDContainer>();
-
-    container.replace(position.row(), data);
-
-    emit dataChanged(position, position, {Qt::DisplayRole, Qt::DecorationRole, Artist::KeyRole});
+    for(auto i = 0; i < newModel.rowCount(); ++i)
+    {
+        const QModelIndex &index = newModel.index(i);
+        auto model = index.data(Artist::ModelRole).value<PlaylistModel*>();
+        for(const SongInfo &info : model->getStore())
+        {
+            info.second.saveToRecord(info.first);
+        }
+        model->saveToRecord();
+    }
+    newModel.saveToRecord();
 }
