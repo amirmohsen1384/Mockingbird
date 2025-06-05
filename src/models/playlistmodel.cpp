@@ -71,7 +71,7 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
     }
     case Qt::BackgroundRole:
     {
-        return index.row() == current ? QColor(180, 255, 240) : QVariant();
+        return index.row() == current ? QColor(230, 250, 120) : QVariant();
     }
     case Qt::FontRole:
     {

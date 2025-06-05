@@ -28,10 +28,15 @@ void MainDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
     auto hints = painter->renderHints();
     painter->setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform | QPainter::TextAntialiasing);
 
-    if(option.state.testFlag(QStyle::State_Selected))
+    if(!index.data(Qt::BackgroundRole).isNull())
+    {
+        painter->fillRect(option.rect, index.data(Qt::BackgroundRole).value<QColor>());
+    }
+    else if(option.state.testFlag(QStyle::State_Selected))
     {
         painter->fillRect(option.rect, QColor(180, 255, 240));
     }
+
 
     painter->save();
     painter->translate(option.rect.topLeft() + QPoint(margins.left(), margins.top()));
