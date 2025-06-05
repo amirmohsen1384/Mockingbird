@@ -39,11 +39,19 @@ ArtistEdit::ArtistEdit(QWidget *parent) : QDialog(parent)
 
     ui->addButton->setVisible(false);
     ui->removeButton->setVisible(false);
+    ui->removeCoverButton->setVisible(false);
 
     delegate = std::make_unique<MainDelegate>();
     delegate->setPrimary(Qt::green);
     delegate->setSecondary(Qt::darkBlue);
     ui->playlistView->setItemDelegate(delegate.get());
+
+    connect(ui->photoView, &ImageView::imageChanged, this,
+        [&](const QImage &value)
+        {
+            ui->removeCoverButton->setVisible(!value.isNull());
+        }
+    );
 }
 
 ArtistEdit::~ArtistEdit() {}
