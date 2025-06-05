@@ -19,7 +19,7 @@ void PlaylistEdit::updateModel()
                 Q_UNUSED(selected)
                 Q_UNUSED(deselected)
                 auto indexes = ui->songView->selectionModel()->selectedIndexes();
-                ui->removeButton->setDisabled(indexes.isEmpty());
+                ui->removeButton->setVisible(!indexes.isEmpty());
             }
         );
     }
@@ -31,7 +31,6 @@ void PlaylistEdit::updateControl()
     ui->songView->setEnabled(sourceModel != nullptr);
     ui->nameLabel->setEnabled(sourceModel != nullptr);
     ui->addButton->setVisible(sourceModel != nullptr);
-    ui->removeButton->setVisible(sourceModel != nullptr);
 }
 
 PlaylistEdit::PlaylistEdit(QWidget *parent) : QDialog(parent)
