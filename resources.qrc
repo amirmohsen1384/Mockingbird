@@ -4,7 +4,6 @@
         <file>images/player/pause.png</file>
         <file>images/player/play.png</file>
         <file>images/player/replay-10.png</file>
-        <file>images/player/speed.png</file>
         <file>images/player/shuffle.png</file>
         <file>images/player/no-repeat.png</file>
         <file>images/player/no-shuffle.png</file>
@@ -24,8 +23,6 @@
         <file>images/logos/logo-3.png</file>
         <file>images/logos/logo-4.png</file>
         <file>images/icon.ico</file>
-        <file>images/playlist/playlist.png</file>
-        <file>images/genres/no-genre.png</file>
         <file>images/view/filter.png</file>
         <file>images/view/search.png</file>
         <file>images/view/sort.png</file>
@@ -34,8 +31,6 @@
         <file>images/dialogs/delete.png</file>
         <file>images/player/advance-next.png</file>
         <file>images/player/advance-prev.png</file>
-        <file>images/dialogs/move-down.png</file>
-        <file>images/dialogs/move-up.png</file>
         <file>images/windows/person.png</file>
         <file>images/windows/back.png</file>
         <file>images/windows/check.png</file>
