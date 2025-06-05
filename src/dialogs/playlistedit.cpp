@@ -38,9 +38,13 @@ PlaylistEdit::PlaylistEdit(QWidget *parent) : QDialog(parent)
 {
     ui = std::make_unique<Ui::PlaylistEdit>();
     ui->setupUi(this);
+
     ui->addButton->setVisible(false);
     ui->removeButton->setVisible(false);
+
     delegate = std::make_unique<MainDelegate>();
+    delegate->setPrimary(Qt::darkRed);
+    delegate->setSecondary(Qt::blue);
     ui->songView->setItemDelegate(delegate.get());
 }
 

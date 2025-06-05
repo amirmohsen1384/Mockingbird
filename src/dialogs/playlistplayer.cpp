@@ -63,6 +63,8 @@ PlaylistPlayer::PlaylistPlayer(QWidget *parent) : QDialog(parent), ui(new Ui::Pl
 {
     ui->setupUi(this);
     delegate = std::make_unique<MainDelegate>();
+    delegate->setSecondary(Qt::blue);
+    delegate->setPrimary(Qt::darkGreen);
     ui->playlistView->setItemDelegate(delegate.get());
     connect(ui->player, &Player::currentTrackChanged, this, &PlaylistPlayer::updateCurrentTrack);
 }
