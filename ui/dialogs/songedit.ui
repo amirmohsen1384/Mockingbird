@@ -16,6 +16,9 @@
   <property name="windowTitle">
    <string>Untitled - Song Editor</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">background-color:white</string>
+  </property>
   <property name="modal">
    <bool>true</bool>
   </property>
