@@ -5,9 +5,9 @@ QPixmap GenreModel::toPixmap(const Song::Genre &genre)
 {
     switch(genre)
     {
-        case Song::Genre::Classic: 
+        case Song::Genre::Classical: 
         {
-            return QPixmap(":/images/genres/classic.png");
+            return QPixmap(":/images/genres/classical.png");
         }
         case Song::Genre::Pop: 
         {
@@ -37,7 +37,111 @@ QPixmap GenreModel::toPixmap(const Song::Genre &genre)
         {
             return QPixmap(":/images/genres/folk.png");
         }
-        default: 
+        case Song::Genre::Blues:
+        {
+            return QPixmap(":/images/genres/blues.png");
+        }
+        case Song::Genre::Reggae:
+        {
+            return QPixmap(":/images/genres/reggae.png");
+        }
+        case Song::Genre::Alternative:
+        {
+            return QPixmap(":/images/genres/alternative.png");
+        }
+        case Song::Genre::Cassette:
+        {
+            return QPixmap(":/images/genres/cassette.png");
+        }
+        case Song::Genre::Children:
+        {
+            return QPixmap(":/images/genres/children.png");
+        }
+        case Song::Genre::Christian:
+        {
+            return QPixmap(":/images/genres/christian.png");
+        }
+        case Song::Genre::Demon:
+        {
+            return QPixmap(":/images/genres/demon.png");
+        }
+        case Song::Genre::EasyListening:
+        {
+            return QPixmap(":/images/genres/easy-listening.png");
+        }
+        case Song::Genre::Enka:
+        {
+            return QPixmap(":/images/genres/enka.png");
+        }
+        case Song::Genre::FrenchMusic:
+        {
+            return QPixmap(":/images/genres/french.png");
+        }
+        case Song::Genre::Goth:
+        {
+            return QPixmap(":/images/genres/goth.png");
+        }
+        case Song::Genre::HipHop:
+        {
+            return QPixmap(":/images/genres/hip-hop.png");
+        }
+        case Song::Genre::International:
+        {
+            return QPixmap(":/images/genres/international.png");
+        }
+        case Song::Genre::IrishMusic:
+        {
+            return QPixmap(":/images/genres/irish.png");
+        }
+        case Song::Genre::Lullaby:
+        {
+            return QPixmap(":/images/genres/lullaby.png");
+        }
+        case Song::Genre::Metal:
+        {
+            return QPixmap(":/images/genres/metal.png");
+        }
+        case Song::Genre::Oud:
+        {
+            return QPixmap(":/images/genres/oud.png");
+        }
+        case Song::Genre::ProgressiveRock:
+        {
+            return QPixmap(":/images/genres/progressive-rock.png");
+        }
+        case Song::Genre::Punk:
+        {
+            return QPixmap(":/images/genres/punk.png");
+        }
+        case Song::Genre::RnB:
+        {
+            return QPixmap(":/images/genres/rnb.png");
+        }
+        case Song::Genre::Rhythm:
+        {
+            return QPixmap(":/images/genres/rhythm.png");
+        }
+        case Song::Genre::Ska:
+        {
+            return QPixmap(":/images/genres/ska.png");
+        }
+        case Song::Genre::TexMex:
+        {
+            return QPixmap(":/images/genres/tex-mex.png");
+        }
+        case Song::Genre::UndergroundMusic:
+        {
+            return QPixmap(":/images/genres/underground.png");
+        }
+        case Song::Genre::UsMusic:
+        {
+            return QPixmap(":/images/genres/us.png");
+        }
+        case Song::Genre::Vaporwave:
+        {
+            return QPixmap(":/images/genres/vaporwave.png");
+        }
+        default:    
         {
             return QPixmap();
         }
@@ -48,17 +152,17 @@ QString GenreModel::toString(const Song::Genre &genre)
 {
     switch(genre)
     {
-        case Song::Genre::Classic:
+        case Song::Genre::Classical:
         {
-            return QString("Classic");
+            return QString("Classical Music");
         }
         case Song::Genre::Pop:
         {
-            return QString("Pop");
+            return QString("Pop Music");
         }
         case Song::Genre::Rock:
         {
-            return QString("Rock");
+            return QString("Rock Music");
         }
         case Song::Genre::Jazz:
         {
@@ -66,19 +170,123 @@ QString GenreModel::toString(const Song::Genre &genre)
         }
         case Song::Genre::Rap:
         {
-            return QString("Rap");
+            return QString("Rap Music");
         }
         case Song::Genre::Electronic:
         {
-            return QString("Electronic");
+            return QString("Electronic Music");
         }
         case Song::Genre::Country:
         {
-            return QString("Country");
+            return QString("Country Music");
         }
         case Song::Genre::Folk:
         {
-            return QString("Folk");
+            return QString("Folk Music");
+        }
+        case Song::Genre::Blues:
+        {
+            return QString("Blues");
+        }
+        case Song::Genre::Reggae:
+        {
+            return QString("Reggae");
+        }
+        case Song::Genre::Alternative:
+        {
+            return QString("Alternative Music");
+        }
+        case Song::Genre::Cassette:
+        {
+            return QString("Cassette");
+        }
+        case Song::Genre::Children:
+        {
+            return QString("Children Music");
+        }
+        case Song::Genre::Christian:
+        {
+            return QString("Christian Music");
+        }
+        case Song::Genre::Demon:
+        {
+            return QString("Demon");
+        }
+        case Song::Genre::EasyListening:
+        {
+            return QString("Easy Listening");
+        }
+        case Song::Genre::Enka:
+        {
+            return QString("Enka");
+        }
+        case Song::Genre::FrenchMusic:
+        {
+            return QString("French Music");
+        }
+        case Song::Genre::Goth:
+        {
+            return QString("Goth");
+        }
+        case Song::Genre::HipHop:
+        {
+            return QString("Hip Hop");
+        }
+        case Song::Genre::International:
+        {
+            return QString("International Music");
+        }
+        case Song::Genre::IrishMusic:
+        {
+            return QString("Irish Music");
+        }
+        case Song::Genre::Lullaby:
+        {
+            return QString("Lullaby");
+        }
+        case Song::Genre::Metal:
+        {
+            return QString("Metal Music");
+        }
+        case Song::Genre::Oud:
+        {
+            return QString("Oud Music");
+        }
+        case Song::Genre::ProgressiveRock:
+        {
+            return QString("Progressive Rock");
+        }
+        case Song::Genre::Punk:
+        {
+            return QString("Punk Music");
+        }
+        case Song::Genre::RnB:
+        {
+            return QString("RnB Music");
+        }
+        case Song::Genre::Rhythm:
+        {
+            return QString("Rhythm");
+        }
+        case Song::Genre::Ska:
+        {
+            return QString("Ska");
+        }
+        case Song::Genre::TexMex:
+        {
+            return QString("Tex-Mex");
+        }
+        case Song::Genre::UndergroundMusic:
+        {
+            return QString("Underground Music");
+        }
+        case Song::Genre::UsMusic:
+        {
+            return QString("US Music");
+        }
+        case Song::Genre::Vaporwave:
+        {
+            return QString("Vaporwave");
         }
         default:
         {
@@ -102,7 +310,7 @@ int GenreModel::rowCount(const QModelIndex &parent) const
     }
 
     // The count of available enumeration values
-    return 8;
+    return 34;
 }
 
 QVariant GenreModel::data(const QModelIndex &index, int role) const

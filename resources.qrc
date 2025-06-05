@@ -37,24 +37,13 @@
         <file>images/genres/alternative.png</file>
         <file>images/genres/blues.png</file>
         <file>images/genres/cassette.png</file>
-        <file>images/genres/children-music.png</file>
-        <file>images/genres/christian-music.png</file>
-        <file>images/genres/classic-music.png</file>
-        <file>images/genres/country-music.png</file>
         <file>images/genres/demon.png</file>
         <file>images/genres/easy-listening.png</file>
-        <file>images/genres/electronic-music.png</file>
         <file>images/genres/enka.png</file>
-        <file>images/genres/folk-music.png</file>
-        <file>images/genres/french-music.png</file>
         <file>images/genres/goth.png</file>
         <file>images/genres/hip-hop.png</file>
-        <file>images/genres/international-music.png</file>
-        <file>images/genres/irish-music.png</file>
         <file>images/genres/lullaby.png</file>
-        <file>images/genres/metal-music.png</file>
         <file>images/genres/oud.png</file>
-        <file>images/genres/pop-music.png</file>
         <file>images/genres/progressive-rock.png</file>
         <file>images/genres/punk.png</file>
         <file>images/genres/reggae.png</file>
@@ -62,8 +51,19 @@
         <file>images/genres/rnb.png</file>
         <file>images/genres/ska.png</file>
         <file>images/genres/tex-mex.png</file>
-        <file>images/genres/underground-music.png</file>
-        <file>images/genres/us-music.png</file>
         <file>images/genres/vaporwave.png</file>
+        <file>images/genres/children.png</file>
+        <file>images/genres/christian.png</file>
+        <file>images/genres/classical.png</file>
+        <file>images/genres/country.png</file>
+        <file>images/genres/electronic.png</file>
+        <file>images/genres/folk.png</file>
+        <file>images/genres/french.png</file>
+        <file>images/genres/international.png</file>
+        <file>images/genres/irish.png</file>
+        <file>images/genres/metal.png</file>
+        <file>images/genres/pop.png</file>
+        <file>images/genres/underground.png</file>
+        <file>images/genres/us.png</file>
     </qresource>
 </RCC>

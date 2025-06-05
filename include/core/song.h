@@ -16,9 +16,35 @@ public:
         Pop,
         Jazz,
         Electronic,
-        Classic,
+        Classical,
         Folk,
-        Country
+        Country,
+        Blues,
+        Reggae,
+        Alternative,
+        Cassette,
+        Children,
+        Christian,
+        Demon,
+        EasyListening,
+        Enka,
+        FrenchMusic,
+        Goth,
+        HipHop,
+        International,
+        IrishMusic,
+        Lullaby,
+        Metal,
+        Oud,
+        ProgressiveRock,
+        Punk,
+        RnB,
+        Rhythm,
+        Ska,
+        TexMex,
+        UndergroundMusic,
+        UsMusic,
+        Vaporwave
     };
 
 public:
@@ -54,7 +80,7 @@ private:
     QImage cover;
     QString artist;
     int publicationYear;
-    Genre genre = Genre::Classic;
+    Genre genre = Genre::Classical;
 };
 
 QDataStream& operator<<(QDataStream &stream, const Song &another);
