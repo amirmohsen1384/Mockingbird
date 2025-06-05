@@ -31,7 +31,7 @@
       </font>
      </property>
      <property name="tabPosition">
-      <enum>QTabWidget::TabPosition::South</enum>
+      <enum>QTabWidget::TabPosition::North</enum>
      </property>
      <property name="currentIndex">
       <number>0</number>
@@ -116,7 +116,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
      </widget>
      <widget class="QWidget" name="playlistWidget">
       <attribute name="title">
-       <string>Playlists</string>
+       <string>Albums</string>
       </attribute>
       <layout class="QGridLayout" name="playlistLayout">
        <item row="0" column="0" colspan="2">
