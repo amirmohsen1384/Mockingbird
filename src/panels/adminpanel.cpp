@@ -177,7 +177,7 @@ void AdminPanel::editArtist()
         editor.setSourceModel(&model);
         if(editor.exec() == QDialog::Accepted)
         {
-            mainModel.modifyArtist(model);
+            mainModel.editArtist(model);
         }
     }
 }

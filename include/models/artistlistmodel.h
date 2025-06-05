@@ -27,8 +27,8 @@ public:
 
     QModelIndex fromKey(const IDContainer &key) const;
 
+    void editArtist(const ArtistModel &newModel);
     void insertArtist(const ArtistModel &model);
-    void modifyArtist(const ArtistModel &model);
     bool removeArtist(const IDContainer &key);
 
 private:
