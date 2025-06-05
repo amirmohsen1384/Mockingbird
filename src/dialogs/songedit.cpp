@@ -25,8 +25,11 @@ SongEdit::SongEdit(QWidget *parent) : QDialog{parent}
     player->setAudioOutput(output);
 
     ui->genreEdit->setModel(&model);
+
     ui->playbackButton->setVisible(false);
     ui->initializeButton->setVisible(false);
+    ui->removePhotoButton->setVisible(false);
+
     ui->releaseYearEdit->setValue(QDate::currentDate().year());
 
     connect(this, &SongEdit::locationChanged, player, &QMediaPlayer::setSource);
@@ -59,6 +62,13 @@ SongEdit::SongEdit(QWidget *parent) : QDialog{parent}
     );
     connect(ui->releaseYearEdit, &QSpinBox::valueChanged, this, &SongEdit::releasedYearChanged);
     ui->releaseYearEdit->setMinimum(_min_year);
+
+    connect(ui->coverView, &ImageView::imageChanged, this,
+        [&](const QImage &image)
+        {
+            ui->removePhotoButton->setVisible(!image.isNull());
+        }
+    );
 }
 
 SongEdit::SongEdit(const Song &song, QWidget *parent) : SongEdit(parent)
