@@ -2,7 +2,7 @@
 #define USERPANEL_H
 
 #include <QMainWindow>
-#include "include/core/user.h"
+#include "include/models/usermodel.h"
 
 namespace Ui {
 class UserPanel;
@@ -17,7 +17,7 @@ public:
     ~UserPanel();
 
 private:
-    User user;
+    UserModel mainModel;
     std::unique_ptr<Ui::UserPanel> ui;
 };
 

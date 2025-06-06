@@ -6,11 +6,12 @@ UserPanel::UserPanel(const IDContainer &key, QWidget *parent) : QMainWindow(pare
     ui = std::make_unique<Ui::UserPanel>();
     ui->setupUi(this);
 
-    user = User::loadFromRecord(key);
-    if(user.isNull())
+    if(User::loadFromRecord(key).isNull())
     {
         throw std::runtime_error("User panel cannot be opened with an invalid key.");
     }
+
+    mainModel.setMainKey(key);
 }
 
 UserPanel::~UserPanel() {}
