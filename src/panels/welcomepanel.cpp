@@ -109,6 +109,7 @@ void WelcomePanel::acceptCreation()
     }
 
     temp.saveToRecord(ID::generateKey());
+    QMessageBox::information(this, "Successful", "Your account has been created successfully.");
     rejectCreation();
 }
 
