@@ -66,5 +66,7 @@
         <file>images/genres/underground.png</file>
         <file>images/genres/us.png</file>
         <file>images/windows/login.png</file>
+        <file>images/playlist/liked-songs.png</file>
+        <file>images/playlist/saved-songs.png</file>
     </qresource>
 </RCC>
