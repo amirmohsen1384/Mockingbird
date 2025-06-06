@@ -56,6 +56,7 @@ public:
     static std::shared_ptr<QFileDialog> initializeSongDialog(QWidget *parent);
 };
 
-
+#define LIKED_INDEX 0
+#define SAVED_INDEX 1
 
 #endif // GENERAL_H
