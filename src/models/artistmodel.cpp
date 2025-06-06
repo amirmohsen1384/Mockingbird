@@ -128,7 +128,7 @@ QVariant ArtistModel::data(const QModelIndex &index, int role) const
     }
     case Artist::KeyListRole:
     {
-        return QVariant::fromValue(value.get()->getKeys());
+        return QVariant::fromValue(value->getKeys());
     }
     case Artist::ModelRole:
     {
@@ -159,7 +159,7 @@ bool ArtistModel::setData(const QModelIndex &index, const QVariant &value, int r
     else
     {
         container.replace(index.row(), value.value<PlaylistModelContainer>());
-        emit dataChanged(index, index, {Qt::DisplayRole, Qt::DecorationRole, Artist::KeyRole});
+        emit dataChanged(index, index, {Qt::DisplayRole, Qt::DecorationRole, Artist::KeyRole, Artist::ModelRole});
     }
     return true;
 }
