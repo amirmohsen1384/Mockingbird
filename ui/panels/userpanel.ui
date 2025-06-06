@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>964</width>
+    <height>741</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,18 +17,203 @@
    <iconset resource="../../resources.qrc">
     <normaloff>:/images/icon.ico</normaloff>:/images/icon.ico</iconset>
   </property>
-  <widget class="QWidget" name="centralwidget"/>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>800</width>
-     <height>26</height>
-    </rect>
-   </property>
+  <property name="styleSheet">
+   <string notr="true">background-color:white</string>
+  </property>
+  <widget class="QWidget" name="main">
+   <layout class="QVBoxLayout" name="verticalLayout_2">
+    <item>
+     <widget class="QStackedWidget" name="pageContainer">
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="profilePage">
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <layout class="QGridLayout" name="accountLayout">
+          <item row="0" column="0" rowspan="3">
+           <widget class="QLabel" name="accountNameLabel">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>15</pointsize>
+              <fontweight>ExtraLight</fontweight>
+             </font>
+            </property>
+            <property name="text">
+             <string>User's Name</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="3">
+           <widget class="QPushButton" name="changeAccountInfoButton">
+            <property name="font">
+             <font>
+              <bold>true</bold>
+              <underline>true</underline>
+              <hintingpreference>PreferDefaultHinting</hintingpreference>
+             </font>
+            </property>
+            <property name="text">
+             <string>Change Information</string>
+            </property>
+            <property name="flat">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="3" rowspan="2">
+           <widget class="QPushButton" name="exploreButton">
+            <property name="font">
+             <font>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>Explore</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../../resources.qrc">
+              <normaloff>:/images/view/search.png</normaloff>:/images/view/search.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+            <property name="flat">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1" rowspan="3" colspan="2">
+           <spacer name="accountSpacer">
+            <property name="orientation">
+             <enum>Qt::Orientation::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Policy::MinimumExpanding</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QListView" name="playlistView">
+          <property name="horizontalScrollBarPolicy">
+           <enum>Qt::ScrollBarPolicy::ScrollBarAlwaysOff</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="controlLayout">
+          <item>
+           <spacer name="leftSpacer">
+            <property name="orientation">
+             <enum>Qt::Orientation::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="addButton">
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="../../resources.qrc">
+              <normaloff>:/images/dialogs/add.png</normaloff>:/images/dialogs/add.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>48</width>
+              <height>48</height>
+             </size>
+            </property>
+            <property name="flat">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="editButton">
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="../../resources.qrc">
+              <normaloff>:/images/dialogs/edit.png</normaloff>:/images/dialogs/edit.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>48</width>
+              <height>48</height>
+             </size>
+            </property>
+            <property name="flat">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="deleteButton">
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="../../resources.qrc">
+              <normaloff>:/images/dialogs/delete.png</normaloff>:/images/dialogs/delete.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>48</width>
+              <height>48</height>
+             </size>
+            </property>
+            <property name="flat">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="rightSpacer">
+            <property name="orientation">
+             <enum>Qt::Orientation::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="explorePage"/>
+     </widget>
+    </item>
+   </layout>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources>
   <include location="../../resources.qrc"/>

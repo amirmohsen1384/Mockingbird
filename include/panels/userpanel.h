@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "include/models/usermodel.h"
+#include "include/models/maindelegate.h"
 
 namespace Ui {
 class UserPanel;
@@ -19,6 +20,7 @@ public:
 private:
     UserModel mainModel;
     std::unique_ptr<Ui::UserPanel> ui;
+    std::unique_ptr<MainDelegate> delegate;
 };
 
 #endif // USERPANEL_H
