@@ -28,6 +28,7 @@ SOURCES += \
     src/models/genremodel.cpp \
     src/models/maindelegate.cpp \
     src/models/playlistmodel.cpp \
+    src/models/usermodel.cpp \
     src/panels/adminpanel.cpp \
     src/panels/userpanel.cpp \
     src/panels/welcomepanel.cpp
@@ -53,6 +54,7 @@ HEADERS += \
     include/models/genremodel.h \
     include/models/maindelegate.h \
     include/models/playlistmodel.h \
+    include/models/usermodel.h \
     include/panels/adminpanel.h \
     include/panels/userpanel.h \
     include/panels/welcomepanel.h
