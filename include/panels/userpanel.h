@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include "include/models/usermodel.h"
 #include "include/models/maindelegate.h"
+#include "include/models/artistlistmodel.h"
 
 namespace Ui {
 class UserPanel;
@@ -17,8 +18,14 @@ public:
     explicit UserPanel(const IDContainer &key, QWidget *parent = nullptr);
     ~UserPanel();
 
+public slots:
+    void viewArtist(const QModelIndex &index);
+    void goToExplorePage();
+    void goToProfilePage();
+
 private:
     UserModel mainModel;
+    ArtistListModel artistModel;
     std::unique_ptr<Ui::UserPanel> ui;
     std::unique_ptr<MainDelegate> delegate;
 };

@@ -25,13 +25,13 @@
     <item>
      <widget class="QStackedWidget" name="pageContainer">
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="profilePage">
        <layout class="QVBoxLayout" name="verticalLayout">
         <item>
          <layout class="QGridLayout" name="accountLayout">
-          <item row="0" column="0" rowspan="3">
+          <item row="0" column="0" rowspan="2">
            <widget class="QLabel" name="accountNameLabel">
             <property name="sizePolicy">
              <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
@@ -50,7 +50,7 @@
             </property>
            </widget>
           </item>
-          <item row="2" column="3">
+          <item row="0" column="2" rowspan="2">
            <widget class="QPushButton" name="changeAccountInfoButton">
             <property name="font">
              <font>
@@ -67,38 +67,10 @@
             </property>
            </widget>
           </item>
-          <item row="0" column="3" rowspan="2">
-           <widget class="QPushButton" name="exploreButton">
-            <property name="font">
-             <font>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="text">
-             <string>Explore</string>
-            </property>
-            <property name="icon">
-             <iconset resource="../../resources.qrc">
-              <normaloff>:/images/view/search.png</normaloff>:/images/view/search.png</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>32</width>
-              <height>32</height>
-             </size>
-            </property>
-            <property name="flat">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1" rowspan="3" colspan="2">
-           <spacer name="accountSpacer">
+          <item row="0" column="1" rowspan="2">
+           <spacer name="separatorSpacer">
             <property name="orientation">
              <enum>Qt::Orientation::Horizontal</enum>
-            </property>
-            <property name="sizeType">
-             <enum>QSizePolicy::Policy::MinimumExpanding</enum>
             </property>
             <property name="sizeHint" stdset="0">
              <size>
@@ -109,6 +81,19 @@
            </spacer>
           </item>
          </layout>
+        </item>
+        <item>
+         <widget class="QLabel" name="label">
+          <property name="font">
+           <font>
+            <pointsize>9</pointsize>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>You can manage your playlists and enjoy listening.</string>
+          </property>
+         </widget>
         </item>
         <item>
          <widget class="QListView" name="playlistView">
@@ -207,9 +192,149 @@
           </item>
          </layout>
         </item>
+        <item>
+         <widget class="QPushButton" name="exploreButton">
+          <property name="font">
+           <font>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>Explore The World of Songs</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../../resources.qrc">
+            <normaloff>:/images/view/search.png</normaloff>:/images/view/search.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>32</width>
+            <height>32</height>
+           </size>
+          </property>
+          <property name="flat">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="explorePage"/>
+      <widget class="QWidget" name="explorePage">
+       <layout class="QVBoxLayout" name="verticalLayout_4">
+        <item>
+         <widget class="QTabWidget" name="exploreWidget">
+          <property name="font">
+           <font>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="tabPosition">
+           <enum>QTabWidget::TabPosition::North</enum>
+          </property>
+          <property name="tabShape">
+           <enum>QTabWidget::TabShape::Rounded</enum>
+          </property>
+          <property name="currentIndex">
+           <number>0</number>
+          </property>
+          <property name="usesScrollButtons">
+           <bool>true</bool>
+          </property>
+          <property name="documentMode">
+           <bool>false</bool>
+          </property>
+          <property name="tabBarAutoHide">
+           <bool>false</bool>
+          </property>
+          <widget class="QWidget" name="artistPage">
+           <attribute name="title">
+            <string>View Artists</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout_3">
+            <property name="leftMargin">
+             <number>10</number>
+            </property>
+            <property name="topMargin">
+             <number>10</number>
+            </property>
+            <property name="rightMargin">
+             <number>10</number>
+            </property>
+            <property name="bottomMargin">
+             <number>10</number>
+            </property>
+            <item>
+             <widget class="QLabel" name="artistLabel">
+              <property name="font">
+               <font>
+                <pointsize>15</pointsize>
+                <fontweight>ExtraLight</fontweight>
+               </font>
+              </property>
+              <property name="text">
+               <string>Visit your favorite artists and enjoy listening to them</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="descriptionLabel">
+              <property name="font">
+               <font>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string>Double-click on each artist for more information.</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QListView" name="artistList">
+              <property name="font">
+               <font>
+                <bold>false</bold>
+                <kerning>false</kerning>
+               </font>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="tab">
+           <attribute name="title">
+            <string>View Users</string>
+           </attribute>
+          </widget>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="goProfileButton">
+          <property name="font">
+           <font>
+            <pointsize>9</pointsize>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>Go Back To Profile</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../../resources.qrc">
+            <normaloff>:/images/windows/person.png</normaloff>:/images/windows/person.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>32</width>
+            <height>32</height>
+           </size>
+          </property>
+          <property name="flat">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
      </widget>
     </item>
    </layout>
@@ -218,5 +343,59 @@
  <resources>
   <include location="../../resources.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>artistList</sender>
+   <signal>activated(QModelIndex)</signal>
+   <receiver>UserPanel</receiver>
+   <slot>viewArtist(QModelIndex)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>301</x>
+     <y>223</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>37</x>
+     <y>733</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>exploreButton</sender>
+   <signal>clicked()</signal>
+   <receiver>UserPanel</receiver>
+   <slot>goToExplorePage()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>420</x>
+     <y>705</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>225</x>
+     <y>740</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>goProfileButton</sender>
+   <signal>clicked()</signal>
+   <receiver>UserPanel</receiver>
+   <slot>goToProfilePage()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>479</x>
+     <y>696</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>737</x>
+     <y>735</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>viewArtist(QModelIndex)</slot>
+  <slot>goToExplorePage()</slot>
+  <slot>goToProfilePage()</slot>
+ </slots>
 </ui>
