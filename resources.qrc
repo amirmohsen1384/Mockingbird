@@ -65,5 +65,6 @@
         <file>images/genres/pop.png</file>
         <file>images/genres/underground.png</file>
         <file>images/genres/us.png</file>
+        <file>images/windows/login.png</file>
     </qresource>
 </RCC>
