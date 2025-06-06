@@ -1,4 +1,4 @@
-#include "include/components/custom/filteredit.h"
+#include "include/components/filteredit.h"
 #include "include/core/playlist.h"
 #include "ui_filteredit.h"
 

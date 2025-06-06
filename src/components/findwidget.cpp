@@ -1,4 +1,4 @@
-#include "include/components/custom/findwidget.h"
+#include "include/components/findwidget.h"
 #include "ui_findwidget.h"
 
 FindWidget::FindWidget(QWidget *parent) : QWidget(parent), ui(new Ui::FindWidget)

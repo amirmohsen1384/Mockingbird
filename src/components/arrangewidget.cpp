@@ -1,4 +1,4 @@
-#include "include/components/custom/arrangewidget.h"
+#include "include/components/arrangewidget.h"
 #include "ui_arrangewidget.h"
 
 ArrangeWidget::ArrangeWidget(QWidget *parent) : QWidget(parent), ui(new Ui::ArrangeWidget)
