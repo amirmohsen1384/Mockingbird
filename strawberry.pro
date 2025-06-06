@@ -9,6 +9,9 @@ CONFIG += c++17
 
 SOURCES += \
     main.cpp \
+    src/components/arrangewidget.cpp \
+    src/components/filteredit.cpp \
+    src/components/findwidget.cpp \
     src/components/imageview.cpp \
     src/components/player.cpp \
     src/core/admin.cpp \
@@ -31,9 +34,13 @@ SOURCES += \
     src/models/usermodel.cpp \
     src/panels/adminpanel.cpp \
     src/panels/userpanel.cpp \
-    src/panels/welcomepanel.cpp
+    src/panels/welcomepanel.cpp \
+    storedialog.cpp
 
 HEADERS += \
+    include/components/arrangewidget.h \
+    include/components/filteredit.h \
+    include/components/findwidget.h \
     include/components/imageview.h \
     include/components/player.h \
     include/core/admin.h \
@@ -57,9 +64,14 @@ HEADERS += \
     include/models/usermodel.h \
     include/panels/adminpanel.h \
     include/panels/userpanel.h \
-    include/panels/welcomepanel.h
+    include/panels/welcomepanel.h \
+    storedialog.h
 
 FORMS += \
+    storedialog.ui \
+    ui/components/arrangewidget.ui \
+    ui/components/filteredit.ui \
+    ui/components/findwidget.ui \
     ui/components/player.ui \
     ui/dialogs/artistedit.ui \
     ui/dialogs/artistview.ui \
