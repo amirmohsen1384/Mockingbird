@@ -21,10 +21,7 @@ void UserModel::updateModel()
     for(const IDContainer &key : keys)
     {
         auto model = std::make_shared<PlaylistModel>(key);
-        if(model->rowCount() > 0)
-        {
-            container.append(model);
-        }
+        container.append(model);
     }
 }
 
@@ -245,21 +242,6 @@ QVariant UserModel::data(const QModelIndex &index, int role) const
     case User::KeyRole:
     {
         return model.get()->getID();
-    }
-    case Qt::BackgroundRole:
-    {
-        if(index.row() == LIKED_INDEX)
-        {
-            return QColor(250, 210, 210);
-        }
-        else if(index.row() == SAVED_INDEX)
-        {
-            return QColor(220, 220, 220);
-        }
-        else
-        {
-            return {};
-        }
     }
     default:
     {
