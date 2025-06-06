@@ -71,7 +71,7 @@ QVariant UserModel::headerData(int section, Qt::Orientation orientation, int rol
 
 void UserModel::insert(std::shared_ptr<PlaylistModel> value)
 {
-    const ID target = value->getID();
+    const IDContainer target = value->getID();
     if(!ID::isValid(target))
     {
         return;
@@ -168,11 +168,11 @@ bool UserModel::removeRows(int row, int count, const QModelIndex &parent)
     {
         if(i == LIKED_INDEX || i == SAVED_INDEX)
         {
-            continue;
+            return false;
         }
         auto model = container.takeAt(i);
         QDir target(MainFolder::getPlaylists().absolutePath());
-        bool result = target.cd(QString("%1").arg(model->getID));
+        bool result = target.cd(QString("%1").arg(model->getID()));
         if(result)
         {
             target.removeRecursively();
@@ -180,6 +180,7 @@ bool UserModel::removeRows(int row, int count, const QModelIndex &parent)
     }
     User::saveIDsToRecord(getKeys(), mainKey);
     endRemoveRows();
+    return true;
 }
 
 bool UserModel::setData(const QModelIndex &index, const QVariant &value, int role)
