@@ -1,4 +1,5 @@
 #include "include/panels/welcomepanel.h"
+#include "include/core/playlist.h"
 #include "include/core/general.h"
 #include "include/core/admin.h"
 #include "include/core/user.h"
@@ -108,7 +109,8 @@ void WelcomePanel::acceptCreation()
         return;
     }
 
-    temp.saveToRecord(ID::generateKey());
+    User::createAccount(temp);
+
     QMessageBox::information(this, "Successful", "Your account has been created successfully.");
     rejectCreation();
 }

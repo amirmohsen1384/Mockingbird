@@ -1,4 +1,5 @@
 #include "include/core/user.h"
+#include "include/core/playlist.h"
 
 QDir User::createRecord(const IDContainer &value)
 {
@@ -98,6 +99,31 @@ void User::saveToRecord(const IDContainer &value) const
     }
     QDataStream stream(&file);
     stream << *this;
+}
+
+void User::createAccount(const User &user)
+{
+    // Save the meta information of the song
+    const IDContainer userKey = ID::generateKey();
+    user.saveToRecord(userKey);
+
+    // Create a playlist for saved songs
+    Playlist saved;
+    saved.setName("Saved Songs");
+    const IDContainer savedKey = ID::generateKey();
+    saved.saveToRecord(savedKey);
+
+    // Create a playlist for liked songs
+    Playlist liked;
+    liked.setName("Liked Songs");
+    const IDContainer likedKey = ID::generateKey();
+    liked.saveToRecord(likedKey);
+
+    // Save the created playlist for the user
+    IDs userKeys;
+    userKeys.insert(LIKED_INDEX, likedKey);
+    userKeys.insert(SAVED_INDEX, savedKey);
+    User::saveIDsToRecord(userKeys, userKey);
 }
 
 void User::saveIDsToRecord(const IDs &idList, const IDContainer &value)

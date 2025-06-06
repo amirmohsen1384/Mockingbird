@@ -20,9 +20,12 @@ public:
         ModelRole = Qt::UserRole + 5,
         KeyListRole = Qt::UserRole + 6
     };
+
+    virtual void saveToRecord(const IDContainer &value) const override;
+
+    static void createAccount(const User &user);
     static User loadFromRecord(const IDContainer &value);
     static IDs loadIDsFromRecord(const IDContainer &value);
-    virtual void saveToRecord(const IDContainer &value) const override;
     static void saveIDsToRecord(const IDs &idList, const IDContainer &value);
 };
 
