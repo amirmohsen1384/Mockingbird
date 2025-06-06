@@ -16,6 +16,10 @@
   <property name="windowTitle">
    <string>Untitled - Song Editor</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="../../resources.qrc">
+    <normaloff>:/images/icon.ico</normaloff>:/images/icon.ico</iconset>
+  </property>
   <property name="styleSheet">
    <string notr="true">background-color:white</string>
   </property>
