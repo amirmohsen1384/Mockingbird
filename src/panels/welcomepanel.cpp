@@ -12,10 +12,9 @@ WelcomePanel::WelcomePanel(QWidget *parent) : QDialog(parent)
     ui = std::make_unique<Ui::WelcomePanel>();
     ui->setupUi(this);
 
-    ui->continueButton->setVisible(false);
     QTimer::singleShot(2000, this, [&]()
     {
-        ui->continueButton->setVisible(true);
+        ui->pageContainer->setCurrentWidget(ui->signinPage);
     }
     );
 }

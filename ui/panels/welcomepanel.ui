@@ -84,19 +84,6 @@
          </property>
         </spacer>
        </item>
-       <item row="3" column="1">
-        <spacer name="bottomSpacer">
-         <property name="orientation">
-          <enum>Qt::Orientation::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>68</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
        <item row="0" column="1">
         <spacer name="topSpacer">
          <property name="orientation">
@@ -109,26 +96,6 @@
           </size>
          </property>
         </spacer>
-       </item>
-       <item row="1" column="0">
-        <spacer name="leftSpacer">
-         <property name="orientation">
-          <enum>Qt::Orientation::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>23</width>
-           <height>152</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="2" column="1">
-        <widget class="QCommandLinkButton" name="continueButton">
-         <property name="text">
-          <string>Click here to continue</string>
-         </property>
-        </widget>
        </item>
        <item row="1" column="1">
         <layout class="QGridLayout" name="logoLayout">
@@ -180,6 +147,32 @@
           </widget>
          </item>
         </layout>
+       </item>
+       <item row="2" column="1">
+        <spacer name="bottomSpacer">
+         <property name="orientation">
+          <enum>Qt::Orientation::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>68</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="1" column="0">
+        <spacer name="leftSpacer">
+         <property name="orientation">
+          <enum>Qt::Orientation::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>23</width>
+           <height>152</height>
+          </size>
+         </property>
+        </spacer>
        </item>
       </layout>
      </widget>
@@ -752,28 +745,11 @@
   <tabstop>accountPasswordShowButton</tabstop>
   <tabstop>checkButton</tabstop>
   <tabstop>cancelButton</tabstop>
-  <tabstop>continueButton</tabstop>
  </tabstops>
  <resources>
   <include location="../../resources.qrc"/>
  </resources>
  <connections>
-  <connection>
-   <sender>continueButton</sender>
-   <signal>clicked()</signal>
-   <receiver>WelcomePanel</receiver>
-   <slot>goToSigninPage()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>242</x>
-     <y>451</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>99</x>
-     <y>614</y>
-    </hint>
-   </hints>
-  </connection>
   <connection>
    <sender>loginButton</sender>
    <signal>clicked()</signal>
