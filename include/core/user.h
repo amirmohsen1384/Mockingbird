@@ -6,6 +6,7 @@
 class User : public Person
 {
 private:
+    static void createAccount(User &user);
     static QDir createRecord(const IDContainer &value);
 
 public:
@@ -20,13 +21,19 @@ public:
         ModelRole = Qt::UserRole + 5,
         KeyListRole = Qt::UserRole + 6
     };
-
-    virtual void saveToRecord(const IDContainer &value) const override;
-
-    static void createAccount(const User &user);
     static User loadFromRecord(const IDContainer &value);
     static IDs loadIDsFromRecord(const IDContainer &value);
+    virtual void saveToRecord(const IDContainer &value) const override;
     static void saveIDsToRecord(const IDs &idList, const IDContainer &value);
+
+    IDContainer getLikedPlaylist() const;
+    IDContainer getSavedPlaylist() const;
+
+    friend QDataStream& operator<<(QDataStream &stream, const User &data);
+    friend QDataStream& operator>>(QDataStream &stream, User &data);
+
+private:
+    IDs specialKeys;
 };
 
 #endif // USER_H

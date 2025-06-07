@@ -101,11 +101,10 @@ void User::saveToRecord(const IDContainer &value) const
     stream << *this;
 }
 
-void User::createAccount(const User &user)
+void User::createAccount(User &user)
 {
     // Save the meta information of the song
     const IDContainer userKey = ID::generateKey();
-    user.saveToRecord(userKey);
 
     // Create a playlist for saved songs
     Playlist saved;
@@ -120,10 +119,12 @@ void User::createAccount(const User &user)
     liked.saveToRecord(likedKey);
 
     // Save the created playlist for the user
-    IDs userKeys;
-    userKeys.insert(LIKED_INDEX, likedKey);
-    userKeys.insert(SAVED_INDEX, savedKey);
-    User::saveIDsToRecord(userKeys, userKey);
+    user.specialKeys.insert(LIKED_INDEX, likedKey);
+    user.specialKeys.insert(SAVED_INDEX, savedKey);
+
+    // Save the record into the database
+    user.saveToRecord(userKey);
+
 }
 
 void User::saveIDsToRecord(const IDs &idList, const IDContainer &value)
@@ -145,4 +146,25 @@ void User::saveIDsToRecord(const IDs &idList, const IDContainer &value)
     }
     QDataStream stream(&file);
     stream << idList;
+}
+
+IDContainer User::getLikedPlaylist() const
+{
+    return specialKeys.at(LIKED_INDEX);
+}
+
+IDContainer User::getSavedPlaylist() const
+{
+    return specialKeys.at(SAVED_INDEX);
+}
+
+QDataStream& operator<<(QDataStream &stream, const User &data)
+{
+    stream << static_cast<const Person&>(data);
+    stream << data.specialKeys;
+}
+QDataStream& operator>>(QDataStream &stream, User &data)
+{
+    stream >> static_cast<Person&>(data);
+    stream >> data.specialKeys;
 }
