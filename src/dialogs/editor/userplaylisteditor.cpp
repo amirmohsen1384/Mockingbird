@@ -22,6 +22,10 @@ bool UserPlaylistEditor::isHeaderDataEditable() const
 void UserPlaylistEditor::addSong()
 {
     StoreDialog dialog(this);
+    if(dialog.exec() == QDialog::Accepted)
+    {
+
+    }
 }
 
 void UserPlaylistEditor::playSong(const QModelIndex &index)
