@@ -1,7 +1,7 @@
 #include "include/dialogs/editor/userplaylisteditor.h"
 #include "include/dialogs/playlistplayer.h"
+#include "include/dialogs/storedialog.h"
 #include "ui_abstractplaylisteditor.h"
-#include "storedialog.h"
 
 UserPlaylistEditor::UserPlaylistEditor(QWidget *parent) : AbstractPlaylistEditor(parent)
 {

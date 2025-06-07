@@ -1,6 +1,6 @@
-#include "storedialog.h"
 #include "ui_storedialog.h"
 #include "include/models/genremodel.h"
+#include "include/dialogs/storedialog.h"
 #include "include/dialogs/playlistplayer.h"
 
 void StoreDialog::updateArrangeCriteria()
