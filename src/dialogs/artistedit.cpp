@@ -89,24 +89,10 @@ void ArtistEdit::accept()
             }
 
             const QImage image = ui->photoView->getImage();
-            if(!image.isNull())
-            {
-                model->setHeaderData(0, Qt::Horizontal, image, Artist::PhotoRole);
-            }
-            else
-            {
-                throw std::runtime_error("You have not loaded the profile photo.");
-            }
+            model->setHeaderData(0, Qt::Horizontal, image, Artist::PhotoRole);
 
             const QString text = ui->biographyEdit->toPlainText();
-            if(!text.isEmpty())
-            {
-                model->setHeaderData(0, Qt::Horizontal, text, Artist::BiographyRole);
-            }
-            else
-            {
-                throw std::runtime_error("You have not entered the biography.");
-            }
+            model->setHeaderData(0, Qt::Horizontal, text, Artist::BiographyRole);
         }
         else
         {
