@@ -27,8 +27,8 @@ public:
     virtual void setSourceModel(PlaylistModel *model);
 
 public slots:
+    virtual void addSong();
     virtual void removeSong();
-    virtual void addSong() = 0;
     virtual void accept() override;
 
 protected:

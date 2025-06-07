@@ -21,6 +21,10 @@ void AbstractPlaylistEditor::updateModel()
             }
         );
     }
+
+    const bool condition = !sourceModel || sourceModel->rowCount() == 0;
+    ui->emptyLabel->setVisible(condition);
+    ui->songView->setVisible(!condition);
 }
 
 void AbstractPlaylistEditor::updateControl()
@@ -39,6 +43,9 @@ AbstractPlaylistEditor::AbstractPlaylistEditor(QWidget *parent) : QDialog(parent
     ui->addButton->setVisible(false);
     ui->removeButton->setVisible(false);
 
+    ui->songView->setVisible(false);
+    ui->emptyLabel->setVisible(true);
+
     delegate = std::make_unique<MainDelegate>();
     delegate->setPrimary(Qt::darkRed);
     delegate->setSecondary(Qt::blue);
@@ -56,6 +63,13 @@ void AbstractPlaylistEditor::setSourceModel(PlaylistModel *model)
 {
     sourceModel = model;
     updateModel();
+}
+
+void AbstractPlaylistEditor::addSong()
+{
+    bool condition = sourceModel && sourceModel->rowCount() != 0;
+    ui->emptyLabel->setVisible(!condition);
+    ui->songView->setVisible(condition);
 }
 
 void AbstractPlaylistEditor::accept()
@@ -110,4 +124,8 @@ void AbstractPlaylistEditor::removeSong()
             sourceModel->removeSong(index.row());
         }
     }
+
+    bool condition = sourceModel && sourceModel->rowCount() != 0;
+    ui->emptyLabel->setVisible(!condition);
+    ui->songView->setVisible(condition);
 }
