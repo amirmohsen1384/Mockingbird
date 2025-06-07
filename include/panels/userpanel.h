@@ -19,6 +19,7 @@ public:
     ~UserPanel();
 
 public slots:
+    void viewPlaylist(const QModelIndex &index);
     void viewArtist(const QModelIndex &index);
     void goToExplorePage();
     void goToProfilePage();

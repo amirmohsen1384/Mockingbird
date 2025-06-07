@@ -25,7 +25,7 @@
     <item>
      <widget class="QStackedWidget" name="pageContainer">
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="profilePage">
        <layout class="QVBoxLayout" name="verticalLayout">
@@ -119,6 +119,9 @@
           </item>
           <item>
            <widget class="QPushButton" name="addButton">
+            <property name="toolTip">
+             <string>Add</string>
+            </property>
             <property name="text">
              <string/>
             </property>
@@ -128,8 +131,8 @@
             </property>
             <property name="iconSize">
              <size>
-              <width>48</width>
-              <height>48</height>
+              <width>32</width>
+              <height>32</height>
              </size>
             </property>
             <property name="flat">
@@ -139,6 +142,9 @@
           </item>
           <item>
            <widget class="QPushButton" name="editButton">
+            <property name="toolTip">
+             <string>Edit</string>
+            </property>
             <property name="text">
              <string/>
             </property>
@@ -148,8 +154,8 @@
             </property>
             <property name="iconSize">
              <size>
-              <width>48</width>
-              <height>48</height>
+              <width>32</width>
+              <height>32</height>
              </size>
             </property>
             <property name="flat">
@@ -159,6 +165,9 @@
           </item>
           <item>
            <widget class="QPushButton" name="deleteButton">
+            <property name="toolTip">
+             <string>Delete</string>
+            </property>
             <property name="text">
              <string/>
             </property>
@@ -168,8 +177,8 @@
             </property>
             <property name="iconSize">
              <size>
-              <width>48</width>
-              <height>48</height>
+              <width>32</width>
+              <height>32</height>
              </size>
             </property>
             <property name="flat">
@@ -222,89 +231,64 @@
       <widget class="QWidget" name="explorePage">
        <layout class="QVBoxLayout" name="verticalLayout_4">
         <item>
-         <widget class="QTabWidget" name="exploreWidget">
+         <widget class="QFrame" name="exploreWidget">
           <property name="font">
            <font>
             <bold>true</bold>
            </font>
           </property>
-          <property name="tabPosition">
-           <enum>QTabWidget::TabPosition::North</enum>
-          </property>
-          <property name="tabShape">
-           <enum>QTabWidget::TabShape::Rounded</enum>
-          </property>
-          <property name="currentIndex">
-           <number>0</number>
-          </property>
-          <property name="usesScrollButtons">
-           <bool>true</bool>
-          </property>
-          <property name="documentMode">
-           <bool>false</bool>
-          </property>
-          <property name="tabBarAutoHide">
-           <bool>false</bool>
-          </property>
-          <widget class="QWidget" name="artistPage">
-           <attribute name="title">
-            <string>View Artists</string>
-           </attribute>
-           <layout class="QVBoxLayout" name="verticalLayout_3">
-            <property name="leftMargin">
-             <number>10</number>
-            </property>
-            <property name="topMargin">
-             <number>10</number>
-            </property>
-            <property name="rightMargin">
-             <number>10</number>
-            </property>
-            <property name="bottomMargin">
-             <number>10</number>
-            </property>
-            <item>
-             <widget class="QLabel" name="artistLabel">
-              <property name="font">
-               <font>
-                <pointsize>15</pointsize>
-                <fontweight>ExtraLight</fontweight>
-               </font>
-              </property>
-              <property name="text">
-               <string>Visit your favorite artists and enjoy listening to them</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="descriptionLabel">
-              <property name="font">
-               <font>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="text">
-               <string>Double-click on each artist for more information.</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QListView" name="artistList">
-              <property name="font">
-               <font>
-                <bold>false</bold>
-                <kerning>false</kerning>
-               </font>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </widget>
-          <widget class="QWidget" name="tab">
-           <attribute name="title">
-            <string>View Users</string>
-           </attribute>
-          </widget>
+          <layout class="QVBoxLayout" name="verticalLayout_3">
+           <property name="leftMargin">
+            <number>10</number>
+           </property>
+           <property name="topMargin">
+            <number>10</number>
+           </property>
+           <property name="rightMargin">
+            <number>10</number>
+           </property>
+           <property name="bottomMargin">
+            <number>10</number>
+           </property>
+           <item>
+            <widget class="QLabel" name="artistLabel">
+             <property name="font">
+              <font>
+               <pointsize>15</pointsize>
+               <fontweight>ExtraLight</fontweight>
+              </font>
+             </property>
+             <property name="text">
+              <string>Explore your favorite artists</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="artistDescriptionLabel">
+             <property name="font">
+              <font>
+               <bold>true</bold>
+              </font>
+             </property>
+             <property name="text">
+              <string>Double-click on each artist for more information.</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QListView" name="artistList">
+             <property name="font">
+              <font>
+               <bold>false</bold>
+               <kerning>false</kerning>
+              </font>
+             </property>
+             <property name="horizontalScrollBarPolicy">
+              <enum>Qt::ScrollBarPolicy::ScrollBarAlwaysOff</enum>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </widget>
         </item>
         <item>
@@ -345,22 +329,6 @@
  </resources>
  <connections>
   <connection>
-   <sender>artistList</sender>
-   <signal>activated(QModelIndex)</signal>
-   <receiver>UserPanel</receiver>
-   <slot>viewArtist(QModelIndex)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>301</x>
-     <y>223</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>37</x>
-     <y>733</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>exploreButton</sender>
    <signal>clicked()</signal>
    <receiver>UserPanel</receiver>
@@ -392,10 +360,43 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>artistList</sender>
+   <signal>activated(QModelIndex)</signal>
+   <receiver>UserPanel</receiver>
+   <slot>viewArtist(QModelIndex)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>374</x>
+     <y>331</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>9</x>
+     <y>701</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>playlistView</sender>
+   <signal>activated(QModelIndex)</signal>
+   <receiver>UserPanel</receiver>
+   <slot>viewPlaylist(QModelIndex)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>245</x>
+     <y>196</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>2</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>viewArtist(QModelIndex)</slot>
   <slot>goToExplorePage()</slot>
   <slot>goToProfilePage()</slot>
+  <slot>viewPlaylist(QModelIndex)</slot>
  </slots>
 </ui>
