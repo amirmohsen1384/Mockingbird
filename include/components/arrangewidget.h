@@ -2,7 +2,7 @@
 #define ARRANGEWIDGET_H
 
 #include <QWidget>
-#include "include/models/proxyplaylistmodel.h"
+#include "include/models/songproxymodel.h"
 
 namespace Ui {
 class ArrangeWidget;
@@ -17,7 +17,7 @@ public:
 
 public:
     Qt::SortOrder getSortOrder() const;
-    ProxyPlaylistModel::Sort getArrangeBase() const;
+    SongProxyModel::Sort getArrangeBase() const;
 
 
 signals:

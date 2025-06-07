@@ -16,11 +16,9 @@ public:
     explicit FindWidget(QWidget *parent = nullptr);
     ~FindWidget();
 
-    enum Base {Artist, Name};
-
     QString getText() const;
     Qt::MatchFlag getFlag() const;
-    FindWidget::Base getSearchBase() const;
+    Playlist::Role getFindRole() const;
     Qt::CaseSensitivity getCaseSensitivityMode();
 
 signals:

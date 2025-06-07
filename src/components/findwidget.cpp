@@ -12,6 +12,7 @@ FindWidget::FindWidget(QWidget *parent) : QWidget(parent), ui(new Ui::FindWidget
     connect(ui->searchModeEdit, &QComboBox::currentIndexChanged, this, &FindWidget::findPropertyChanged);
     connect(ui->caseSensitivityEdit, &QCheckBox::clicked, this, &FindWidget::findPropertyChanged);
     connect(ui->searchEdit, &QLineEdit::textChanged, this, &FindWidget::findPropertyChanged);
+    connect(ui->artistEdit, &QRadioButton::clicked, this, &FindWidget::findPropertyChanged);
     connect(ui->nameEdit, &QRadioButton::clicked, this, &FindWidget::findPropertyChanged);
 }
 
@@ -30,9 +31,9 @@ Qt::MatchFlag FindWidget::getFlag() const
     return ui->searchModeEdit->currentData().value<Qt::MatchFlag>();
 }
 
-FindWidget::Base FindWidget::getSearchBase() const
+Playlist::Role FindWidget::getFindRole() const
 {
-    return ui->nameEdit->isChecked() ? FindWidget::Name : FindWidget::Artist;
+    return ui->nameEdit->isChecked() ? Playlist::NameRole : Playlist::ArtistRole;
 }
 
 Qt::CaseSensitivity FindWidget::getCaseSensitivityMode()

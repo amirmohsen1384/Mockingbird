@@ -12,7 +12,7 @@
   </property>
   <property name="font">
    <font>
-    <bold>true</bold>
+    <bold>false</bold>
    </font>
   </property>
   <property name="windowTitle">
@@ -20,7 +20,7 @@
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <item>
-    <widget class="QGroupBox" name="">
+    <widget class="QGroupBox" name="groupBox">
      <property name="title">
       <string>Filter</string>
      </property>
