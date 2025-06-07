@@ -23,7 +23,9 @@ SOURCES += \
     src/core/user.cpp \
     src/dialogs/artistedit.cpp \
     src/dialogs/artistview.cpp \
-    src/dialogs/playlistedit.cpp \
+    src/dialogs/editor/abstractplaylisteditor.cpp \
+    src/dialogs/editor/adminplaylisteditor.cpp \
+    src/dialogs/editor/userplaylisteditor.cpp \
     src/dialogs/playlistplayer.cpp \
     src/dialogs/songedit.cpp \
     src/models/artistlistmodel.cpp \
@@ -31,11 +33,13 @@ SOURCES += \
     src/models/genremodel.cpp \
     src/models/maindelegate.cpp \
     src/models/playlistmodel.cpp \
+    src/models/songmodel.cpp \
+    src/models/songproxymodel.cpp \
     src/models/usermodel.cpp \
     src/panels/adminpanel.cpp \
     src/panels/userpanel.cpp \
     src/panels/welcomepanel.cpp \
-    storedialog.cpp
+    src/dialogs/storedialog.cpp
 
 HEADERS += \
     include/components/arrangewidget.h \
@@ -53,7 +57,9 @@ HEADERS += \
     include/core/user.h \
     include/dialogs/artistedit.h \
     include/dialogs/artistview.h \
-    include/dialogs/playlistedit.h \
+    include/dialogs/editor/abstractplaylisteditor.h \
+    include/dialogs/editor/adminplaylisteditor.h \
+    include/dialogs/editor/userplaylisteditor.h \
     include/dialogs/playlistplayer.h \
     include/dialogs/songedit.h \
     include/models/artistlistmodel.h \
@@ -61,21 +67,23 @@ HEADERS += \
     include/models/genremodel.h \
     include/models/maindelegate.h \
     include/models/playlistmodel.h \
+    include/models/songmodel.h \
+    include/models/songproxymodel.h \
     include/models/usermodel.h \
     include/panels/adminpanel.h \
     include/panels/userpanel.h \
     include/panels/welcomepanel.h \
-    storedialog.h
+    include/dialogs/storedialog.h
 
 FORMS += \
-    storedialog.ui \
+    ui/dialogs/storedialog.ui \
     ui/components/arrangewidget.ui \
     ui/components/filteredit.ui \
     ui/components/findwidget.ui \
     ui/components/player.ui \
     ui/dialogs/artistedit.ui \
     ui/dialogs/artistview.ui \
-    ui/dialogs/playlistedit.ui \
+    ui/dialogs/editor/abstractplaylisteditor.ui \
     ui/dialogs/playlistplayer.ui \
     ui/dialogs/songedit.ui \
     ui/panels/adminpanel.ui \
