@@ -9,20 +9,21 @@ void UserModel::updateModel()
         return;
     }
 
-    // Loads the meta-information into the model
     metaData = User::loadFromRecord(mainKey);
     if(metaData.isNull())
     {
         return;
     }
 
-    // Loads keys into the model
     IDs keys = User::loadIDsFromRecord(mainKey);
     for(const IDContainer &key : keys)
     {
         auto model = std::make_shared<PlaylistModel>(key);
         container.append(model);
     }
+
+    likedPlaylist = std::make_shared<PlaylistModel>(metaData.getLikedPlaylist());
+    savedPlaylist = std::make_shared<PlaylistModel>(metaData.getSavedPlaylist());
 }
 
 UserModel::UserModel(const IDContainer &key, QObject *parent) : QAbstractListModel(parent)
@@ -59,6 +60,14 @@ QVariant UserModel::headerData(int section, Qt::Orientation orientation, int rol
     {
         return metaData.getPassword();
     }
+    case User::LikedRole:
+    {
+        return metaData.getLikedPlaylist();
+    }
+    case User::SavedRole:
+    {
+        return metaData.getSavedPlaylist();
+    }
     default:
     {
         return {};
@@ -71,14 +80,19 @@ void UserModel::insert(std::shared_ptr<PlaylistModel> value)
     const IDContainer target = value->getID();
     if(!ID::isValid(target))
     {
+        qDebug() << "The given ID is not valid.";
         return;
     }
 
     IDs keys = getKeys();
     auto it = std::lower_bound(keys.cbegin(), keys.cend(), target);
-    if(*it == target && it != keys.cend())
+    if(it != keys.cend())
     {
-        return;
+        if(*it == target)
+        {
+            qDebug() << "The ID is already in the list.";
+            return;
+        }
     }
 
     int index = std::distance(keys.cbegin(), it);
@@ -94,10 +108,12 @@ void UserModel::insert(std::shared_ptr<PlaylistModel> value)
 
 bool UserModel::remove(const IDContainer &key)
 {
-    if(key == container.at(LIKED_INDEX)->getID() && key == container.at(SAVED_INDEX)->getID())
+    if(metaData.getSpecialKeys().contains(key))
     {
+        qDebug() << "Cannot delete special playlists.";
         return false;
     }
+
     auto keys = getKeys();
     auto it = std::lower_bound(keys.cbegin(), keys.cend(), key);
     if(it != keys.cend() && *it == key)
@@ -107,6 +123,7 @@ bool UserModel::remove(const IDContainer &key)
     }
     else
     {
+        qDebug() << "The ID was not found in the list.";
         return false;
     }
 }
@@ -136,12 +153,26 @@ IDs UserModel::getKeys() const
 
 QModelIndex UserModel::fromKey(const IDContainer &key)
 {
+    if(key == savedPlaylist->getID())
+    {
+        return index(SAVED_INDEX);
+    }
+    else if(key == likedPlaylist->getID())
+    {
+        return index(LIKED_INDEX);
+    }
+
     IDs keys = getKeys();
     auto it = std::lower_bound(keys.cbegin(), keys.cend(), key);
     if(it != keys.cend() && *it == key)
     {
         return index(std::distance(keys.cbegin(), it));
     }
+    else
+    {
+        qDebug() << "The given key was not found";
+    }
+
     return QModelIndex();
 }
 
@@ -151,28 +182,36 @@ int UserModel::rowCount(const QModelIndex &parent) const
     {
         return 0;
     }
-    return container.size();
+    return container.size() + metaData.getSpecialKeys().size();
 }
 
 bool UserModel::removeRows(int row, int count, const QModelIndex &parent)
 {
     if(parent.isValid())
     {
+        qDebug() << "Cannot delete a valid parent";
         return false;
     }
+
     beginRemoveRows(parent, row, row + count - 1);
     for(int i = row; i < (row + count); ++i)
     {
         if(i == LIKED_INDEX || i == SAVED_INDEX)
         {
+            qDebug() << "Cannot delete special playlists.";
             return false;
         }
+
         auto model = container.takeAt(i);
         QDir target(MainFolder::getPlaylists().absolutePath());
         bool result = target.cd(QString("%1").arg(model->getID()));
         if(result)
         {
             target.removeRecursively();
+        }
+        else
+        {
+            qDebug() << QString("The directory with %1 was not found.").arg(model->getID());
         }
     }
     User::saveIDsToRecord(getKeys(), mainKey);
@@ -184,10 +223,12 @@ bool UserModel::setData(const QModelIndex &index, const QVariant &value, int rol
 {
     if(!index.isValid())
     {
+        qDebug() << "Index is not valid.";
         return false;
     }
     else if(index.row() == LIKED_INDEX || index.row() == SAVED_INDEX)
     {
+        qDebug() << "Liked or saved playlist cannot be modified.";
         return false;
     }
     else if(role != User::ModelRole)
@@ -198,7 +239,7 @@ bool UserModel::setData(const QModelIndex &index, const QVariant &value, int rol
     else
     {
         container.replace(index.row(), value.value<std::shared_ptr<PlaylistModel>>());
-        emit dataChanged(index, index, {Qt::DisplayRole, Qt::DecorationRole, User::KeyRole, User::ModelRole});
+        emit dataChanged(index, index, {Qt::DisplayRole, Qt::DecorationRole, User::KeyRole, User::ModelRole, User::KeyListRole});
     }
     return true;
 }
@@ -209,27 +250,78 @@ QVariant UserModel::data(const QModelIndex &index, int role) const
     {
         return {};
     }
+    if(index.row() == SAVED_INDEX)
+    {
+        switch(role)
+        {
+        case Qt::DisplayRole:
+        {
+            return savedPlaylist->headerData(0, Qt::Horizontal, Playlist::NameRole);
+        }
+        case Qt::DecorationRole:
+        {
+            return QPixmap(":/images/playlist/saved-songs.png");
+        }
+        case User::ModelRole:
+        {
+            return QVariant::fromValue<PlaylistModel*>(savedPlaylist.get());
+        }
+        case User::KeyRole:
+        {
+            return savedPlaylist->getID();
+        }
+        case User::KeyListRole:
+        {
+            return QVariant::fromValue(savedPlaylist->getKeys());
+        }
+        default:
+        {
+            return {};
+        }
+        }
+    }
+    else if(index.row() == LIKED_INDEX)
+    {
+        switch(role)
+        {
+        case Qt::DisplayRole:
+        {
+            return likedPlaylist->headerData(0, Qt::Horizontal, Playlist::NameRole);
+        }
+        case Qt::DecorationRole:
+        {
+            return QPixmap(":/images/playlist/liked-songs.png");
+        }
+        case User::ModelRole:
+        {
+            return QVariant::fromValue<PlaylistModel*>(likedPlaylist.get());
+        }
+        case User::KeyRole:
+        {
+            return likedPlaylist->getID();
+        }
+        case User::KeyListRole:
+        {
+            return QVariant::fromValue(likedPlaylist->getKeys());
+        }
+        default:
+        {
+            return {};
+        }
+        }
+    }
+
     auto model = container.at(index.row());
+
     switch(role)
     {
     case Qt::DisplayRole:
     {
-        return model->headerData(Playlist::NameRole);
+        return model->headerData(0, Qt::Horizontal, Playlist::NameRole);
     }
     case Qt::DecorationRole:
     {
-        if(index.row() == LIKED_INDEX)
-        {
-            return QPixmap(":/images/playlist/liked-songs.png");
-        }
-        else if(index.row() == SAVED_INDEX)
-        {
-            return QPixmap(":/images/playlist/saved-songs.png");
-        }
-        else
-        {
-            return model->data(model->index(0), Playlist::CoverRole);
-        }
+        return model->data(model->index(0), Playlist::CoverRole);
     }
     case User::KeyListRole:
     {

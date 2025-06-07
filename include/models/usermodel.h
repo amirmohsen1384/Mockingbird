@@ -36,6 +36,8 @@ public:
 private:
     User metaData;
     IDContainer mainKey = 0;
+    std::shared_ptr<PlaylistModel> likedPlaylist;
+    std::shared_ptr<PlaylistModel> savedPlaylist;
     QList<std::shared_ptr<PlaylistModel>> container;
 };
 
