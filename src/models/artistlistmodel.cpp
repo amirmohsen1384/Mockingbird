@@ -159,7 +159,7 @@ void ArtistListModel::insertArtist(const ArtistModel &model)
         const auto &store = target->getStore();
         for(const auto &song : store)
         {
-            song.second.saveToRecord(song.first);
+            song.data.saveToRecord(song.key);
         }
         target->saveToRecord();
     }
@@ -248,7 +248,7 @@ void ArtistListModel::editArtist(const ArtistModel &newModel)
         auto model = index.data(Artist::ModelRole).value<PlaylistModel*>();
         for(const SongInfo &info : model->getStore())
         {
-            info.second.saveToRecord(info.first);
+            info.data.saveToRecord(info.key);
         }
         model->saveToRecord();
     }

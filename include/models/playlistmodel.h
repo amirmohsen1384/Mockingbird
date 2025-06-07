@@ -5,8 +5,6 @@
 #include "include/core/song.h"
 #include <QAbstractItemModel>
 
-using SongInfo = QPair<IDContainer, Song>;
-
 class PlaylistModel : public QAbstractListModel
 {
     Q_OBJECT

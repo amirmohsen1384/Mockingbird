@@ -2,6 +2,7 @@
 #define STOREDIALOG_H
 
 #include <QDialog>
+#include "include/models/songmodel.h"
 
 namespace Ui {
 class StoreDialog;
@@ -16,6 +17,7 @@ public:
     ~StoreDialog();
 
 private:
+    SongModel model;
     Ui::StoreDialog *ui;
 };
 

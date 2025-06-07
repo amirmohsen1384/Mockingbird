@@ -15,9 +15,9 @@ void AdminPlaylistEditor::addSong()
         const Song &song = editor.getSong();
         for(const SongInfo &info : sourceModel->getStore())
         {
-            if(info.second.getAddress() == song.getAddress())
+            if(info.data.getAddress() == song.getAddress())
             {
-                sourceModel->setData(sourceModel->fromKey(info.first), QVariant::fromValue(song), Qt::UserRole);
+                sourceModel->setData(sourceModel->fromKey(info.key), QVariant::fromValue(song), Qt::UserRole);
                 return;
             }
         }

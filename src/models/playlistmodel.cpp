@@ -32,7 +32,7 @@ void PlaylistModel::updateModel()
             Song value = Song::loadFromRecord(key);
             if(!value.isNull())
             {
-                store.append({key, value});
+                store.append({value, key});
             }
         }
     }
@@ -61,7 +61,7 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
         return {};
     }
 
-    const Song &target = store.at(index.row()).second;
+    const Song &target = store.at(index.row()).data;
 
     switch(role)
     {
@@ -116,7 +116,7 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
     }
     case Playlist::KeyRole:
     {
-        return store[index.row()].first;
+        return store[index.row()].key;
     }
     default:
     {
@@ -186,19 +186,22 @@ void PlaylistModel::insertSong(const IDContainer &value, const Song &data)
     {
         return;
     }
+    SongInfo target;
+    target.key = value;
+    target.data = data;
     auto it = std::lower_bound
     (
         store.cbegin(),
         store.cend(),
-        SongInfo(value, data),
+        target,
         [&](const SongInfo &one, const SongInfo &two)
         {
-            return one.first < two.first;
+            return one.key < two.key;
         }
     );
     int index = std::distance(store.cbegin(), it);
     beginInsertRows(QModelIndex(), index, index);
-    store.insert(index, {value, data});
+    store.insert(index, {data, value});
     endInsertRows();
 }
 
@@ -208,17 +211,19 @@ void PlaylistModel::removeSong(const IDContainer &value)
     {
         return;
     }
+    SongInfo target;
+    target.key = value;
     auto result = std::lower_bound
         (
         store.cbegin(),
         store.cend(),
-        SongInfo(value, Song()),
+        target,
         [&](const SongInfo &one, const SongInfo &two)
         {
-            return one.first < two.first;
+            return one.key < two.key;
         }
     );
-    if(result != store.cend() && result->first == value)
+    if(result != store.cend() && result->key == value)
     {
         int row = std::distance(store.cbegin(), result);
         beginRemoveRows(QModelIndex(), row, row);
@@ -259,7 +264,7 @@ bool PlaylistModel::setData(const QModelIndex &index, const QVariant &value, int
         return false;
     }
 
-    Song &target = store[index.row()].second;
+    Song &target = store[index.row()].data;
 
     switch(role)
     {
@@ -301,8 +306,8 @@ bool PlaylistModel::setData(const QModelIndex &index, const QVariant &value, int
     }
     case Playlist::KeyRole:
     {
-        store[index.row()].first = value.value<IDContainer>();
-        store[index.row()].second = Song::loadFromRecord(store[index.row()].first);
+        store[index.row()].key = value.value<IDContainer>();
+        store[index.row()].data = Song::loadFromRecord(store[index.row()].key);
         emit dataChanged(index, index, roles);
         return true;
     }
@@ -345,7 +350,7 @@ IDs PlaylistModel::getKeys() const
     IDs container;
     for(const SongInfo &info : store)
     {
-        container.append(info.first);
+        container.append(info.key);
     }
     return container;
 }
@@ -355,7 +360,7 @@ SongList PlaylistModel::getSongs() const
     SongList container;
     for(const SongInfo &info : store)
     {
-        container.append(info.second);
+        container.append(info.data);
     }
     return container;
 }
