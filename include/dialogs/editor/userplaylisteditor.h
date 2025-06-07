@@ -13,7 +13,7 @@ public:
 
 public slots:
     virtual void addSong() override;
-    virtual void performSong(const QModelIndex &index) override;
+    virtual void playSong(const QModelIndex &index);
 
     void setHeaderDataEditable(bool value);
 

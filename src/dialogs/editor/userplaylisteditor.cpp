@@ -11,6 +11,7 @@ UserPlaylistEditor::UserPlaylistEditor(QWidget *parent) : AbstractPlaylistEditor
             ui->nameLabel->setVisible(value);
         }
     );
+    connect(ui->songView, &QListView::activated, this, &UserPlaylistEditor::playSong);
 }
 
 bool UserPlaylistEditor::isHeaderDataEditable() const
@@ -23,7 +24,7 @@ void UserPlaylistEditor::addSong()
     StoreDialog dialog(this);
 }
 
-void UserPlaylistEditor::performSong(const QModelIndex &index)
+void UserPlaylistEditor::playSong(const QModelIndex &index)
 {
     PlaylistModel model;
     model.insertSong(index.data(Playlist::KeyRole).toLongLong(), index.data(Qt::UserRole).value<Song>());
