@@ -90,4 +90,12 @@ Q_DECLARE_METATYPE(Song)
 
 using SongList = QList<Song>;
 
+struct SongInfo
+{
+    Song data;
+    IDContainer key;
+};
+
+using SongInfoList = QList<SongInfo>;
+
 #endif // SONG_H
