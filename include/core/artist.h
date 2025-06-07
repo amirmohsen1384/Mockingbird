@@ -12,9 +12,9 @@ public:
         KeyRole = Qt::UserRole,
         NameRole = Qt::DisplayRole,
         DataRole = Qt::UserRole + 4,
-        PhotoRole = Qt::UserRole + 2,
         ModelRole = Qt::UserRole + 3,
         KeyListRole = Qt::UserRole + 5,
+        PhotoRole = Qt::DecorationRole,
         BiographyRole = Qt::UserRole + 1
     };
 

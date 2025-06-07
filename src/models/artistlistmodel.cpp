@@ -218,6 +218,8 @@ void ArtistListModel::editArtist(const ArtistModel &newModel)
         return;
     }
 
+    auto& target = container[position.row()];
+
     ArtistModel oldModel;
     oldModel.setMainKey(newModel.mainKey());
 
@@ -256,4 +258,9 @@ void ArtistListModel::editArtist(const ArtistModel &newModel)
         model->saveToRecord();
     }
     newModel.saveToRecord();
+
+    target.name = newModel.headerData(0, Qt::Horizontal, Qt::DisplayRole).toString();
+    target.key = newModel.headerData(0, Qt::Horizontal, Artist::KeyRole).toLongLong();
+    target.photo = newModel.headerData(0, Qt::Horizontal, Qt::DecorationRole).value<QImage>();
+    emit dataChanged(position, position, {Qt::DisplayRole, Qt::DecorationRole, Artist::KeyRole});
 }
