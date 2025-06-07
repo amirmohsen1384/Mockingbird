@@ -148,6 +148,11 @@ void User::saveIDsToRecord(const IDs &idList, const IDContainer &value)
     stream << idList;
 }
 
+const IDs &User::getSpecialKeys() const
+{
+    return specialKeys;
+}
+
 IDContainer User::getLikedPlaylist() const
 {
     return specialKeys.at(LIKED_INDEX);
@@ -162,9 +167,11 @@ QDataStream& operator<<(QDataStream &stream, const User &data)
 {
     stream << static_cast<const Person&>(data);
     stream << data.specialKeys;
+    return stream;
 }
 QDataStream& operator>>(QDataStream &stream, User &data)
 {
     stream >> static_cast<Person&>(data);
     stream >> data.specialKeys;
+    return stream;
 }
