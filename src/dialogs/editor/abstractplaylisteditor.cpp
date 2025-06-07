@@ -73,10 +73,6 @@ void AbstractPlaylistEditor::accept()
             {
                 throw std::runtime_error("You have not entered the playlist's name.");
             }
-            if(sourceModel->rowCount() <= 0)
-            {
-                throw std::runtime_error("You have not entered added any songs to the playlist.");
-            }
         }
         else
         {
