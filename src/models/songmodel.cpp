@@ -17,7 +17,7 @@ SongModel::SongModel(QObject *parent) : QAbstractListModel(parent)
 
 int SongModel::rowCount(const QModelIndex &parent) const
 {
-    if (!parent.isValid())
+    if (parent.isValid())
     {
         return 0;
     }
@@ -40,11 +40,15 @@ QVariant SongModel::data(const QModelIndex &index, int role) const
     }
     case Qt::DecorationRole:
     {
-        return songInfo.data.getCover();
+        return songInfo.data.getCover().scaled(_cover_size, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
     }
     case Playlist::KeyRole:
     {
         return songInfo.key;
+    }
+    case Qt::UserRole:
+    {
+        return QVariant::fromValue(songInfo.data);
     }
     }
     return {};
