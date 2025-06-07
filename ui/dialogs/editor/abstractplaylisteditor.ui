@@ -225,22 +225,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>songView</sender>
-   <signal>activated(QModelIndex)</signal>
-   <receiver>AbstractPlaylistEditor</receiver>
-   <slot>handleSong(QModelIndex)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>598</x>
-     <y>250</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>748</x>
-     <y>143</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
    <receiver>AbstractPlaylistEditor</receiver>
@@ -276,6 +260,5 @@
  <slots>
   <slot>addSong()</slot>
   <slot>removeSong()</slot>
-  <slot>handleSong(QModelIndex)</slot>
  </slots>
 </ui>

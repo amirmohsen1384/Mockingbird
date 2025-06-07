@@ -29,8 +29,6 @@ public:
 public slots:
     virtual void removeSong();
     virtual void addSong() = 0;
-    virtual void handleSong(const QModelIndex &index);
-
     virtual void accept() override;
 
 protected:
