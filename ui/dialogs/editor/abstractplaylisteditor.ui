@@ -199,8 +199,8 @@
    <slot>addSong()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>353</x>
-     <y>644</y>
+     <x>321</x>
+     <y>701</y>
     </hint>
     <hint type="destinationlabel">
      <x>97</x>
@@ -215,8 +215,8 @@
    <slot>removeSong()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>405</x>
-     <y>644</y>
+     <x>373</x>
+     <y>701</y>
     </hint>
     <hint type="destinationlabel">
      <x>274</x>
@@ -228,7 +228,7 @@
    <sender>songView</sender>
    <signal>activated(QModelIndex)</signal>
    <receiver>AbstractPlaylistEditor</receiver>
-   <slot>editSong(QModelIndex)</slot>
+   <slot>handleSong(QModelIndex)</slot>
    <hints>
     <hint type="sourcelabel">
      <x>598</x>
@@ -247,8 +247,8 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>529</x>
-     <y>669</y>
+     <x>600</x>
+     <y>738</y>
     </hint>
     <hint type="destinationlabel">
      <x>478</x>
@@ -263,8 +263,8 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>659</x>
-     <y>677</y>
+     <x>638</x>
+     <y>738</y>
     </hint>
     <hint type="destinationlabel">
      <x>708</x>
@@ -276,7 +276,6 @@
  <slots>
   <slot>addSong()</slot>
   <slot>removeSong()</slot>
-  <slot>editSong(QModelIndex)</slot>
-  <slot>playSong()</slot>
+  <slot>handleSong(QModelIndex)</slot>
  </slots>
 </ui>

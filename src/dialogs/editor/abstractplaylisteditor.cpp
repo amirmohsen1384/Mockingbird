@@ -58,7 +58,7 @@ void AbstractPlaylistEditor::setSourceModel(PlaylistModel *model)
     updateModel();
 }
 
-void AbstractPlaylistEditor::editSong(const QModelIndex &index)
+void AbstractPlaylistEditor::handleSong(const QModelIndex &index)
 {
     Q_UNUSED(index)
     // It does nothing.

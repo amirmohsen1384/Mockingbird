@@ -22,7 +22,7 @@ void AdminPlaylistEditor::addSong()
     }
 }
 
-void AdminPlaylistEditor::editSong(const QModelIndex &index)
+void AdminPlaylistEditor::handleSong(const QModelIndex &index)
 {
     SongEdit editor(index.data(Qt::UserRole).value<Song>(), this);
     if(editor.exec() == QDialog::Accepted)
