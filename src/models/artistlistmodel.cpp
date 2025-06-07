@@ -25,9 +25,9 @@ ArtistListModel::ArtistListModel(QObject *parent) : QAbstractListModel(parent)
 
 namespace Sensitive
 {
-    bool removeSong(const IDContainer &key)
+    bool removeSong(const IDContainer &initialKey)
     {
-        const QString &filename = MainFolder::getSongs().absoluteFilePath(QString("%1.sof").arg(QString::number(key)));
+        const QString &filename = MainFolder::getSongs().absoluteFilePath(QString("%1.sof").arg(QString::number(initialKey)));
         if(!QFile::exists(filename))
         {
             return false;
@@ -36,16 +36,19 @@ namespace Sensitive
         auto playlists = MainFolder::getPlaylists().entryInfoList({"*"}, QDir::NoDotAndDotDot | QDir::AllDirs);
         for(const auto &target : playlists)
         {
-            IDContainer key = target.baseName().toLongLong();
+            IDContainer playlistKey = target.baseName().toLongLong();
 
-            IDs playlistKeys = Playlist::loadIDsFromRecord(key);
+            IDs playlistKeys = Playlist::loadIDsFromRecord(playlistKey);
 
-            auto it = std::lower_bound(playlistKeys.cbegin(), playlistKeys.cend(), key);
-            if(*it == key && it != playlistKeys.cend())
+            auto it = std::lower_bound(playlistKeys.cbegin(), playlistKeys.cend(), initialKey);
+            if(it != playlistKeys.cend())
             {
-                int index = std::distance(playlistKeys.cbegin(), it);
-                playlistKeys.remove(index);
-                Playlist::saveIDsToRecord(playlistKeys, key);
+                if(*it == initialKey)
+                {
+                    int index = std::distance(playlistKeys.cbegin(), it);
+                    playlistKeys.remove(index);
+                    Playlist::saveIDsToRecord(playlistKeys, playlistKey);
+                }
             }
         }
 
