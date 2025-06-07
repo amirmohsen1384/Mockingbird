@@ -30,7 +30,7 @@ UserPanel::UserPanel(const IDContainer &key, QWidget *parent) : QMainWindow(pare
     ui->playlistView->setItemDelegate(delegate.get());
 
     const auto& name = mainModel.headerData(0, Qt::Horizontal, Qt::DisplayRole).toString();
-    ui->accountNameLabel->setText(QString("%1, How's it going?").arg(name));
+    ui->accountNameLabel->setText(name);
     setWindowTitle(QString("%1 - User Panel").arg(name));
 
     connect(ui->playlistView->selectionModel(), &QItemSelectionModel::selectionChanged,
