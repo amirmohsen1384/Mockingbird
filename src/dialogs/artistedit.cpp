@@ -1,4 +1,4 @@
-#include "include/dialogs/playlistedit.h"
+#include "include/dialogs/editor/adminplaylisteditor.h"
 #include "include/dialogs/artistedit.h"
 #include "ui_artistedit.h"
 #include <QMessageBox>
@@ -127,7 +127,7 @@ void ArtistEdit::removeCover()
 
 void ArtistEdit::addPlaylist()
 {
-    PlaylistEdit editor;
+    AdminPlaylistEditor editor;
     PlaylistModelContainer playlist = std::make_shared<PlaylistModel>(ID::generateKey());
     editor.setSourceModel(playlist.get());
     if(editor.exec() == QDialog::Accepted)
@@ -170,7 +170,7 @@ void ArtistEdit::editPlaylist(const QModelIndex &index)
         std::shared_ptr<PlaylistModel> target = data->clone();
 
         // Performing on the clone
-        PlaylistEdit editor;
+        AdminPlaylistEditor editor;
         editor.setSourceModel(target.get());
         if(editor.exec() == QDialog::Accepted)
         {
