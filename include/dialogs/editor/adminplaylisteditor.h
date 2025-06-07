@@ -11,7 +11,7 @@ public:
 
 public slots:
     virtual void addSong() override;
-    virtual void handleSong(const QModelIndex &index) override;
+    virtual void editSong(const QModelIndex &index);
 };
 
 #endif // ADMINPLAYLISTEDITOR_H

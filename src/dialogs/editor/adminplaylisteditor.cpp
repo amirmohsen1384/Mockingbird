@@ -1,7 +1,11 @@
 #include "include/dialogs/editor/adminplaylisteditor.h"
+#include "ui_abstractplaylisteditor.h"
 #include "include/dialogs/songedit.h"
 
-AdminPlaylistEditor::AdminPlaylistEditor(QWidget *parent) : AbstractPlaylistEditor(parent) {}
+AdminPlaylistEditor::AdminPlaylistEditor(QWidget *parent) : AbstractPlaylistEditor(parent)
+{
+    connect(ui->songView, &QListView::activated, this, &AdminPlaylistEditor::editSong);
+}
 
 void AdminPlaylistEditor::addSong()
 {
@@ -22,7 +26,7 @@ void AdminPlaylistEditor::addSong()
     }
 }
 
-void AdminPlaylistEditor::handleSong(const QModelIndex &index)
+void AdminPlaylistEditor::editSong(const QModelIndex &index)
 {
     SongEdit editor(index.data(Qt::UserRole).value<Song>(), this);
     if(editor.exec() == QDialog::Accepted)
