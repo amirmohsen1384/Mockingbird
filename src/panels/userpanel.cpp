@@ -1,3 +1,4 @@
+#include "include/dialogs/editor/userplaylisteditor.h"
 #include "include/dialogs/playlistplayer.h"
 #include "include/dialogs/artistview.h"
 #include "include/panels/userpanel.h"
@@ -51,6 +52,31 @@ UserPanel::UserPanel(const IDContainer &key, QWidget *parent) : QMainWindow(pare
 }
 
 UserPanel::~UserPanel() {}
+
+void UserPanel::addPlaylist()
+{
+    auto model = std::make_shared<PlaylistModel>();
+    model->setID(ID::generateKey());
+
+    UserPlaylistEditor editor(this);
+    editor.setSourceModel(model.get());
+    editor.setHeaderDataEditable(true);
+
+    if(editor.exec() == QDialog::Accepted)
+    {
+        mainModel.insert(model);
+    }
+}
+
+void UserPanel::editPlaylist()
+{
+
+}
+
+void UserPanel::removePlaylist()
+{
+
+}
 
 void UserPanel::viewArtist(const QModelIndex &index)
 {

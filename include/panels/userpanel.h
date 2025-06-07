@@ -19,10 +19,15 @@ public:
     ~UserPanel();
 
 public slots:
-    void viewPlaylist(const QModelIndex &index);
-    void viewArtist(const QModelIndex &index);
+    void addPlaylist();
+    void editPlaylist();
+    void removePlaylist();
+
     void goToExplorePage();
     void goToProfilePage();
+
+    void viewArtist(const QModelIndex &index);
+    void viewPlaylist(const QModelIndex &index);
 
 private:
     UserModel mainModel;

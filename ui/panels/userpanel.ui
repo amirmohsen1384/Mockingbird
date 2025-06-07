@@ -351,8 +351,8 @@
    <slot>goToProfilePage()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>479</x>
-     <y>696</y>
+     <x>110</x>
+     <y>40</y>
     </hint>
     <hint type="destinationlabel">
      <x>737</x>
@@ -367,8 +367,8 @@
    <slot>viewArtist(QModelIndex)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>374</x>
-     <y>331</y>
+     <x>110</x>
+     <y>40</y>
     </hint>
     <hint type="destinationlabel">
      <x>9</x>
@@ -392,11 +392,62 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>addButton</sender>
+   <signal>clicked()</signal>
+   <receiver>UserPanel</receiver>
+   <slot>addPlaylist()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>433</x>
+     <y>657</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>481</x>
+     <y>740</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>deleteButton</sender>
+   <signal>clicked()</signal>
+   <receiver>UserPanel</receiver>
+   <slot>removePlaylist()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>528</x>
+     <y>651</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>669</x>
+     <y>740</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>editButton</sender>
+   <signal>clicked()</signal>
+   <receiver>UserPanel</receiver>
+   <slot>editPlaylist()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>474</x>
+     <y>648</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1</x>
+     <y>671</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>viewArtist(QModelIndex)</slot>
   <slot>goToExplorePage()</slot>
   <slot>goToProfilePage()</slot>
   <slot>viewPlaylist(QModelIndex)</slot>
+  <slot>addPlaylist()</slot>
+  <slot>removePlaylist()</slot>
+  <slot>editPlaylist()</slot>
  </slots>
 </ui>
