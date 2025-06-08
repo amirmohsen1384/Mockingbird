@@ -25,6 +25,7 @@ private slots:
     void updateMetaData();
     void rejectChanging();
     void acceptChanging();
+    void updateAvailability();
     void togglePasswordShow(bool toggle);
 
 public slots:

@@ -27,6 +27,7 @@ AdminPanel::AdminPanel(const IDContainer &key, QWidget *parent) : QMainWindow(pa
 
     delegate = std::make_unique<MainDelegate>();
     ui->artistView->setItemDelegate(delegate.get());
+    updateAvailability();
 }
 
 AdminPanel::~AdminPanel() {}
@@ -102,6 +103,14 @@ void AdminPanel::acceptChanging()
     goToNormalMode();
 }
 
+void AdminPanel::updateAvailability()
+{
+    const bool value = mainModel.rowCount() > 0;
+    ui->artistDescriptionLabel->setVisible(value);
+    ui->notFoundLabel->setVisible(!value);
+    ui->artistView->setVisible(value);
+}
+
 void AdminPanel::togglePasswordShow(bool toggle)
 {
     if(!toggle)
@@ -134,6 +143,7 @@ void AdminPanel::addArtist()
     if(editor.exec() == QDialog::Accepted)
     {
         mainModel.insertArtist(model);
+        updateAvailability();
     }
 }
 
@@ -163,6 +173,7 @@ void AdminPanel::removeArtist()
         if(message.exec() == QMessageBox::Yes)
         {
             mainModel.removeArtist(index.data(Artist::KeyRole).value<IDContainer>());
+            updateAvailability();
         }
     }
 }
@@ -178,6 +189,7 @@ void AdminPanel::editArtist()
         if(editor.exec() == QDialog::Accepted)
         {
             mainModel.editArtist(model);
+            updateAvailability();
         }
     }
 }
