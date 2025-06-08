@@ -93,7 +93,7 @@ using SongList = QList<Song>;
 struct SongInfo
 {
     Song data;
-    IDContainer key;
+    IDContainer key = 0;
 };
 
 using SongInfoList = QList<SongInfo>;
