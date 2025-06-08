@@ -33,19 +33,15 @@ UserPanel::UserPanel(const IDContainer &key, QWidget *parent) : QMainWindow(pare
     ui->accountNameLabel->setText(name);
     setWindowTitle(QString("%1 - User Panel").arg(name));
 
-    connect(ui->playlistView->selectionModel(), &QItemSelectionModel::selectionChanged,
-        [&](const auto &one, const auto &two)
+    connect(ui->playlistView->selectionModel(), &QItemSelectionModel::currentChanged,
+        [&](const auto &current, const auto &previous)
         {
-            Q_UNUSED(one)
-            Q_UNUSED(two)
-            auto indices = ui->playlistView->selectionModel()->selectedIndexes();
-            if(!indices.isEmpty())
+            Q_UNUSED(previous)
+            if(current.isValid())
             {
                 ui->editButton->setVisible(true);
-                if(!indices.contains(mainModel.index(SAVED_INDEX)) && !indices.contains(mainModel.index(LIKED_INDEX)))
-                {
-                    ui->deleteButton->setVisible(true);
-                }
+                auto id = current.data(User::KeyRole).toLongLong();
+                ui->deleteButton->setVisible(!mainModel.isSpecialKey(id));
             }
         }
     );
@@ -55,8 +51,7 @@ UserPanel::~UserPanel() {}
 
 void UserPanel::addPlaylist()
 {
-    auto model = std::make_shared<PlaylistModel>();
-    model->setID(ID::generateKey());
+    auto model = std::make_shared<PlaylistModel>(ID::generateKey());
 
     UserPlaylistEditor editor(this);
     editor.setSourceModel(model.get());
@@ -70,12 +65,33 @@ void UserPanel::addPlaylist()
 
 void UserPanel::editPlaylist()
 {
+    UserPlaylistEditor editor(this);
+    const auto &index = ui->playlistView->currentIndex();
+    auto model = index.data(User::ModelRole).value<PlaylistModel*>();
+    editor.setHeaderDataEditable(!mainModel.isSpecialKey(model->getID()));
 
+    auto clone = model->clone();
+    editor.setSourceModel(clone.get());
+    if(editor.exec() == QDialog::Accepted)
+    {
+        mainModel.setData(index, QVariant::fromValue(clone), User::ModelRole);
+    }
 }
 
 void UserPanel::removePlaylist()
 {
-
+    QMessageBox message(this);
+    message.setWindowTitle("Caution");
+    message.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+    message.setText("Are you sure to permanently remove the playlist?");
+    if(message.exec() == QMessageBox::Yes)
+    {
+        const auto &index = ui->playlistView->currentIndex();
+        if(index.isValid())
+        {
+            mainModel.removeRow(index.row());
+        }
+    }
 }
 
 void UserPanel::viewArtist(const QModelIndex &index)

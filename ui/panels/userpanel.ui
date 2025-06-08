@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>964</width>
-    <height>741</height>
+    <width>947</width>
+    <height>724</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -336,11 +336,11 @@
    <hints>
     <hint type="sourcelabel">
      <x>420</x>
-     <y>705</y>
+     <y>701</y>
     </hint>
     <hint type="destinationlabel">
      <x>225</x>
-     <y>740</y>
+     <y>723</y>
     </hint>
    </hints>
   </connection>
@@ -356,7 +356,7 @@
     </hint>
     <hint type="destinationlabel">
      <x>737</x>
-     <y>735</y>
+     <y>723</y>
     </hint>
    </hints>
   </connection>
@@ -399,12 +399,12 @@
    <slot>addPlaylist()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>433</x>
-     <y>657</y>
+     <x>432</x>
+     <y>652</y>
     </hint>
     <hint type="destinationlabel">
      <x>481</x>
-     <y>740</y>
+     <y>723</y>
     </hint>
    </hints>
   </connection>
@@ -420,7 +420,7 @@
     </hint>
     <hint type="destinationlabel">
      <x>669</x>
-     <y>740</y>
+     <y>723</y>
     </hint>
    </hints>
   </connection>
