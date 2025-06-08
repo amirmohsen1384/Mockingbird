@@ -132,10 +132,10 @@
           <widget class="QLabel" name="description">
            <property name="font">
             <font>
-             <family>Palatino Linotype</family>
-             <pointsize>16</pointsize>
+             <family>Segoe UI</family>
+             <pointsize>20</pointsize>
              <italic>false</italic>
-             <bold>false</bold>
+             <fontweight>ExtraLight</fontweight>
             </font>
            </property>
            <property name="text">
@@ -255,10 +255,10 @@
            </property>
            <property name="font">
             <font>
-             <family>Palatino Linotype</family>
+             <family>Segoe UI</family>
              <pointsize>14</pointsize>
              <italic>false</italic>
-             <bold>false</bold>
+             <fontweight>ExtraLight</fontweight>
             </font>
            </property>
            <property name="text">
