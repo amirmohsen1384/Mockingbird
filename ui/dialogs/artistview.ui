@@ -123,7 +123,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
        <string>Albums</string>
       </attribute>
       <layout class="QGridLayout" name="playlistLayout">
-       <item row="0" column="0" colspan="2">
+       <item row="1" column="0" colspan="2">
         <widget class="QListView" name="playlistView">
          <property name="sizePolicy">
           <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
@@ -141,6 +141,28 @@ li.checked::marker { content: &quot;\2612&quot;; }
          </property>
          <property name="sizeAdjustPolicy">
           <enum>QAbstractScrollArea::SizeAdjustPolicy::AdjustToContentsOnFirstShow</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0" colspan="2">
+        <widget class="QLabel" name="notFoundLabel">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>15</pointsize>
+           <fontweight>ExtraLight</fontweight>
+          </font>
+         </property>
+         <property name="text">
+          <string>Oops! No albums found for this artist!</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignmentFlag::AlignCenter</set>
          </property>
         </widget>
        </item>
