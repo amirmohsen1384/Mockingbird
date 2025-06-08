@@ -1,6 +1,5 @@
 #include "include/dialogs/playlistplayer.h"
 #include "include/models/playlistmodel.h"
-#include "include/models/maindelegate.h"
 #include "ui_playlistplayer.h"
 
 void PlaylistPlayer::updateModel()
@@ -66,7 +65,7 @@ void PlaylistPlayer::playSong(const QModelIndex &index)
 PlaylistPlayer::PlaylistPlayer(QWidget *parent) : QDialog(parent), ui(new Ui::PlaylistPlayer)
 {
     ui->setupUi(this);
-    delegate = std::make_unique<MainDelegate>();
+    delegate = std::make_unique<PlaylistDelegate>();
     delegate->setSecondary(Qt::blue);
     delegate->setPrimary(Qt::darkGreen);
     ui->playlistView->setItemDelegate(delegate.get());

@@ -1,11 +1,10 @@
 #include <QPainter>
-#include "include/models/maindelegate.h"
+#include "include/models/delegates/maindelegate.h"
 
 int MainDelegate::thickness = 4;
 QMargins MainDelegate::margins = QMargins(4, 4, 4, 4);
 QFont MainDelegate::nameFont = QFont("Segoe UI Light", 14);
 QFontMetrics MainDelegate::nameMetrics = QFontMetrics(MainDelegate::nameFont);
-QTextOption MainDelegate::textOptions = QTextOption(Qt::AlignLeft | Qt::AlignVCenter);
 
 MainDelegate::MainDelegate(QObject *parent) : QStyledItemDelegate{parent}
 {
@@ -28,15 +27,10 @@ void MainDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
     auto hints = painter->renderHints();
     painter->setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform | QPainter::TextAntialiasing);
 
-    if(!index.data(Qt::BackgroundRole).isNull())
-    {
-        painter->fillRect(option.rect, index.data(Qt::BackgroundRole).value<QColor>());
-    }
-    else if(option.state.testFlag(QStyle::State_Selected))
+    if(option.state.testFlag(QStyle::State_Selected))
     {
         painter->fillRect(option.rect, QColor(180, 255, 240));
     }
-
 
     painter->save();
     painter->translate(option.rect.topLeft() + QPoint(margins.left(), margins.top()));
@@ -57,18 +51,12 @@ void MainDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
     painter->translate(cover.width() + margins.right() + margins.left(), 0);
 
     QRect nameRegion;
-    nameRegion.setWidth(option.rect.width() - cover.width() - margins.right() - 2 * margins.left());
     nameRegion.setHeight(option.rect.height() - margins.top() - margins.bottom());
+    nameRegion.setWidth(option.rect.width() - cover.width() - margins.right() - margins.left() * 2);
 
     QFont font = painter->font();
     painter->setFont(nameFont);
-    painter->drawText(nameRegion, index.data(Qt::DisplayRole).toString(), textOptions);
-
-    if(!index.data(Qt::BackgroundRole).isNull())
-    {
-        painter->setFont(QFont("Segoe UI", 9, QFont::Bold));
-        painter->drawText(nameRegion, "Playing...", QTextOption(Qt::AlignRight | Qt::AlignBottom));
-    }
+    painter->drawText(nameRegion, index.data(Qt::DisplayRole).toString(), QTextOption(Qt::AlignVCenter | Qt::AlignLeft));
 
     painter->setRenderHints(hints);
     painter->setFont(font);
@@ -79,11 +67,9 @@ void MainDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 void MainDelegate::setPrimary(const QColor &value)
 {
     gradient.setColorAt(0.8, value);
-    emit primaryChanged(value);
 }
 
 void MainDelegate::setSecondary(const QColor &value)
 {
     gradient.setColorAt(0.5, value);
-    emit secondaryChanged(value);
 }
