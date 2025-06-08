@@ -1,3 +1,4 @@
+#include <QMessageBox>
 #include "ui_storedialog.h"
 #include "include/models/genremodel.h"
 #include "include/dialogs/storedialog.h"
@@ -98,6 +99,19 @@ StoreDialog::StoreDialog(QWidget *parent) : QDialog(parent)
 
 StoreDialog::~StoreDialog() {}
 
+SongInfo StoreDialog::getSelectedSong() const
+{
+    const QModelIndex &index = ui->songView->currentIndex();
+    if(index.isValid())
+    {
+        SongInfo information;
+        information.data = index.data(Qt::UserRole).value<Song>();
+        information.key = index.data(Playlist::KeyRole).toLongLong();
+        return information;
+    }
+    return SongInfo();
+}
+
 void StoreDialog::playSong()
 {
     const QModelIndex &index = ui->songView->currentIndex();
@@ -112,7 +126,7 @@ void StoreDialog::playSong(const QModelIndex &index)
     if(index.isValid())
     {
         PlaylistModel model(ID::generateKey());
-        model.insertSong(index.data(Playlist::KeyRole).toLongLong(), index.data(Qt::UserRole).value<Song>());
+        model.insertSong(index.data(Playlist::InfoRole).value<SongInfo>());
 
         PlaylistPlayer player;
         player.setSourceModel(&model);
@@ -151,4 +165,14 @@ void StoreDialog::setArrangePanelVisible(bool toggle)
 
     ui->filterButton->setChecked(false);
     ui->findButton->setChecked(false);
+}
+
+void StoreDialog::accept()
+{
+    if(!ui->songView->currentIndex().isValid())
+    {
+        QMessageBox::critical(this, "No Song Selected", "You have not selected any songs!");
+        return;
+    }
+    QDialog::accept();
 }

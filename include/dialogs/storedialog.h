@@ -20,6 +20,8 @@ public:
     explicit StoreDialog(QWidget *parent = nullptr);
     ~StoreDialog();
 
+    SongInfo getSelectedSong() const;
+
 public slots:
     void playSong();
     void playSong(const QModelIndex &index);
@@ -27,6 +29,8 @@ public slots:
     void setFindPanelVisible(bool toggle);
     void setFilterPanelVisible(bool toggle);
     void setArrangePanelVisible(bool toggle);
+
+    virtual void accept() override;
 
 private slots:
     void updateFilter();
