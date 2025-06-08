@@ -17,7 +17,6 @@
         <file>images/logos/logo-2.png</file>
         <file>images/logos/logo-3.png</file>
         <file>images/logos/logo-4.png</file>
-        <file>images/icon.ico</file>
         <file>images/view/filter.png</file>
         <file>images/view/search.png</file>
         <file>images/view/sort.png</file>
@@ -68,5 +67,6 @@
         <file>images/windows/login.png</file>
         <file>images/playlist/liked-songs.png</file>
         <file>images/playlist/saved-songs.png</file>
+        <file>icon.ico</file>
     </qresource>
 </RCC>
