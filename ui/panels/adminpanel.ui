@@ -250,6 +250,12 @@
             <fontweight>ExtraLight</fontweight>
            </font>
           </property>
+          <property name="frameShape">
+           <enum>QFrame::Shape::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Shadow::Sunken</enum>
+          </property>
           <property name="text">
            <string>No artists found</string>
           </property>

@@ -158,6 +158,12 @@ li.checked::marker { content: &quot;\2612&quot;; }
            <fontweight>ExtraLight</fontweight>
           </font>
          </property>
+         <property name="frameShape">
+          <enum>QFrame::Shape::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Shadow::Sunken</enum>
+         </property>
          <property name="text">
           <string>Oops! No albums found for this artist!</string>
          </property>
