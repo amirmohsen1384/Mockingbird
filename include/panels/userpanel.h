@@ -3,8 +3,8 @@
 
 #include <QMainWindow>
 #include "include/models/usermodel.h"
-#include "include/models/maindelegate.h"
 #include "include/models/artistlistmodel.h"
+#include "include/models/delegates/maindelegate.h"
 
 namespace Ui {
 class UserPanel;
