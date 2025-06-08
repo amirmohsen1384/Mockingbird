@@ -10,7 +10,10 @@ SongModel::SongModel(QObject *parent) : QAbstractListModel(parent)
         Song song = Song::loadFromRecord(key);
         if(!song.isNull())
         {
-            container.append({song, key});
+            SongInfo target;
+            target.key = key;
+            target.data = song;
+            container.append(target);
         }
     }
 }
@@ -40,7 +43,16 @@ QVariant SongModel::data(const QModelIndex &index, int role) const
     }
     case Qt::DecorationRole:
     {
-        return songInfo.data.getCover().scaled(_cover_size, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+        const auto &image = songInfo.data.getCover();
+        if(!image.isNull())
+        {
+            return image.scaled(_cover_size, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+        }
+        else
+        {
+            return {};
+        }
+
     }
     case Playlist::KeyRole:
     {
@@ -49,6 +61,10 @@ QVariant SongModel::data(const QModelIndex &index, int role) const
     case Qt::UserRole:
     {
         return QVariant::fromValue(songInfo.data);
+    }
+    case Playlist::InfoRole:
+    {
+        return QVariant::fromValue(songInfo);
     }
     }
     return {};
