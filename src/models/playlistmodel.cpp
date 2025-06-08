@@ -118,6 +118,10 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
     {
         return store[index.row()].key;
     }
+    case Playlist::InfoRole:
+    {
+        return QVariant::fromValue(store.at(index.row()));
+    }
     default:
     {
         return {};
@@ -180,20 +184,18 @@ bool PlaylistModel::setHeaderData(int section, Qt::Orientation orientation, cons
     return true;
 }
 
-void PlaylistModel::insertSong(const IDContainer &value, const Song &data)
+void PlaylistModel::insertSong(const SongInfo &info)
 {
-    if(!ID::isValid(value))
+    if(!ID::isValid(info.key))
     {
+        qDebug() << "Invalid key. Failed to insert.";
         return;
     }
-    SongInfo target;
-    target.key = value;
-    target.data = data;
     auto it = std::lower_bound
     (
         store.cbegin(),
         store.cend(),
-        target,
+        info,
         [&](const SongInfo &one, const SongInfo &two)
         {
             return one.key < two.key;
@@ -201,7 +203,7 @@ void PlaylistModel::insertSong(const IDContainer &value, const Song &data)
     );
     int index = std::distance(store.cbegin(), it);
     beginInsertRows(QModelIndex(), index, index);
-    store.insert(index, {data, value});
+    store.insert(index, info);
     endInsertRows();
 }
 
