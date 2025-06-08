@@ -99,8 +99,8 @@ void UserModel::insert(std::shared_ptr<PlaylistModel> value)
     beginInsertRows(QModelIndex(), index, index);
 
     value->saveToRecord();
+    keys.insert(index, target);
     container.insert(index, value);
-    keys.insert(index, value->getID());
     User::saveIDsToRecord(keys, mainKey);
 
     endInsertRows();
@@ -108,8 +108,9 @@ void UserModel::insert(std::shared_ptr<PlaylistModel> value)
 
 bool UserModel::remove(const IDContainer &key)
 {
-    if(metaData.getSpecialKeys().contains(key))
+    if(isSpecialKey(key))
     {
+        qDebug() << metaData.getSpecialKeys();
         qDebug() << "Cannot delete special playlists.";
         return false;
     }
@@ -176,6 +177,11 @@ QModelIndex UserModel::fromKey(const IDContainer &key)
     return QModelIndex();
 }
 
+bool UserModel::isSpecialKey(const IDContainer &key)
+{
+    return metaData.getSpecialKeys().contains(key);
+}
+
 int UserModel::rowCount(const QModelIndex &parent) const
 {
     if (parent.isValid())
@@ -202,7 +208,7 @@ bool UserModel::removeRows(int row, int count, const QModelIndex &parent)
             return false;
         }
 
-        auto model = container.takeAt(i);
+        auto model = container.takeAt(i - metaData.getSpecialKeys().size());
         QDir target(MainFolder::getPlaylists().absolutePath());
         bool result = target.cd(QString("%1").arg(model->getID()));
         if(result)
@@ -221,27 +227,53 @@ bool UserModel::removeRows(int row, int count, const QModelIndex &parent)
 
 bool UserModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
+    static QList<int> roles =
+    {
+        Qt::DisplayRole,
+        Qt::DecorationRole,
+        User::KeyListRole,
+        User::KeyRole,
+        User::ModelRole
+    };
     if(!index.isValid())
     {
         qDebug() << "Index is not valid.";
         return false;
+    }
+    else if(role == User::ModelRole)
+    {
+        auto model = value.value<std::shared_ptr<PlaylistModel>>();
+        if(index.row() == LIKED_INDEX)
+        {
+            likedPlaylist = model;
+            emit dataChanged(this->index(LIKED_INDEX), this->index(LIKED_INDEX), roles);
+        }
+        else if(index.row() == SAVED_INDEX)
+        {
+            savedPlaylist = model;
+            emit dataChanged(this->index(SAVED_INDEX), this->index(SAVED_INDEX), roles);
+        }
+        else
+        {
+            container.replace(index.row() - metaData.getSpecialKeys().size(), model);
+            emit dataChanged(index, index, roles);
+        }
+        model->saveToRecord();
+        return true;
     }
     else if(index.row() == LIKED_INDEX || index.row() == SAVED_INDEX)
     {
         qDebug() << "Liked or saved playlist cannot be modified.";
         return false;
     }
-    else if(role != User::ModelRole)
-    {
-        container[index.row()]->setHeaderData(0, Qt::Horizontal, value, role);
-        emit dataChanged(index, index, {role, Qt::DecorationRole});
-    }
     else
     {
-        container.replace(index.row(), value.value<std::shared_ptr<PlaylistModel>>());
-        emit dataChanged(index, index, {Qt::DisplayRole, Qt::DecorationRole, User::KeyRole, User::ModelRole, User::KeyListRole});
+        auto &model = container[index.row() - metaData.getSpecialKeys().size()];
+        model->setHeaderData(0, Qt::Horizontal, value, role);
+        model->saveToRecord();
+        emit dataChanged(index, index, {role, Qt::DecorationRole});
+        return true;
     }
-    return true;
 }
 
 QVariant UserModel::data(const QModelIndex &index, int role) const
@@ -311,7 +343,7 @@ QVariant UserModel::data(const QModelIndex &index, int role) const
         }
     }
 
-    auto model = container.at(index.row());
+    auto model = container.at(index.row() - metaData.getSpecialKeys().size());
 
     switch(role)
     {

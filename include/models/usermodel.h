@@ -32,6 +32,7 @@ public:
     IDs getKeys() const;
     QModelIndex fromKey(const IDContainer &key);
 
+    bool isSpecialKey(const IDContainer &key);
 
 private:
     User metaData;
