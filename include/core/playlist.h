@@ -18,7 +18,8 @@ public:
         GenreRole = Qt::UserRole + 6,
         YearRole = Qt::UserRole + 5,
         NameRole = Qt::DisplayRole,
-        KeyRole = Qt::UserRole + 7
+        KeyRole = Qt::UserRole + 7,
+        InfoRole = Qt::UserRole + 8
     };
 
     QString getName() const;
