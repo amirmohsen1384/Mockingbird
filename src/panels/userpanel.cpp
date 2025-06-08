@@ -5,6 +5,13 @@
 #include "ui_userpanel.h"
 #include <QMessageBox>
 
+void UserPanel::checkAvailability()
+{
+    const bool condition = artistModel.rowCount() > 0;
+    ui->notFoundLabel->setVisible(!condition);
+    ui->artistList->setVisible(condition);
+}
+
 UserPanel::UserPanel(const IDContainer &key, QWidget *parent) : QMainWindow(parent)
 {
     if(User::loadFromRecord(key).isNull())
@@ -45,6 +52,8 @@ UserPanel::UserPanel(const IDContainer &key, QWidget *parent) : QMainWindow(pare
             }
         }
     );
+
+    checkAvailability();
 }
 
 UserPanel::~UserPanel() {}

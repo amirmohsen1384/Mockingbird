@@ -13,6 +13,8 @@ class UserPanel;
 class UserPanel : public QMainWindow
 {
     Q_OBJECT
+private slots:
+    void checkAvailability();
 
 public:
     explicit UserPanel(const IDContainer &key, QWidget *parent = nullptr);
