@@ -99,6 +99,11 @@ void Player::updatePlayer()
     player->setSource(song.getAddress());
     player->play();
     _model->setHeaderData(0, Qt::Horizontal, currentTrack, Playlist::PlayingRole);
+    bool single = _model->rowCount() > 1;
+    ui->advanceNext->setVisible(single);
+    ui->advanceBack->setVisible(single);
+    ui->advanceNext->setEnabled(single);
+    ui->advanceBack->setEnabled(single);
 }
 
 void Player::advance()
@@ -111,6 +116,11 @@ void Player::advance()
     const int count = _model->rowCount();
     if(count <= 0)
     {
+        return;
+    }
+    else if(count == 1 && !isInfiniteMode())
+    {
+        player->stop();
         return;
     }
     else if(!isShuffleMode())
