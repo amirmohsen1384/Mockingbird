@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>982</width>
-    <height>671</height>
+    <width>675</width>
+    <height>700</height>
    </rect>
   </property>
   <property name="font">
@@ -18,12 +18,15 @@
   <property name="windowTitle">
    <string>Select a song to continue</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">background-color:white</string>
+  </property>
   <property name="modal">
    <bool>true</bool>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QLabel" name="label">
+    <widget class="QLabel" name="titleLabel">
      <property name="font">
       <font>
        <pointsize>16</pointsize>
@@ -36,7 +39,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QLabel" name="label_2">
+    <widget class="QLabel" name="descriptionLabel">
      <property name="font">
       <font>
        <bold>true</bold>
@@ -48,7 +51,35 @@
     </widget>
    </item>
    <item>
+    <widget class="QLabel" name="notFoundLabel">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>15</pointsize>
+       <fontweight>ExtraLight</fontweight>
+      </font>
+     </property>
+     <property name="text">
+      <string>No song has been provided</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignmentFlag::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="QListView" name="songView">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="font">
       <font>
        <bold>false</bold>
@@ -70,7 +101,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="resources.qrc">
+        <iconset resource="../../resources.qrc">
          <normaloff>:/images/player/play.png</normaloff>:/images/player/play.png</iconset>
        </property>
        <property name="iconSize">
@@ -106,7 +137,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="resources.qrc">
+        <iconset resource="../../resources.qrc">
          <normaloff>:/images/view/filter.png</normaloff>:/images/view/filter.png</iconset>
        </property>
        <property name="iconSize">
@@ -132,7 +163,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="resources.qrc">
+        <iconset resource="../../resources.qrc">
          <normaloff>:/images/view/search.png</normaloff>:/images/view/search.png</iconset>
        </property>
        <property name="iconSize">
@@ -158,7 +189,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="resources.qrc">
+        <iconset resource="../../resources.qrc">
          <normaloff>:/images/view/sort.png</normaloff>:/images/view/sort.png</iconset>
        </property>
        <property name="iconSize">
@@ -237,7 +268,7 @@
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="resources.qrc"/>
+  <include location="../../resources.qrc"/>
  </resources>
  <connections>
   <connection>

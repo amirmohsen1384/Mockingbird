@@ -73,7 +73,7 @@ StoreDialog::StoreDialog(QWidget *parent) : QDialog(parent)
     ui->findPanel->setVisible(false);
 
     delegate = std::make_unique<MainDelegate>();
-    model.setSourceModel(&sourcModel);
+    model.setSourceModel(&sourceModel);
 
     ui->songView->setModel(&model);
     ui->songView->setItemDelegate(delegate.get());
@@ -95,6 +95,13 @@ StoreDialog::StoreDialog(QWidget *parent) : QDialog(parent)
     updateFilter();
     updateFindCriteria();
     updateArrangeCriteria();
+
+    const auto condition = sourceModel.rowCount() > 0;
+    ui->songView->setVisible(condition);
+    ui->findButton->setVisible(condition);
+    ui->filterButton->setVisible(condition);
+    ui->arrangeButton->setVisible(condition);
+    ui->notFoundLabel->setVisible(!condition);
 }
 
 StoreDialog::~StoreDialog() {}

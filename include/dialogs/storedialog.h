@@ -38,7 +38,7 @@ private slots:
     void updateArrangeCriteria();
 
 private:
-    SongModel sourcModel;
+    SongModel sourceModel;
     SongProxyModel model;
     std::unique_ptr<Ui::StoreDialog> ui;
     std::unique_ptr<MainDelegate> delegate;
