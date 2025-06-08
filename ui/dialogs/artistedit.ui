@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>650</width>
-    <height>750</height>
+    <width>662</width>
+    <height>794</height>
    </rect>
   </property>
   <property name="font">
@@ -58,23 +58,8 @@
       <attribute name="title">
        <string>Profile</string>
       </attribute>
-      <layout class="QVBoxLayout" name="infoLayout">
-       <item>
-        <widget class="QLineEdit" name="nameEdit">
-         <property name="font">
-          <font>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="placeholderText">
-          <string>Type the artist's name here</string>
-         </property>
-        </widget>
-       </item>
-       <item>
+      <layout class="QGridLayout" name="gridLayout">
+       <item row="2" column="0" colspan="2">
         <widget class="ImageView" name="photoView" native="true">
          <property name="sizePolicy">
           <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
@@ -92,7 +77,7 @@
          </property>
         </widget>
        </item>
-       <item>
+       <item row="3" column="0" colspan="2">
         <widget class="QPushButton" name="removeCoverButton">
          <property name="text">
           <string/>
@@ -112,7 +97,7 @@
          </property>
         </widget>
        </item>
-       <item>
+       <item row="6" column="0" colspan="2">
         <widget class="QTextEdit" name="biographyEdit">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -136,6 +121,52 @@
          </property>
         </widget>
        </item>
+       <item row="1" column="1">
+        <widget class="QLineEdit" name="nameEdit">
+         <property name="font">
+          <font>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="placeholderText">
+          <string>Type the artist's name here</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="label">
+         <property name="font">
+          <font>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>Name:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0" colspan="2">
+        <widget class="Line" name="line">
+         <property name="orientation">
+          <enum>Qt::Orientation::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0" colspan="2">
+        <widget class="QLabel" name="label_2">
+         <property name="font">
+          <font>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>Biography:</string>
+         </property>
+        </widget>
+       </item>
       </layout>
      </widget>
      <widget class="QWidget" name="playlistWidget">
@@ -143,6 +174,28 @@
        <string>Albums</string>
       </attribute>
       <layout class="QVBoxLayout" name="playlistLayout">
+       <item>
+        <widget class="QLabel" name="notFoundLabel">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>15</pointsize>
+           <fontweight>ExtraLight</fontweight>
+          </font>
+         </property>
+         <property name="text">
+          <string>Oops! No albums found for this artist!</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignmentFlag::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
        <item>
         <widget class="QListView" name="playlistView">
          <property name="frameShape">

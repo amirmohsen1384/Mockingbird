@@ -14,6 +14,7 @@ class ArtistEdit : public QDialog
 {
     Q_OBJECT
 private slots:
+    void updateAvailability();
     void updateControl();
     void updateModel();
 

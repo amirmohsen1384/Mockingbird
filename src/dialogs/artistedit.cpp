@@ -3,6 +3,13 @@
 #include "ui_artistedit.h"
 #include <QMessageBox>
 
+void ArtistEdit::updateAvailability()
+{
+    bool condition = model != nullptr && model->rowCount() > 0;
+    ui->notFoundLabel->setVisible(!condition);
+    ui->playlistView->setVisible(condition);
+}
+
 void ArtistEdit::updateControl()
 {
     ui->addButton->setVisible(model != nullptr);
@@ -12,6 +19,7 @@ void ArtistEdit::updateControl()
 void ArtistEdit::updateModel()
 {
     ui->playlistView->setModel(model);
+    updateAvailability();
     updateControl();
     if(model)
     {
@@ -25,10 +33,24 @@ void ArtistEdit::updateModel()
                 ui->removeButton->setVisible(!indexes.isEmpty());
             }
         );
-        ui->nameEdit->setText(artist.getName());
+        const auto &name = artist.getName();
+
+        ui->nameEdit->setText(name);
         ui->photoView->setImage(artist.getPhoto());
         ui->biographyEdit->setPlainText(artist.getBiography());
-        setWindowTitle(QString("%1 - Artist Editor").arg(artist.getName()));
+
+        if(name.isEmpty())
+        {
+            setWindowTitle("Untitled - Artist Editor");
+        }
+        else
+        {
+            setWindowTitle(QString("%1  - Artist Editor").arg(name));
+        }
+    }
+    else
+    {
+        setWindowTitle("Artist Editor");
     }
 }
 
@@ -119,6 +141,7 @@ void ArtistEdit::addPlaylist()
     if(editor.exec() == QDialog::Accepted)
     {
         model->insertPlaylist(playlist);
+        updateAvailability();
     }
 }
 
@@ -144,6 +167,7 @@ void ArtistEdit::removePlaylist()
         {
             model->removeRow(index.row());
         }
+        updateAvailability();
     }
 }
 
@@ -161,6 +185,7 @@ void ArtistEdit::editPlaylist(const QModelIndex &index)
         if(editor.exec() == QDialog::Accepted)
         {
             model->setData(index, QVariant::fromValue(target), Artist::ModelRole);
+            updateAvailability();
         }
     }
 }
