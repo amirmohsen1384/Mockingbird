@@ -24,14 +24,16 @@ void UserPlaylistEditor::addSong()
     StoreDialog dialog(this);
     if(dialog.exec() == QDialog::Accepted)
     {
-
+        const SongInfo &info = dialog.getSelectedSong();
+        sourceModel->insertSong(info);
+        AbstractPlaylistEditor::addSong();
     }
 }
 
 void UserPlaylistEditor::playSong(const QModelIndex &index)
 {
     PlaylistModel model;
-    model.insertSong(index.data(Playlist::KeyRole).toLongLong(), index.data(Qt::UserRole).value<Song>());
+    model.insertSong(index.data(Playlist::InfoRole).value<SongInfo>());
 
     PlaylistPlayer player;
     player.setSourceModel(&model);

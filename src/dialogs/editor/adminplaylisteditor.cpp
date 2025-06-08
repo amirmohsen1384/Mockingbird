@@ -21,8 +21,13 @@ void AdminPlaylistEditor::addSong()
                 return;
             }
         }
+
+        SongInfo target;
         IDContainer id = ID::generateKey();
-        sourceModel->insertSong(id, song);
+        target.data = song;
+        target.key = id;
+
+        sourceModel->insertSong(target);
         AbstractPlaylistEditor::addSong();
     }
 }
