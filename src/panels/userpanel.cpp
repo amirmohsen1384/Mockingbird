@@ -129,11 +129,6 @@ void UserPanel::goToProfilePage()
 void UserPanel::viewPlaylist(const QModelIndex &index)
 {
     auto model = index.data(User::ModelRole).value<PlaylistModel*>();
-    if(model->rowCount() <= 0)
-    {
-        QMessageBox::warning(this, "Error", "You have no song to be played in this playlist.");
-        return;
-    }
     PlaylistPlayer player;
     player.setSourceModel(model);
     player.exec();

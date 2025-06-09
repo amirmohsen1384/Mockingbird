@@ -14,6 +14,7 @@ private slots:
     void updateModel();
     void updateCurrentTrack();
     void toggleSingleMode(bool enabled);
+    void toggleMainControl(bool enabled);
     void playSong(const QModelIndex &index);
 
 public:

@@ -14,7 +14,7 @@
    <string>Playlist Player</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../../resources.qrc">
+   <iconset>
     <normaloff>:/images/icon.ico</normaloff>:/images/icon.ico</iconset>
   </property>
   <property name="autoFillBackground">
@@ -27,6 +27,28 @@
    <bool>true</bool>
   </property>
   <layout class="QVBoxLayout" name="mainLayout">
+   <item>
+    <widget class="QLabel" name="notFoundLabel">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>15</pointsize>
+       <fontweight>ExtraLight</fontweight>
+      </font>
+     </property>
+     <property name="text">
+      <string>Oops! No songs available in this playlist!</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignmentFlag::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
    <item>
     <widget class="QStackedWidget" name="pageContainer">
      <property name="currentIndex">
@@ -236,9 +258,7 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources>
-  <include location="../../resources.qrc"/>
- </resources>
+ <resources/>
  <connections>
   <connection>
    <sender>playlistView</sender>

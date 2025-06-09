@@ -7,10 +7,11 @@ void PlaylistPlayer::updateModel()
 {
     ui->playlistView->setModel(model);
     ui->player->setModel(model);
-
-    if(model)
+    if(model && model->rowCount() > 0)
     {
+        toggleMainControl(true);
         ui->player->setCurrentTrack(0);
+        ui->notFoundLabel->setVisible(false);
         const QString name = model->headerData().toString();
         ui->titleLabel->setText(name.isEmpty() ? QString() : name);
         model->setHeaderData(0, Qt::Horizontal, 0, Playlist::PlayingRole);
@@ -19,11 +20,17 @@ void PlaylistPlayer::updateModel()
             ui->playlistModeCheckBox->setVisible(false);
         }
     }
+    else
+    {
+        toggleMainControl(false);
+        ui->notFoundLabel->setVisible(true);
+        setWindowTitle("Empty Playlist - Media Player");
+    }
 }
 
 void PlaylistPlayer::updateCurrentTrack()
 {
-    if(model)
+    if(model && model->rowCount() > 0)
     {
         const int row = ui->player->getCurrentTrack();
         model->setHeaderData(0, Qt::Horizontal, row, Playlist::PlayingRole);
@@ -58,6 +65,14 @@ void PlaylistPlayer::toggleSingleMode(bool enabled)
     }
 }
 
+void PlaylistPlayer::toggleMainControl(bool enabled)
+{
+    ui->player->setVisible(enabled);
+    ui->infoFrame->setVisible(enabled);
+    ui->pageContainer->setVisible(enabled);
+    ui->playlistModeCheckBox->setVisible(enabled);
+}
+
 void PlaylistPlayer::playSong(const QModelIndex &index)
 {
     ui->player->setCurrentTrack(index.row());
@@ -71,6 +86,8 @@ PlaylistPlayer::PlaylistPlayer(QWidget *parent) : QDialog(parent), ui(new Ui::Pl
     delegate->setPrimary(Qt::darkGreen);
     ui->playlistView->setItemDelegate(delegate.get());
     connect(ui->player, &Player::currentTrackChanged, this, &PlaylistPlayer::updateCurrentTrack);
+    toggleMainControl(false);
+    ui->notFoundLabel->setVisible(true);
 }
 
 PlaylistPlayer::~PlaylistPlayer() {}
