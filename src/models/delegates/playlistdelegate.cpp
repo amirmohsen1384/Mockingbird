@@ -2,12 +2,7 @@
 #include <QPainter>
 
 PlaylistDelegate::PlaylistDelegate(QObject *parent) : MainDelegate{parent}
-{
-    playing.setStops({{0.3, Qt::magenta}, {0.5, Qt::green}, {0.7, Qt::darkYellow}});
-    playing.setCoordinateMode(QGradient::ObjectMode);
-    playing.setFinalStop(1.0, 1.0);
-    playing.setStart(0.0, 0.0);
-}
+{}
 
 void PlaylistDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
@@ -21,8 +16,6 @@ void PlaylistDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
     bool value = index.data(Playlist::PlayingRole).toBool();
     if(value)
     {
-        qDebug() << index.data(Playlist::NameRole).toString();
-        painter->fillRect(trackRect, Qt::yellow);
+        painter->fillRect(trackRect, QGradient::PoliteRumors);
     }
-    qDebug() << playing << value;
 }

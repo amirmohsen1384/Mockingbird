@@ -6,13 +6,9 @@
 class PlaylistDelegate : public MainDelegate
 {
     Q_OBJECT
-
 public:
     explicit PlaylistDelegate(QObject *parent = nullptr);
     virtual void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
-
-private:
-    QLinearGradient playing;
 };
 
 #endif // PLAYLISTDELEGATE_H
