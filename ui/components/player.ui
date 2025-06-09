@@ -87,7 +87,7 @@
    <string/>
   </property>
   <property name="windowIcon">
-   <iconset resource="../../resources.qrc">
+   <iconset>
     <normaloff>:/images/icon.ico</normaloff>:/images/icon.ico</iconset>
   </property>
   <property name="autoFillBackground">
@@ -415,7 +415,7 @@
           </font>
          </property>
          <property name="toolTip">
-          <string>Adjust Playback Speed (Ctrl + P)</string>
+          <string>Adjust Playback Speed</string>
          </property>
          <property name="layoutDirection">
           <enum>Qt::LayoutDirection::LeftToRight</enum>
