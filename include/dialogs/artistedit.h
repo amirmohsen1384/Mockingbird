@@ -4,7 +4,7 @@
 #include <QDialog>
 #include <QAbstractItemModel>
 #include "include/models/artistmodel.h"
-#include "include/models/maindelegate.h"
+#include "include/models/delegates/maindelegate.h"
 
 namespace Ui {
 class ArtistEdit;

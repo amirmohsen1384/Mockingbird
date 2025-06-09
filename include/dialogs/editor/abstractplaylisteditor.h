@@ -3,7 +3,7 @@
 
 #include <QDialog>
 #include "include/models/playlistmodel.h"
-#include "include/models/maindelegate.h"
+#include "include/models/delegates/maindelegate.h"
 
 namespace Ui
 {

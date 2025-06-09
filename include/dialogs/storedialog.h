@@ -3,8 +3,8 @@
 
 #include <QDialog>
 #include "include/models/songmodel.h"
-#include "include/models/maindelegate.h"
 #include "include/models/songproxymodel.h"
+#include "include/models/delegates/maindelegate.h"
 
 namespace Ui {
 class StoreDialog;

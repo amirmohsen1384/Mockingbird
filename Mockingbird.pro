@@ -31,8 +31,9 @@ SOURCES += \
     src/dialogs/songedit.cpp \
     src/models/artistlistmodel.cpp \
     src/models/artistmodel.cpp \
+    src/models/delegates/playlistdelegate.cpp \
     src/models/genremodel.cpp \
-    src/models/maindelegate.cpp \
+    src/models/delegates/maindelegate.cpp \
     src/models/playlistmodel.cpp \
     src/models/songmodel.cpp \
     src/models/songproxymodel.cpp \
@@ -65,8 +66,9 @@ HEADERS += \
     include/dialogs/songedit.h \
     include/models/artistlistmodel.h \
     include/models/artistmodel.h \
+    include/models/delegates/playlistdelegate.h \
     include/models/genremodel.h \
-    include/models/maindelegate.h \
+    include/models/delegates/maindelegate.h \
     include/models/playlistmodel.h \
     include/models/songmodel.h \
     include/models/songproxymodel.h \

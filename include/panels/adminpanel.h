@@ -4,7 +4,7 @@
 #include <QMainWindow>
 #include "include/core/admin.h"
 #include "include/models/artistlistmodel.h"
-#include "include/models/maindelegate.h"
+#include "include/models/delegates/maindelegate.h"
 
 namespace Ui
 {
