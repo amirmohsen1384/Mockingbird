@@ -66,7 +66,7 @@ void AdminPanel::rejectChanging()
 
 void AdminPanel::acceptChanging()
 {
-    Admin temp;
+    Admin temp = Admin::loadFromRecord(mainKey);
     try
     {
         const QString lastName = ui->lastNameEdit->text();
