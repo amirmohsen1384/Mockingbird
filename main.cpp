@@ -16,7 +16,7 @@ void initializeAdmin()
     another.setFirstName("Amir Mohsen");
     another.setLastName("Ghasemi");
     another.setUserName("amir1234");
-    another.setPassword("amir@1384");
+    another.setPassword("Amir@1384");
     info.saveToRecord(683192219);
 }
 
