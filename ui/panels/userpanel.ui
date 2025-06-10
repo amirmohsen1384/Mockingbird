@@ -6,15 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>947</width>
-    <height>724</height>
+    <width>940</width>
+    <height>752</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Mockingbird</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../../resources.qrc">
+   <iconset>
     <normaloff>:/images/icon.ico</normaloff>:/images/icon.ico</iconset>
   </property>
   <property name="styleSheet">
@@ -353,6 +353,365 @@
         </item>
        </layout>
       </widget>
+      <widget class="QWidget" name="infoEditorPage">
+       <layout class="QGridLayout" name="gridLayout">
+        <item row="0" column="0" colspan="3">
+         <layout class="QGridLayout" name="descriptionLayout">
+          <item row="0" column="0" rowspan="2">
+           <widget class="QLabel" name="mainTitle">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>16</pointsize>
+              <fontweight>Light</fontweight>
+             </font>
+            </property>
+            <property name="text">
+             <string>Modify your account</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignBottom|Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft</set>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="description">
+            <property name="font">
+             <font>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>You can change your personal information here.</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1" rowspan="3">
+           <widget class="QPushButton" name="cancelButton">
+            <property name="toolTip">
+             <string>Go Back</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="../../resources.qrc">
+              <normaloff>:/images/windows/back.png</normaloff>:/images/windows/back.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>48</width>
+              <height>48</height>
+             </size>
+            </property>
+            <property name="flat">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item row="1" column="0" colspan="3">
+         <widget class="QGroupBox" name="informationLayout">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="font">
+           <font>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="title">
+           <string>Information</string>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_4">
+           <property name="leftMargin">
+            <number>10</number>
+           </property>
+           <property name="topMargin">
+            <number>5</number>
+           </property>
+           <property name="rightMargin">
+            <number>10</number>
+           </property>
+           <property name="bottomMargin">
+            <number>6</number>
+           </property>
+           <item row="0" column="1" colspan="2">
+            <widget class="QLineEdit" name="accountFirstNameEdit">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="font">
+              <font>
+               <bold>true</bold>
+              </font>
+             </property>
+             <property name="placeholderText">
+              <string>Example: Amir Mohsen</string>
+             </property>
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0">
+            <widget class="QLabel" name="accountFirstNameLabel">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="font">
+              <font>
+               <bold>true</bold>
+              </font>
+             </property>
+             <property name="text">
+              <string>First Name</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1" colspan="2">
+            <widget class="QLineEdit" name="accountLastNameEdit">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="font">
+              <font>
+               <bold>true</bold>
+              </font>
+             </property>
+             <property name="placeholderText">
+              <string>Example: Ghasemi</string>
+             </property>
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="accountLastNameLabel">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="font">
+              <font>
+               <bold>true</bold>
+              </font>
+             </property>
+             <property name="text">
+              <string>Last Name</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="0">
+            <widget class="QLabel" name="accountPasswordLabel">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="font">
+              <font>
+               <bold>true</bold>
+              </font>
+             </property>
+             <property name="text">
+              <string>Password</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="2">
+            <widget class="QPushButton" name="accountPasswordShowButton">
+             <property name="toolTip">
+              <string>Show Password</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset resource="../../resources.qrc">
+               <normaloff>:/images/windows/show-password.png</normaloff>:/images/windows/show-password.png</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>32</width>
+               <height>32</height>
+              </size>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
+             </property>
+             <property name="flat">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="1">
+            <widget class="QLineEdit" name="accountPasswordEdit">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="font">
+              <font>
+               <bold>true</bold>
+              </font>
+             </property>
+             <property name="echoMode">
+              <enum>QLineEdit::EchoMode::Password</enum>
+             </property>
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1" colspan="2">
+            <widget class="QLineEdit" name="accountUserNameEdit">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="font">
+              <font>
+               <bold>true</bold>
+              </font>
+             </property>
+             <property name="placeholderText">
+              <string>Example: amir@1384</string>
+             </property>
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="accountUserNameLabel">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="font">
+              <font>
+               <bold>true</bold>
+              </font>
+             </property>
+             <property name="text">
+              <string>User Name</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <spacer name="checkTopSpacer">
+          <property name="orientation">
+           <enum>Qt::Orientation::Vertical</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Policy::MinimumExpanding</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>290</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="3" column="0">
+         <spacer name="checkLeftSpacer">
+          <property name="orientation">
+           <enum>Qt::Orientation::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>408</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="3" column="1">
+         <widget class="QPushButton" name="checkButton">
+          <property name="toolTip">
+           <string>Accept</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="../../resources.qrc">
+            <normaloff>:/images/windows/check.png</normaloff>:/images/windows/check.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>48</width>
+            <height>48</height>
+           </size>
+          </property>
+          <property name="flat">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="2">
+         <spacer name="checkRightSpacer">
+          <property name="orientation">
+           <enum>Qt::Orientation::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>407</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </widget>
      </widget>
     </item>
    </layout>
@@ -385,8 +744,8 @@
    <slot>goToProfilePage()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>110</x>
-     <y>40</y>
+     <x>132</x>
+     <y>729</y>
     </hint>
     <hint type="destinationlabel">
      <x>737</x>
@@ -401,8 +760,8 @@
    <slot>viewArtist(QModelIndex)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>110</x>
-     <y>40</y>
+     <x>142</x>
+     <y>429</y>
     </hint>
     <hint type="destinationlabel">
      <x>9</x>
@@ -474,6 +833,70 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>changeAccountInfoButton</sender>
+   <signal>clicked()</signal>
+   <receiver>UserPanel</receiver>
+   <slot>goToInfoEditor()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>861</x>
+     <y>41</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>934</x>
+     <y>59</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cancelButton</sender>
+   <signal>clicked()</signal>
+   <receiver>UserPanel</receiver>
+   <slot>rejectEditor()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>875</x>
+     <y>58</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>951</x>
+     <y>98</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>accountPasswordShowButton</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>UserPanel</receiver>
+   <slot>toggleShowPassword(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>878</x>
+     <y>322</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>942</x>
+     <y>356</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkButton</sender>
+   <signal>clicked()</signal>
+   <receiver>UserPanel</receiver>
+   <slot>acceptEditor()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>470</x>
+     <y>696</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>372</x>
+     <y>753</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>viewArtist(QModelIndex)</slot>
@@ -483,5 +906,9 @@
   <slot>addPlaylist()</slot>
   <slot>removePlaylist()</slot>
   <slot>editPlaylist()</slot>
+  <slot>goToInfoEditor()</slot>
+  <slot>toggleShowPassword(bool)</slot>
+  <slot>rejectEditor()</slot>
+  <slot>acceptEditor()</slot>
  </slots>
 </ui>

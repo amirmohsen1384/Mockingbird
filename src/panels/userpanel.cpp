@@ -5,6 +5,91 @@
 #include "ui_userpanel.h"
 #include <QMessageBox>
 
+void UserPanel::goToInfoEditor()
+{
+    ui->pageContainer->setCurrentWidget(ui->infoEditorPage);
+}
+
+void UserPanel::toggleShowPassword(bool enabled)
+{
+    if(!enabled)
+    {
+        ui->accountPasswordEdit->setEchoMode(QLineEdit::Password);
+        ui->accountPasswordShowButton->setIcon(QIcon(":/images/windows/show-password.png"));
+    }
+    else
+    {
+        ui->accountPasswordEdit->setEchoMode(QLineEdit::Normal);
+        ui->accountPasswordShowButton->setIcon(QIcon(":/images/windows/hide-password.png"));
+    }
+}
+
+void UserPanel::rejectEditor()
+{
+    goToProfilePage();
+    initializeEditor();
+}
+
+void UserPanel::acceptEditor()
+{
+    User temp = User::loadFromRecord(mainModel.getMainKey());
+    try
+    {
+        const QString firstName = ui->accountFirstNameEdit->text();
+        const QString lastName = ui->accountLastNameEdit->text();
+        const QString userName = ui->accountUserNameEdit->text();
+        const QString password = ui->accountPasswordEdit->text();
+        if(!temp.setFirstName(firstName))
+        {
+            throw std::runtime_error("The first name should only contain non-letter characters and not be empty.");
+        }
+
+        if(!temp.setLastName(lastName))
+        {
+            throw std::runtime_error("The last name should only contain non-letter characters and not be empty.");
+        }
+
+        if(!temp.setUserName(userName))
+        {
+            throw std::runtime_error("The user name should have at least 6 characters.");
+        }
+
+        if(!temp.setPassword(password))
+        {
+            throw std::runtime_error("A strong password is at least 8 character, and has all kinds of characters.");
+        }
+    }
+    catch(std::exception &e)
+    {
+        QMessageBox::critical(this, "Error", e.what());
+        return;
+    }
+
+    temp.saveToRecord(mainModel.getMainKey());
+    QMessageBox::information(this, "Successful", "Your account has been modified successfully.");
+
+    initializeEditor();
+    goToProfilePage();
+}
+
+void UserPanel::initializeEditor()
+{
+    auto data = User::loadFromRecord(mainModel.getMainKey());
+    if(data.isNull())
+    {
+        return;
+    }
+
+    ui->accountFirstNameEdit->setText(data.getFirstName());
+    ui->accountLastNameEdit->setText(data.getLastName());
+    ui->accountPasswordEdit->setText(data.getPassword());
+    ui->accountUserNameEdit->setText(data.getUserName());
+
+    const auto name = data.getFullName();
+    ui->accountNameLabel->setText(name);
+    setWindowTitle(QString("%1 - User Panel").arg(name));
+}
+
 void UserPanel::checkAvailability()
 {
     const bool condition = artistModel.rowCount() > 0;
@@ -36,10 +121,6 @@ UserPanel::UserPanel(const IDContainer &key, QWidget *parent) : QMainWindow(pare
     ui->playlistView->setModel(&mainModel);
     ui->playlistView->setItemDelegate(delegate.get());
 
-    const auto& name = mainModel.headerData(0, Qt::Horizontal, Qt::DisplayRole).toString();
-    ui->accountNameLabel->setText(name);
-    setWindowTitle(QString("%1 - User Panel").arg(name));
-
     connect(ui->playlistView->selectionModel(), &QItemSelectionModel::currentChanged,
         [&](const auto &current, const auto &previous)
         {
@@ -54,6 +135,7 @@ UserPanel::UserPanel(const IDContainer &key, QWidget *parent) : QMainWindow(pare
     );
 
     checkAvailability();
+    initializeEditor();
 }
 
 UserPanel::~UserPanel() {}

@@ -60,7 +60,7 @@
    <string>Mockingbird</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../../resources.qrc">
+   <iconset>
     <normaloff>:/images/icon.ico</normaloff>:/images/icon.ico</iconset>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -757,8 +757,8 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>551</x>
-     <y>458</y>
+     <x>481</x>
+     <y>430</y>
     </hint>
     <hint type="destinationlabel">
      <x>255</x>
@@ -773,8 +773,8 @@
    <slot>toggleShowLoginPassword(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>603</x>
-     <y>458</y>
+     <x>533</x>
+     <y>430</y>
     </hint>
     <hint type="destinationlabel">
      <x>650</x>
@@ -789,8 +789,8 @@
    <slot>goToAccountPage()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>324</x>
-     <y>541</y>
+     <x>490</x>
+     <y>508</y>
     </hint>
     <hint type="destinationlabel">
      <x>15</x>
@@ -805,8 +805,8 @@
    <slot>toggleShowAccountPassword(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>803</x>
-     <y>332</y>
+     <x>685</x>
+     <y>306</y>
     </hint>
     <hint type="destinationlabel">
      <x>840</x>
@@ -821,8 +821,8 @@
    <slot>rejectCreation()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>800</x>
-     <y>67</y>
+     <x>695</x>
+     <y>100</y>
     </hint>
     <hint type="destinationlabel">
      <x>843</x>
@@ -837,8 +837,8 @@
    <slot>acceptCreation()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>415</x>
-     <y>718</y>
+     <x>389</x>
+     <y>674</y>
     </hint>
     <hint type="destinationlabel">
      <x>354</x>

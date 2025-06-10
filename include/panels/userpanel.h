@@ -14,6 +14,7 @@ class UserPanel : public QMainWindow
 {
     Q_OBJECT
 private slots:
+    void initializeEditor();
     void checkAvailability();
 
 public:
@@ -30,6 +31,12 @@ public slots:
 
     void viewArtist(const QModelIndex &index);
     void viewPlaylist(const QModelIndex &index);
+
+    void goToInfoEditor();
+    void toggleShowPassword(bool enabled);
+
+    void rejectEditor();
+    void acceptEditor();
 
 private:
     UserModel mainModel;
