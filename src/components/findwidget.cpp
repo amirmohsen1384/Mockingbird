@@ -3,6 +3,7 @@
 
 FindWidget::FindWidget(QWidget *parent) : QWidget(parent), ui(new Ui::FindWidget)
 {
+    ui = std::make_unique<Ui::FindWidget>();
     ui->setupUi(this);
 
     ui->searchModeEdit->setItemData(1, QVariant::fromValue(Qt::MatchFlag::MatchEndsWith));
@@ -14,11 +15,6 @@ FindWidget::FindWidget(QWidget *parent) : QWidget(parent), ui(new Ui::FindWidget
     connect(ui->searchEdit, &QLineEdit::textChanged, this, &FindWidget::findPropertyChanged);
     connect(ui->artistEdit, &QRadioButton::clicked, this, &FindWidget::findPropertyChanged);
     connect(ui->nameEdit, &QRadioButton::clicked, this, &FindWidget::findPropertyChanged);
-}
-
-FindWidget::~FindWidget()
-{
-    delete ui;
 }
 
 QString FindWidget::getText() const

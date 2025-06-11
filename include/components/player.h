@@ -20,7 +20,6 @@ class Player : public QWidget
 public:
     Q_DISABLE_COPY_MOVE(Player)
     explicit Player(QWidget *parent = nullptr);
-    ~Player();
 
     QAbstractItemModel* model();
     void setModel(QAbstractItemModel *value);

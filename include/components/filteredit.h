@@ -15,7 +15,6 @@ class FilterEdit : public QWidget
     Q_OBJECT
 public:
     explicit FilterEdit(QWidget *parent = nullptr);
-    ~FilterEdit();
 
     bool isYearFilteringEnabled() const;
     bool isGenreFilteringEnabled() const;

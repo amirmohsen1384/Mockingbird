@@ -23,8 +23,6 @@ FilterEdit::FilterEdit(QWidget *parent) : QWidget(parent)
     ui->endYearEdit->setValue(QDate::currentDate().year());
 }
 
-FilterEdit::~FilterEdit() {}
-
 bool FilterEdit::isYearFilteringEnabled() const
 {
     return ui->yearFilterGroup->isChecked();

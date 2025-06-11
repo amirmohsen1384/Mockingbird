@@ -13,7 +13,6 @@ class ArrangeWidget : public QWidget
     Q_OBJECT
 public:
     explicit ArrangeWidget(QWidget *parent = nullptr);
-    ~ArrangeWidget();
 
 public:
     Qt::SortOrder getSortOrder() const;
@@ -24,7 +23,7 @@ signals:
     void sortCriteriaChanged();
 
 private:
-    Ui::ArrangeWidget *ui;
+    std::unique_ptr<Ui::ArrangeWidget> ui;
 };
 
 #endif // ARRANGEWIDGET_H

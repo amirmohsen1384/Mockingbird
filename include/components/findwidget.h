@@ -14,7 +14,6 @@ class FindWidget : public QWidget
     Q_OBJECT
 public:
     explicit FindWidget(QWidget *parent = nullptr);
-    ~FindWidget();
 
     QString getText() const;
     Qt::MatchFlag getFlag() const;
@@ -25,7 +24,7 @@ signals:
     void findPropertyChanged();
 
 private:
-    Ui::FindWidget *ui;
+    std::unique_ptr<Ui::FindWidget> ui;
 };
 
 #endif // FINDWIDGET_H

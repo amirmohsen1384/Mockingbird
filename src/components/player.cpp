@@ -269,8 +269,6 @@ void Player::setInfiniteMode(bool value)
     emit infiniteModeChanged(value);
 }
 
-Player::~Player() {}
-
 QAbstractItemModel *Player::model()
 {
     return _model;
