@@ -13,7 +13,6 @@ void ArtistEdit::updateAvailability()
 void ArtistEdit::updateControl()
 {
     ui->addButton->setVisible(model != nullptr);
-    ui->removeButton->setVisible(model != nullptr);
 }
 
 void ArtistEdit::updateModel()
