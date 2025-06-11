@@ -19,7 +19,7 @@
    <string>Mockingbird</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../../resources.qrc">
+   <iconset>
     <normaloff>:/images/icon.ico</normaloff>:/images/icon.ico</iconset>
   </property>
   <property name="styleSheet">
@@ -78,7 +78,7 @@
           <item>
            <widget class="QPushButton" name="editButton">
             <property name="toolTip">
-             <string>View</string>
+             <string>Edit</string>
             </property>
             <property name="text">
              <string/>
