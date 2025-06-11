@@ -154,15 +154,15 @@ QString GenreModel::toString(const Song::Genre &genre)
     {
         case Song::Genre::Classical:
         {
-            return QString("Classical Music");
+            return QString("Classical");
         }
         case Song::Genre::Pop:
         {
-            return QString("Pop Music");
+            return QString("Pop");
         }
         case Song::Genre::Rock:
         {
-            return QString("Rock Music");
+            return QString("Rock");
         }
         case Song::Genre::Jazz:
         {
@@ -170,19 +170,19 @@ QString GenreModel::toString(const Song::Genre &genre)
         }
         case Song::Genre::Rap:
         {
-            return QString("Rap Music");
+            return QString("Rap");
         }
         case Song::Genre::Electronic:
         {
-            return QString("Electronic Music");
+            return QString("Electronic");
         }
         case Song::Genre::Country:
         {
-            return QString("Country Music");
+            return QString("Country");
         }
         case Song::Genre::Folk:
         {
-            return QString("Folk Music");
+            return QString("Folk");
         }
         case Song::Genre::Blues:
         {
@@ -194,7 +194,7 @@ QString GenreModel::toString(const Song::Genre &genre)
         }
         case Song::Genre::Alternative:
         {
-            return QString("Alternative Music");
+            return QString("Alternative");
         }
         case Song::Genre::Cassette:
         {
@@ -202,11 +202,11 @@ QString GenreModel::toString(const Song::Genre &genre)
         }
         case Song::Genre::Children:
         {
-            return QString("Children Music");
+            return QString("Children");
         }
         case Song::Genre::Christian:
         {
-            return QString("Christian Music");
+            return QString("Christian");
         }
         case Song::Genre::Demon:
         {
@@ -222,7 +222,7 @@ QString GenreModel::toString(const Song::Genre &genre)
         }
         case Song::Genre::FrenchMusic:
         {
-            return QString("French Music");
+            return QString("French");
         }
         case Song::Genre::Goth:
         {
@@ -258,11 +258,11 @@ QString GenreModel::toString(const Song::Genre &genre)
         }
         case Song::Genre::Punk:
         {
-            return QString("Punk Music");
+            return QString("Punk");
         }
         case Song::Genre::RnB:
         {
-            return QString("RnB Music");
+            return QString("RnB");
         }
         case Song::Genre::Rhythm:
         {
